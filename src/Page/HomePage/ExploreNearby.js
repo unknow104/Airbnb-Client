@@ -45,7 +45,7 @@ export default function ExploreNearby() {
           alt=""
         />
         <div className="">
-          <h1 className="text-[0.9rem] font-bold">{t("Desert")}</h1>
+          <h1 className="text-[0.9rem] font-bold">{t("Sea")}</h1>
           <p className="opacity-60 text-[0.8rem]">20km</p>
         </div>
       </div>

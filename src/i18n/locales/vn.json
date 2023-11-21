@@ -23,7 +23,6 @@
     "Please input your confirm password": "Hãy xác nhận mật khẩu",
     "confirm password": "Xác nhận mật khẩu",
     "Logout": "Đăng xuất",
-
     "Explore nearby": "Khám phá lân cận",
     "Filter": "Lọc",
     "Show All": "Hiển thị tất cả",
@@ -42,7 +41,6 @@
     "Comment": "Bình luận",
     "Show all": "Hiển thị tất cả",
     "Where you'll be": "Bạn sẽ ở đâu",
-
     "Explorers": "Trang Chủ",
     "Wislists": "mong muốn",
     "Trips": "Chuyến đi",
@@ -54,7 +52,6 @@
     "Please input your email!": "Vui lòng nhập email của bạn!",
     "Input your email/phone number": "Nhập email / số điện thoại của bạn",
     "Please input your password!": "Vui lòng nhập mật khẩu của bạn!",
-
     "Please input your Email!": "Vui lòng nhập Email của bạn!",
     "Please input your username!": "Vui lòng nhập tên người dùng của bạn!",
     "Birthday": "Ngày sinh nhật",
@@ -65,9 +62,7 @@
     "+84 Phone Number": "+84",
     "Plese login to booking room.thank you": "Vui lòng đăng nhập để đặt phòng.cảm ơn",
     "Plese login to comment.thank you": "Vui lòng đăng nhập để binh luận.cảm ơn",
-
     "Any Location": "Địa điểm",
-
     "Try Hosting": "Trở thành chủ nhà",
     "Earn extra income and unlock new": "Kiếm thêm thu nhập và mở ra",
     "opportunities by sharing your space": "cơ hội bằng cách chia sẻ không gian sống của bạn",
@@ -94,7 +89,6 @@
     "Verified": "Đã xác nhận",
     "Email": "Tài khoản Email",
     "My Information": "Thông tin của tôi",
-
     "Save changes": "Lưu thay đổi",
     "Name: ": "Tên: ",
     "Birthday: ": "Ngày sinh: ",
@@ -115,7 +109,6 @@
     "You do not have any trips right now": "Bạn hiện tại không có chuyến đi nào",
     "Dive right in": "Cùng đi bơi nào",
     "This is one of the few places in the area with a pool": "Một trong số các địa điểm có hồ bơi",
-
     "Bedroom": "Phòng ngủ",
     "Bed": "Giường",
     "Bathroom": "Phòng tắm",
@@ -141,7 +134,6 @@
     "Non-refunable": "Không hoàn tiền",
     "Free cancellation before 22 Jun. Cancel before check-in on 23 Jun for a partial refund.": "Hoàn tiền miễn phí trước ngày 22 tháng Sáu. Hủy trước ngày check-in 23 tháng Sáu sẽ chỉ hoàn một phần tiền đặt cọc",
     "Find out More": "Tìm hiểu thêm",
-
     "your password must be max 16 characters.": "Mật khẩu của bạn chỉ được chứa tối đa 16 ký tự",
     "your password must be minimum 6 characters.": "Mật khẩu của bạn phải chứa ít nhất 6 ký tự",
     "The input is not valid E-mail!": "Email của bạn chưa đúng định dạng!",
@@ -204,7 +196,7 @@
     "MoonLight": "Địa điểm ngắm trăng",
     "WaterFall": "Thác nước",
     "River": "Gần sông",
-    "Desert": "Sa mạc",
+    "Sea": "Gần biển",
     "Peace": "Yên bình",
     "Tropical": "Nhiệt đới",
     "River Side": "Ven sông",
@@ -259,18 +251,15 @@
     "Bed number": "Số phòng ngủ",
     "Enter Price": "Nhập giá",
     "Please add picture": "Thêm hình ảnh",
-    "Manager" : "Quản lý",
-
-
-    "Tropical" :"Nhiệt đới",
-    "Decrease" : "Giảm bớt",
-    "Increase" : "Tăng thêm",
-    "Show All" : "Hiển thị tất cả",
+    "Manager": "Quản lý",
+    "Tropical": "Nhiệt đới",
+    "Decrease": "Giảm bớt",
+    "Increase": "Tăng thêm",
+    "Show All": "Hiển thị tất cả",
     "More Than": "Hơn nữa",
-    "Support" :"Hỗ trợ",
-    "Help Center" : "Trung tâm hỗ trợ",
+    "Support": "Hỗ trợ",
+    "Help Center": "Trung tâm hỗ trợ",
     "Community": "Cộng đồng",
-    "Hosting": "Tổ chức"
-
-
+    "Hosting": "Tổ chức",
+    "Date":"Cách đây"
 }
