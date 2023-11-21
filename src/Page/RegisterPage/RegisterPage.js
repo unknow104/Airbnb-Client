@@ -21,7 +21,7 @@ function RegisterPage() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [isLoading, setIsLoading] = useState(false)
-  
+
   const navigate = useNavigate();
   const onFinish = async (values) => {
     setIsLoading(true)

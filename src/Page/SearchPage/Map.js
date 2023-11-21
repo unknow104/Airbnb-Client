@@ -8,11 +8,11 @@ const containerStyle = {
 
 
 const position = {
-  lat:  11.9425783,
+  lat: 11.9425783,
   lng: 108.4343696
 };
 const center = {
-  lat:  11.9425783,
+  lat: 11.9425783,
   lng: 108.4343696
 };
 
@@ -42,7 +42,7 @@ const options = {
 const Map = ({ address }) => {
   return (
     <LoadScript
-      googleMapsApiKey="AIzaSyAuLeNevWVQJMYM7GBtmRa9yXNyP96Cnd8">
+      googleMapsApiKey="AIzaSyAQ4hwi9JTqJKOkuU7JdU0LxsqTYycrQnk">
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={{

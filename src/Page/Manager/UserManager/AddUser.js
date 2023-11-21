@@ -2,7 +2,7 @@ import { Button, Checkbox, DatePicker, Form, Input, Radio, Select } from "antd";
 import { useState } from "react";
 
 function AddUserManager() {
-  
+
   // const onChange: DatePickerProps["onChange"] = (date, dateString) => {
   //   console.log(date, dateString);
   // };

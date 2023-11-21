@@ -1,8 +1,9 @@
+// eslint-disable-next-line
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router-dom";
 import { roomService } from "../../../../services/RoomService";
-import { Form, Input, Button, Checkbox, Row, Col, Select } from "antd";
+import { Form, Input, Checkbox, Row, Col, Select } from "antd";
 
 const { Option } = Select;
 
@@ -49,25 +50,25 @@ export default function UpdateHouseManager() {
 
   const onFinish = (values) => {
     console.log(values);
-const formData = new FormData();
+    const formData = new FormData();
 
-formData.append('name', values.name);
-formData.append('description', values.description);
-formData.append('price', values.price);
-formData.append('codeLocation', values.codeLocation);
-formData.append('address', values.address);
-formData.append('washingMachine', values.washingMachine ? 'true' : 'false');
-formData.append('television', values.television ? 'true' : 'false');
-formData.append('airConditioner', values.airConditioner ? 'true' : 'false');
-formData.append('wifi', values.wifi ? 'true' : 'false');
-formData.append('kitchen', values.kitchen ? 'true' : 'false');
-formData.append('parking', values.parking ? 'true' : 'false');
-formData.append('pool', values.pool ? 'true' : 'false');
-formData.append('maxGuests', values.maxGuests);
-formData.append('numLivingRooms', values.numLivingRooms);
-formData.append('numBathrooms', values.numBathrooms);
-formData.append('numBedrooms', values.numBedrooms);
-formData.append('images', []);
+    formData.append('name', values.name);
+    formData.append('description', values.description);
+    formData.append('price', values.price);
+    formData.append('codeLocation', values.codeLocation);
+    formData.append('address', values.address);
+    formData.append('washingMachine', values.washingMachine ? 'true' : 'false');
+    formData.append('television', values.television ? 'true' : 'false');
+    formData.append('airConditioner', values.airConditioner ? 'true' : 'false');
+    formData.append('wifi', values.wifi ? 'true' : 'false');
+    formData.append('kitchen', values.kitchen ? 'true' : 'false');
+    formData.append('parking', values.parking ? 'true' : 'false');
+    formData.append('pool', values.pool ? 'true' : 'false');
+    formData.append('maxGuests', values.maxGuests);
+    formData.append('numLivingRooms', values.numLivingRooms);
+    formData.append('numBathrooms', values.numBathrooms);
+    formData.append('numBedrooms', values.numBedrooms);
+    formData.append('images', []);
 
 
     // Call the API to update the room

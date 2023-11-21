@@ -483,7 +483,7 @@ export default function AddHouseManager() {
               <Form.Item>
                 <button
                   className="px-3 py-2 rounded-lg bg-primary text-white font-medium hover:bg-[#068FFF] hover:text-white transition-all"
-                  type="submit"
+                  htmlType="submit"
                   disabled={isLoading}
                 >
                   {isLoading ? "Loading..." : "Thêm phòng"}

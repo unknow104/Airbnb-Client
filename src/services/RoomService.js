@@ -1,6 +1,5 @@
-import axios from "axios";
+
 import { https } from "./axiosClient";
-import { Content } from "antd/es/layout/layout";
 
 export let roomService = {
   getHouseList: () => {

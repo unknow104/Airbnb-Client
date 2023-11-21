@@ -229,15 +229,12 @@ export default function RegisterOwner() {
                   placeholder={t('Password')}
                 />
               </Form.Item>
-
-
               <Button
                 className="hover:blacks w-full rounded-[0.5rem] bg-primary btn-login text-white py-[6px] px-[12px]"
                 type="primary"
                 size="large"
-                htmltype="submit"
+                htmlType="submit"
                 disabled={isLoading}
-
               >
                 {isLoading ? t('Loading...') : t('Register')}
               </Button>

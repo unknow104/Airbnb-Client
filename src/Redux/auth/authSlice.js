@@ -36,19 +36,19 @@ export const logoutUser = createAsyncThunk('auth/logoutUser', async (user, thunk
   try {
     localStorageService.remove('USER')
     localStorageService.remove('accessToken')
-    openNotificationIcon('success', 'Success', 'Logout Success!');
+    openNotificationIcon('success', 'Thành công', 'Đăng xuất thành công!');
     return user;
   } catch (error) {
-    openNotificationIcon('erorr', 'Erorr', 'Logout Erorr!');
+    openNotificationIcon('erorr', 'Lỗi', 'Đăng xuất bị lỗi!');
   }
 });
 export const registerUser = createAsyncThunk('auth/registerUser', async (infor, thunkAPI) => {
   try {
     const res = await https.post('/api/v1/auth/register-customer', infor);
-    message.success('Register success');
+    message.success('Đăng kí thành công');
     return res.data;
   } catch (error) {
-    message.error('Login fail');
+    message.error('Đăng nhập thất bại');
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
@@ -126,6 +126,7 @@ const authSlice = createSlice({
       });
   },
 });
+// Action creators are generated for each case reducer function
 export const { reset } = authSlice.actions;
 
 export default authSlice.reducer;
