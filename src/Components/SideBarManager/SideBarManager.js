@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { localStorageService } from '../../services/localStorageService';
 import { RiAccountCircleFill, RiFeedbackFill } from 'react-icons/ri';
-import { CiLogout } from 'react-icons/ci';
-import { AiOutlineBarChart } from 'react-icons/ai';
-import { BsHouse, BsFillCartFill, BsFillHouseGearFill } from 'react-icons/bs';
+import { BsHouse, BsFillCartFill } from 'react-icons/bs';
+import { CiLogout } from 'react-icons/ci'; 
+import { AiOutlineBarChart } from 'react-icons/ai'; 
 import { MdLocationOn, MdCalendarToday } from 'react-icons/md'
 import { BsFillPencilFill } from 'react-icons/bs';
 import { logoutUser } from '../../Redux/auth/authSlice';
