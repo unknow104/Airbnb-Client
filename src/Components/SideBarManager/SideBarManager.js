@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { localStorageService } from '../../services/localStorageService';
 import { RiAccountCircleFill, RiFeedbackFill } from 'react-icons/ri';
-import { BsHouse, BsFillCartFill } from 'react-icons/bs';
+import { BsHouse, BsFillCartFill,BsFillHouseGearFill } from 'react-icons/bs';
 import { CiLogout } from 'react-icons/ci'; 
 import { AiOutlineBarChart } from 'react-icons/ai'; 
 import { MdLocationOn, MdCalendarToday } from 'react-icons/md'
@@ -55,6 +55,11 @@ export default function SideBarManager() {
       path: "/manager/statistical",
       Icon: AiOutlineBarChart,
     },
+    {
+      name: "Amenity",
+      path: "/manager/amenity",
+      Icon: BsFillHouseGearFill,
+    },
     // Add other Admin items here if needed
   ];
   
@@ -102,7 +107,7 @@ export default function SideBarManager() {
   const render = () => {
     const isAdmin = user?.role[0] === role.ADMIN;
     if (isAdmin) {
-      return adminData.map((item, i) => (
+      return adminData?.map((item, i) => (
         <li key={i}>
           <Link
             to={item.path}
@@ -150,7 +155,7 @@ export default function SideBarManager() {
                 <li onClick={handleLogout}>
                   <div
                     href=""
-                    className="flex  cursor-pointer flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="flex  cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <CiLogout className='text-[20px]' />
                     <span className=" ml-3 whitespace-nowrap">Logout</span>
