@@ -271,5 +271,8 @@
     "USER_ADDRESS": "Địa chỉ nhà:",
     "GENDER_MALE": "MALE",
     "GENDER_FEMALE": "FEMALE",
-    "profile": "Thông tin"
+    "profile": "Thông tin",
+    "room": "Phòng",
+    "start": "Ngày bắt đầu:",
+    "end": "Ngày kết thúc:"
 }
