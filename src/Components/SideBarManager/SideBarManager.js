@@ -23,13 +23,13 @@ export default function SideBarManager() {
   useEffect(() => {
     if (isLoggedIn === false) {
       navigate('/login')
-      openNotificationIcon("error", "Error" , "Please Login")
+      openNotificationIcon("error", "Error", "Please Login")
 
     } else if (user.role[0] === role.CUSTOMER) {
       navigate("/");
-      openNotificationIcon("error", "Error" , "Not Have Access")
+      openNotificationIcon("error", "Error", "Not Have Access")
     }
-  }, [isLoggedIn, navigate,user]);
+  }, [isLoggedIn, navigate, user]);
   const handleLogout = () => {
     setTimeout(() => {
       localStorageService.remove('USER');
@@ -62,15 +62,15 @@ export default function SideBarManager() {
     },
     // Add other Admin items here if needed
   ];
-  
+
   const ownerData = [
-   
+
     {
       name: "House",
       path: "/manager/house",
       Icon: BsHouse,
     },
-     {
+    {
       name: "Statistical",
       path: "/manager/statistical",
       Icon: AiOutlineBarChart,
@@ -101,7 +101,7 @@ export default function SideBarManager() {
       Icon: BsFillPencilFill,
     },
   ];
-  
+
 
 
   const render = () => {

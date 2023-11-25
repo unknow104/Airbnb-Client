@@ -54,7 +54,7 @@ const Map = ({ address }) => {
         {address?.map((addr, index) => (
           <Marker
             key={index}
-            // icon={icon}
+            icon={icon}
             position={{ lat: addr.address.lat, lng: addr.address.lng }}
           />
         ))}

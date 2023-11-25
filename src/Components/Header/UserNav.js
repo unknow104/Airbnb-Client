@@ -51,8 +51,8 @@ export default function UserNav({ bg }) {
           setOpen(false);
         }}
         className={`${open || openLanguage
-            ? 'animate__fadeIn animate__animated fixed top-0 left-0 w-screen h-screen bg-transparent'
-            : 'hidden'
+          ? 'animate__fadeIn animate__animated fixed top-0 left-0 w-screen h-screen bg-transparent'
+          : 'hidden'
           }`}
       ></div>
       <div className="text-[14px] relative flex items-center lg:flex  md:flex sm:flex  mb:hidden animate__animated animate__fadeInRight">
@@ -140,7 +140,7 @@ export default function UserNav({ bg }) {
                 </Link>
               )}
             </li>
-            {/* {user?.userDTO?.role[0] === 'CUSTOMER' && 
+            {user?.userDTO?.role[0] === 'CUSTOMER' &&
               <Link
                 onClick={() => {
                   closeDropDown();
@@ -153,7 +153,7 @@ export default function UserNav({ bg }) {
                   </p>
                 </li>
               </Link>
-            } */}
+            }
             {user?.userDTO?.role[0] === 'ADMIN' || user?.userDTO?.role[0] === 'OWNER' ? (
               <Link
                 onClick={() => {

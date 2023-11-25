@@ -232,9 +232,7 @@ export default function AddHouseManager() {
               >
                 <Input />
               </Form.Item>
-
               {/* Địa chỉ */}
-
               <Form.Item
                 label="Địa chỉ"
                 rules={[{ required: true }]}
@@ -442,7 +440,7 @@ export default function AddHouseManager() {
                       valuePropName="checked"
                       initialValue={false}
                     >
-                      <Checkbox>Máy nóng lạn</Checkbox>
+                      <Checkbox>Máy nóng lạnh</Checkbox>
                     </Form.Item>
                   </Col>
                 </Row>
