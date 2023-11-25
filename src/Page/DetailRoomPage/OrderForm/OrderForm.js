@@ -1,5 +1,5 @@
-import React, {  useState } from "react";
-import { DatePicker, message, Space,  } from "antd";
+import React, { useState } from "react";
+import { DatePicker, message, Space, } from "antd";
 import { InputNumber } from "antd";
 import { localStorageService } from "../../../services/localStorageService";
 
@@ -72,17 +72,17 @@ export default function OrderRoom(props) {
 
   return (
     <div
-  className="w-full  rounded-[15px]  mt-10 h-full ">
+      className="w-full  rounded-[15px]  mt-10 h-full ">
       <section style={{ backgroundImage: "url('https://img.freepik.com/free-psd/3d-mock-up-mid-autumn-festival-with-assortment-elements_23-2149659895.jpg?w=1380&t=st=1691314167~exp=1691314767~hmac=701e5d9b48967e2994554aa03eddc04970ee06adbd2baa18a80078687baf2336')" }} className="bg-cover sticky top-32 rounded-[15px] p-6">
         <div className="flex items-center justify-between">
-          <p className="font-bold"> 
+          <p className="font-bold">
             <span className="font-bold text-[22px]">{props.room?.price} $</span> / night
           </p>
           {/* <p>4.38 <span className="reviews">(4 reviews)</span></p> */}
         </div>
         <div className=" rounded-[15px] my-4 py-4">
           <div className="">
-          <div className=" py-3  transition duration-300 rounded-full h-full flex flex-wrap justify-center items-center">
+            <div className=" py-3  transition duration-300 rounded-full h-full flex flex-wrap justify-center items-center">
               <label
                 className={`text-black  text-sm font-bold  mr-3 lg:block md:block sm:hidden mb:hidden`}
               >
@@ -104,8 +104,6 @@ export default function OrderRoom(props) {
                 />
               </Space>
             </div>
-
-           
           </div>
         </div>
         <div className="my-5">

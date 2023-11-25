@@ -261,5 +261,15 @@
     "Help Center": "Trung tâm hỗ trợ",
     "Community": "Cộng đồng",
     "Hosting": "Tổ chức",
-    "Date":"Cách đây"
+    "Date": "Cách đây",
+    "USER_NAME": "Họ và tên:",
+    "USER_PHONE": "Số điện thoại:",
+    "USER_EMAIL": "Email:",
+    "USER_BIRTHDAY": "Ngày sinh:",
+    "USER_GENDER": "Giới tính:",
+    "USER_ACTIVE": "Kích hoạt:",
+    "USER_ADDRESS": "Địa chỉ nhà:",
+    "GENDER_MALE": "MALE",
+    "GENDER_FEMALE": "FEMALE",
+    "profile": "Thông tin"
 }
