@@ -25,6 +25,7 @@ import { localStorageService } from "../../../../services/localStorageService";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { openNotificationIcon } from "../../../../Components/NotificationIcon/NotificationIcon";
+import { amenityService } from "../../../../services/amenityService";
 
 const PROVINCES_API_URL = "https://provinces.open-api.vn/api";
 
@@ -50,6 +51,8 @@ export default function AddHouseManager() {
   const { register, handleSubmit } = useForm();
   const { Option } = Select;
   const navigate = useNavigate();
+  const [amenities, setAmenities] = useState([])
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
 
   const MINIMUM_IMAGES = 5;
 
@@ -72,6 +75,34 @@ export default function AddHouseManager() {
     setStreet(e.target.value);
 
   };
+
+  useEffect(() => {
+    const getAmenities = async () => {
+      try {
+        const items = await amenityService.getAmenityList();
+        setAmenities(items.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAmenities();
+  },[])
+
+  const handleCheckboxChange = (amenityId) => {
+    // Kiểm tra xem amenityId có trong selectedAmenities không
+    const isAmenitySelected = selectedAmenities.includes(amenityId);
+  
+    // Nếu amenityId đã được chọn, loại bỏ nó khỏi danh sách
+    // Nếu amenityId chưa được chọn, thêm nó vào danh sách
+    setSelectedAmenities((prevSelectedAmenities) => {
+      if (isAmenitySelected) {
+        return prevSelectedAmenities.filter((id) => id !== amenityId);
+      } else {
+        return [...prevSelectedAmenities, amenityId];
+      }
+    });
+  };
+
   useEffect(() => {
     setAddress(
       street + ", " + nameWard + ", " + nameDistrict + ", " + nameProvince
@@ -170,13 +201,7 @@ export default function AddHouseManager() {
     formData.append("price", values.price);
     formData.append("codeLocation", idLocation);
     formData.append("address", address);
-    formData.append("washingMachine", values.washingMachine);
-    formData.append("television", values.television);
-    formData.append("airConditioner", values.airConditioner);
-    formData.append("wifi", values.wifi);
-    formData.append("kitchen", values.kitchen);
-    formData.append("parking", values.parking);
-    formData.append("pool", values.pool);
+    formData.append("amenities", selectedAmenities);
     formData.append("maxGuests", values.maxGuests);
     formData.append("numLivingRooms", values.numLivingRooms);
     formData.append("numBathrooms", values.numBathrooms);
@@ -370,79 +395,22 @@ export default function AddHouseManager() {
             <div className="col-span-6">
               <Form.Item label="Tiện nghi" labelCol={labelCol}
                 wrapperCol={wrapperCol}>
-                <Row>
-                  <Col span={8}>
-                    <Form.Item
-                      name="washingMachine"
-                      valuePropName="checked"
-                      initialValue={false}
-                    >
-                      <Checkbox>Máy giặt</Checkbox>
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}>
-                    <Form.Item
-                      name="television"
-                      valuePropName="checked"
-                      initialValue={false}
-                    >
-                      <Checkbox>Tivi</Checkbox>
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}>
-                    <Form.Item
-                      name="airConditioner"
-                      valuePropName="checked"
-                      initialValue={false}
-                    >
-                      <Checkbox>Máy lạnh</Checkbox>
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}>
-                    <Form.Item
-                      name="wifi"
-                      valuePropName="checked"
-                      initialValue={false}
-                    >
-                      <Checkbox>Wifi</Checkbox>
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}>
-                    <Form.Item
-                      name="kitchen"
-                      valuePropName="checked"
-                      initialValue={false}
-                    >
-                      <Checkbox>Phòng bếp</Checkbox>
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}>
-                    <Form.Item
-                      name="parking"
-                      valuePropName="checked"
-                      initialValue={false}
-                    >
-                      <Checkbox>Chỗ đỗ xe</Checkbox>
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}>
-                    <Form.Item
-                      name="pool"
-                      valuePropName="checked"
-                      initialValue={false}
-                    >
-                      <Checkbox>Hồ bơi</Checkbox>
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}>
-                    <Form.Item
-                      name="hotAndColdMachine"
-                      valuePropName="checked"
-                      initialValue={false}
-                    >
-                      <Checkbox>Máy nóng lạnh</Checkbox>
-                    </Form.Item>
-                  </Col>
+                <Row>          
+                  {amenities.map((amenity) => (
+                      <Col span={8} key={amenity.id}>
+                        <Form.Item
+                          name={amenity.name}
+                          valuePropName="checked"
+                          initialValue={false}
+                        >
+                          <Checkbox
+                            value={amenity.id}
+                            checked={selectedAmenities.includes(amenity.id)}
+                            onChange={() => handleCheckboxChange(amenity.id)
+                          }>{amenity.name}</Checkbox>
+                        </Form.Item>
+                      </Col>
+                  ))}
                 </Row>
               </Form.Item>
               <Form.Item label="Location" labelCol={labelCol}

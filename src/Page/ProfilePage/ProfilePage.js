@@ -10,10 +10,14 @@ import { favoriteService } from '../../services/favoriteService';
 import { Link, useLocation } from 'react-router-dom';
 import { openNotificationIcon } from '../../Components/NotificationIcon/NotificationIcon';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function ProfilePage() {
   const [openLanguage, setOpenLanguage] = useState(false);
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
+
   const handleChangeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     setOpenLanguage(false);
@@ -135,42 +139,49 @@ export default function ProfilePage() {
                   <h2 className='ml-2'>{t('profile')}</h2>
                 </span></Link>
             } key="profile">
-              <div className="py-4 grid grid-cols-3 gap-4">
+              <div className=" py-4 grid grid-cols-3 gap-4">
                 <div className="col-span-1 bg-white shadow rounded p-4">
                   {/* Personal Information */}
                   <h3 className="text-xl font-bold mb-4">About</h3>
-                  <div className='space-y-4'>
-                    <div className='flex items-center'>
+                  <div className='w-9/12 mx-auto space-y-2'>
+                    <div className='flex items-center font-semibold text-base bg-slate-100 p-2'>
                       <p className='w-32'>{t('USER_NAME')}</p>
                       <span className='font-medium'>{infor?.name}</span>
                     </div>
-                    <div className='flex items-center'>
+                    <div className='flex items-center font-semibold text-base '>
                       <p className='w-32'>{t('USER_PHONE')}</p>
                       <span className='font-medium'>{infor?.phone}</span>
                     </div>
-                    <div className='flex items-center'>
+                    <div className='flex items-center font-semibold text-base bg-slate-100 p-2'>
                       <p className='w-32'>{t('USER_EMAIL')}</p>
                       <span className='font-medium'>{infor?.email}</span>
                     </div>
-                    <div className='flex items-center'>
+                    <div className='flex items-center font-semibold text-base '>
                       <p className='w-32'>{t('USER_BIRTHDAY')}</p>
                       <span className='font-medium'>{infor?.birthday}</span>
                     </div>
-                    <div className='flex items-center'>
+                    <div className='flex items-center font-semibold text-base bg-slate-100 p-2'>
                       <p className='w-32'>{t('USER_GENDER')}</p>
                       <span className='font-medium'>{infor?.gender ? "Male" : "Female"}</span>
                     </div>
-                    <div className='flex items-center'>
+                    <div className='flex items-center font-semibold text-base '>
                       <p className='w-32'>Is Confirmed: </p>
                       <span className='font-medium'>{infor?.isConfirmed === 1 ? "No" : "Yes"}</span>
                     </div>
-                    <div className='flex items-center'>
+                    <div className='flex items-center font-semibold text-base bg-slate-100 p-2'>
                       <p className='w-32'>{t('USER_ACTIVE')} </p>
                       <span className='font-medium'>{infor?.status}</span>
                     </div>
-                    <button>
+                    <div className='w-full flex justify-center'>
+                    <button 
+                      className='font-semibold text-white py-3 px-5 rounded bg-gradient-to-r from-pink-600 to-red-500 hover:border hover:border-3 hover:shadow'
+                      onClick={() => {
+                        navigate(`/profile/edit-user/${infor?.id}`)
+                      }}
+                    >
                       Cập nhập tài khoản
                     </button>
+                    </div>
                   </div>
 
                   {/* Add more personal information here */}

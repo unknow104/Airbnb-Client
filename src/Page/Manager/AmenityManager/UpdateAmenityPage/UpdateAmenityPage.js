@@ -61,7 +61,7 @@ export default function UpdateAmenityPage() {
 
   return (
     <div className='w-full'>
-      <h1 className='uppercase font-bold text-primary text-[20px] text-center my-5'>update blog</h1>
+      <h1 className='uppercase font-bold text-primary text-[20px] text-center my-5'>update Amenity</h1>
       <Form form={form} onFinish={onFinish}>
         <Form.Item
           label="Name"

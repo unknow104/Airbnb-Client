@@ -28,6 +28,7 @@ import UserManagemer from "../Page/Manager/UserManager/UserManager";
 import AmenityManger from "../Page/Manager/AmenityManager/AmenityManager";
 import AddAmenityPage from "../Page/Manager/AmenityManager/AddAmenityPage/AddAmenityPage";
 import UpdateAmenityPage from "../Page/Manager/AmenityManager/UpdateAmenityPage/UpdateAmenityPage";
+import EditUserPage from "../Page/ProfilePage/UpdateUserPage/EditUserPage";
 
 export default function Routers() {
   return (
@@ -45,6 +46,7 @@ export default function Routers() {
             <Route path="/confirmOrder/:id" element={<ConfirmOrderPage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/profile/edit-user/:id" element={<EditUserPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogDetailPage />} />
           </Route>
@@ -64,6 +66,7 @@ export default function Routers() {
             <Route path="/manager/statistical" element={<StatisticalManager />} />
             <Route path="/manager/amenity" element={<AmenityManger />} />
             <Route path="/manager/amenity-update/:id" element={<UpdateAmenityPage />} />
+
             <Route
               path="/manager/blog-update/:id"
               element={<UpdateBlogManagerPage />}
