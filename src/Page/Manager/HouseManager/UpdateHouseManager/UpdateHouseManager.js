@@ -76,7 +76,7 @@ export default function UpdateHouseManager() {
       .update(id, formData)
       .then((res) => {
         console.log("Room updated:", res);
-        navigate("/"); // Redirect to the home page after successful update
+        navigate("/manager/house"); // Redirect to the home page after successful update
       })
       .catch((err) => {
         console.log("Update failed:", err);

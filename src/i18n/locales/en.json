@@ -223,5 +223,14 @@
     "Age": "Age",
     "kilometers away": "kilometers away",
     "Manager": "Manager",
-    "Date": "Date"
+    "Date": "Date",
+    "USER_NAME": "Full name:",
+    "USER_PHONE": "Phone Number:",
+    "USER_EMAIL": "Email:",
+    "USER_BIRTHDAY": "Birthday:",
+    "USER_GENDER": "Gender:",
+    "USER_ACTIVE": "Active:",
+    "USER_ADDRESS": "Address:",
+    "profile": "Profile",
+    "night": "night"
 }

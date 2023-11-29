@@ -116,58 +116,37 @@ export default function OrderManager() {
         }
       })
       .catch((err) => {
-        openNotificationIcon("error", "Error", "Order cancelled error")
+        openNotificationIcon("error", "Lỗi", "Hủy phòng bị lỗi")
         console.log(err);
       });
   };
-
-  // const handleUpdateStatus = async () => {
-   
-  //       return await orderService.update(orderIdSelected, orderStatus)
-  //         .then((res) => {
-  //           openNotificationIcon("success", "Success", "Order cancelled successfully")
-  //           if (isDataLoaded) {
-  //             userService
-  //               .getOrder(idUser)
-  //               .then((res) => {
-  //                 setOrders(res.data);
-  //               })
-  //               .catch((err) => {
-  //                 console.log(err);
-  //               });
-  //           }
-  //         })
-  //         .catch((err) => {
-  //           openNotificationIcon("error", "Error", "Order cancelled error")
-  //           console.log(err);
-  //         });;
-      
-  //   }
-  // };
   return (
-    <div className="container mx-auto pb-5 mb:pt-[0px] sm:pt-[0px] md:pt-[6rem]">
-      <Table dataSource={orders} columns={columns} pagination={{
-        total: orders?.length,
-        pageSize: pageSize,
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
-      }} />
-      <Modal
-        title="Order Update Status"
-        centered
-        visible={isCancelModalVisible}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <div className='text-center flex-col flex space-y-3'>
-          {orderStatus === order.BOOKED &&
-            <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={()=>handleUpdateStatus(order.CONFIRM)}>CONFIRM</button>}
-          {orderStatus === order.CONFIRM &&
-            <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white'onClick={()=>handleUpdateStatus(order.CHECK_IN)}>CHECK IN</button>}
-          {orderStatus === order.CHECK_IN &&
-            <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white'onClick={()=>handleUpdateStatus(order.CHECK_OUT)}>CHECK OUT</button>}
-          <button className='px-4 py-2 bg-primary rounded-lg text-white' onClick={()=>handleUpdateStatus(order.CANCEL)}>CANCEL</button>
-        </div>
-      </Modal>
+    <div>
+      <h1 className='font-medium text-3xl mb-3'>Phòng đã đặt</h1>
+      <div className="container mx-auto">
+        <Table dataSource={orders} columns={columns} pagination={{
+          total: orders?.length,
+          pageSize: pageSize,
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+        }} />
+        <Modal
+          title="Order Update Status"
+          centered
+          visible={isCancelModalVisible}
+          onCancel={handleCancel}
+          footer={null}
+        >
+          <div className='text-center flex-col flex space-y-3'>
+            {orderStatus === order.BOOKED &&
+              <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={() => handleUpdateStatus(order.CONFIRM)}>CONFIRM</button>}
+            {orderStatus === order.CONFIRM &&
+              <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={() => handleUpdateStatus(order.CHECK_IN)}>CHECK IN</button>}
+            {orderStatus === order.CHECK_IN &&
+              <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={() => handleUpdateStatus(order.CHECK_OUT)}>CHECK OUT</button>}
+            <button className='px-4 py-2 bg-primary rounded-lg text-white' onClick={() => handleUpdateStatus(order.CANCEL)}>CANCEL</button>
+          </div>
+        </Modal>
+      </div>
     </div>
   );
 }
