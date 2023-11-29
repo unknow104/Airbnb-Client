@@ -188,7 +188,7 @@ export default function DetailRoomPage() {
                   />
                 </>
               ) : (
-                <p>No images available</p>
+                <></>
               )}
             </div>
           </div>
@@ -253,9 +253,9 @@ export default function DetailRoomPage() {
           </div>
         </>}
       <div className='container mx-auto pb-5 mb:pt-[0px] sm:pt-[0px] md:pt-[6rem]'>
-        {/* <Map address={address} /> */}
+        {/* <Map address={roomDetail?.address} /> */}
         <LoadScript
-          googleMapsApiKey="AIzaSyAuLeNevWVQJMYM7GBtmRa9yXNyP96Cnd8">
+          googleMapsApiKey="AIzaSyAQ4hwi9JTqJKOkuU7JdU0LxsqTYycrQnk">
           <GoogleMap
             mapContainerStyle={containerStyle}
             center={{

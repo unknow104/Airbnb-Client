@@ -69,16 +69,23 @@ export default function OrderRoom(props) {
     const totalPrice = props.room?.price * numNights;
     return totalPrice;
   };
-
+  const calculateTax = () => {
+    if (!startDay || !endDay) {
+      return 0;
+    }
+    const numNights = moment(endDay).diff(moment(startDay), 'days');
+    const tax = (props.room?.price * numNights) / 0.143;
+    return tax;
+  }
   return (
     <div
-      className="w-full  rounded-[15px]  mt-10 h-full ">
-      <section style={{ backgroundImage: "url('https://img.freepik.com/free-psd/3d-mock-up-mid-autumn-festival-with-assortment-elements_23-2149659895.jpg?w=1380&t=st=1691314167~exp=1691314767~hmac=701e5d9b48967e2994554aa03eddc04970ee06adbd2baa18a80078687baf2336')" }} className="bg-cover sticky top-32 rounded-[15px] p-6">
+      className="w-full rounded-[15px] mt-10 h-[500px] shadow-2xl">
+      <section className="bg-cover sticky top-32 rounded-[15px] p-6">
         <div className="flex items-center justify-between">
           <p className="font-bold">
             <span className="font-bold text-[22px]">{props.room?.price} $</span> / night
           </p>
-          {/* <p>4.38 <span className="reviews">(4 reviews)</span></p> */}
+          <p>4.38 <span className="reviews">(4 reviews)</span></p>
         </div>
         <div className=" rounded-[15px] my-4 py-4">
           <div className="">
@@ -96,7 +103,7 @@ export default function OrderRoom(props) {
                 onChange={onChangeInputNumber}
               />
             </div>
-            <div className="lg:block  md:hidden sm:hidden mb:hidden  py-3  transition duration-300 rounded-full h-full flex flex-wrap justify-center items-center">
+            <div className="lg:block  md:hidden sm:hidden mb:hidden py-3 transition duration-300 rounded-full h-full flex flex-wrap justify-center items-center">
               <Space direction="vertical" size={12}>
                 <DatePicker.RangePicker
                   disabledDate={(date) => isDisableDate(date, props?.date)}

@@ -39,19 +39,17 @@ export default function HouseManager() {
     try {
       const respone = await roomService.delete(selectedHouse);
       setReloadPage(!reloadPage)
-      openNotificationIcon("success", "Success", "Delete Room Success")
+      openNotificationIcon("success", "Thành công", "Xóa phòng thành công")
     } catch (error) {
-      openNotificationIcon("error", "Error", "Delete Room Error")
+      openNotificationIcon("error", "Lỗi", "Xóa phòng bị lỗi")
     }
     setModalVisible(false);
   };
 
   return (
     <div className="w-full">
-      <div className="headerManager font-roboto mb-5 flex justify-between">
-        <h1 className="font-bold text-[20px] uppercase ">
-          Rooms Management
-        </h1>
+      <div className="headerManager mb-5 flex justify-between">
+        <h1 className='font-medium text-3xl'>Phòng của bạn</h1>
         <button onClick={() => { navigate('/manager/house-add') }} className="text-white bg-primary font-medium rounded-lg text-sm px-4 py-2 flex items-center hover:scale-110 transition-all">Add <IoIosAddCircleOutline className='ml-2 text-[20px]' /> </button>
       </div>
       <Table
@@ -77,7 +75,7 @@ export default function HouseManager() {
           title="Price"
           dataIndex="price"
           key="price"
-          render={(price) => <Tag color="green">{price.toLocaleString()} $</Tag>}
+          render={(price) => <Tag color="green">{price.toLocaleString()} VNĐ</Tag>}
         />
 
         <Column
@@ -107,7 +105,7 @@ export default function HouseManager() {
       </Table>
 
       <Modal
-        title={`Xóa house ${selectedHouse?.name} ?`}
+        title={`Bạn có muốn xóa phòng này ?`}
         visible={modalVisible}
         onOk={handleDeleteHouse}
         onCancel={() => setModalVisible(false)}

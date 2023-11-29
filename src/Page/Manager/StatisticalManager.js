@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   AreaChart,
-  Line,
   CartesianGrid,
   XAxis,
   YAxis,
@@ -12,35 +11,31 @@ import {
 import { localStorageService } from "../../services/localStorageService";
 import { orderService } from "../../services/orderService";
 
-
 export default function StatisticalManager() {
+  const formatCurrency = (value) =>
+    new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(value);
+
   const [statiscal, setStatiscal] = useState([]);
   useEffect(() => {
     const id = localStorageService.get("USER").userDTO.id;
-    const getStatiscalByYear = async () => {
+    const getStatiscalByMonth = async () => {
       try {
-        const response = await orderService.getStatiscalByYear(id, 2023);
+        const response = await orderService.getStatiscalByMonth(id, 2023);
         console.log(response);
         setStatiscal(response.data);
       } catch (error) {
         console.log(error);
       }
     };
-    getStatiscalByYear();
+    getStatiscalByMonth();
   }, []);
+
   return (
     <div className="w-full h-full ">
-      <div className="headerManager font-roboto mb-5">
-        <h1 className="font-bold text-[20px] uppercase ">
-          Statistical Management
-        </h1>
+      <div className="mb-5">
+        <h1 className="font-medium text-3xl">Thống kê của bạn</h1>
       </div>
-      <AreaChart
-        width={900}
-        height={400}
-        data={statiscal}
-        margin={{ top: 10, right: 0, left: 10, bottom: 0 }}
-      >
+      <AreaChart width={1140} height={605} data={statiscal} className="mx-auto">
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
@@ -51,13 +46,20 @@ export default function StatisticalManager() {
             <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <XAxis dataKey="month" />
-        <YAxis />
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
+        <XAxis dataKey="year" /> {/* Assuming "day" is the property in your data for the day within the month */}
+        <YAxis
+          width={100}
+          tickFormatter={(value) => formatCurrency(value)}
+        />
+        <CartesianGrid strokeDasharray="4 4" />
+        <Tooltip
+          labelFormatter={(label) => `Ngày ${label}`}
+          formatter={(value) => formatCurrency(value)}
+        />
         <Area
           type="monotone"
           dataKey="reallyReceived"
+          name="Thống kê sau thuế"
           stroke="#8884d8"
           fillOpacity={1}
           fill="url(#colorUv)"
@@ -65,10 +67,12 @@ export default function StatisticalManager() {
         <Area
           type="monotone"
           dataKey="totalRevenue"
+          name="Thống kê trước thuế"
           stroke="#82ca9d"
           fillOpacity={1}
           fill="url(#colorPv)"
         />
+        <Legend />
       </AreaChart>
     </div>
   );

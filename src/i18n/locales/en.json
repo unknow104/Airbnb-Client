@@ -231,5 +231,6 @@
     "USER_GENDER": "Gender:",
     "USER_ACTIVE": "Active:",
     "USER_ADDRESS": "Address:",
-    "profile": "Profile"
+    "profile": "Profile",
+    "night": "night"
 }
