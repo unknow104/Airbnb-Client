@@ -23,7 +23,7 @@ function LoginPage() {
       if (role === "CUSTOMER") {
         navigate("/");
       } else {
-        navigate("/manager")
+        navigate("/")
       }
     }
   }, [isLoggedIn, navigate]);

@@ -36,7 +36,6 @@ export default function UserNav({ bg }) {
     navigate('/login')
   };
   const handleHost = () => {
-    dispatch(logoutUser())
     navigate('/register-owner')
   }
   const closeDropDown = () => {

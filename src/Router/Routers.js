@@ -25,6 +25,7 @@ import ConfirmOrderPage from "../Page/ConfirmOrderPage/ConfirmOrderPage";
 import RegisterOwner from "../Page/RegisterPage/RegisterOwner";
 import StatisticalManager from "../Page/Manager/StatisticalManager";
 import UserManagemer from "../Page/Manager/UserManager/UserManager";
+import { HostPage } from "../Page/HostPage/HostPage";
 
 export default function Routers() {
   return (
@@ -33,7 +34,7 @@ export default function Routers() {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/register-owner" element={<RegisterOwner />} />
+          <Route path="/register-owner" element={<HostPage />} />
           <Route path="/*" element={<NotFoundPage />} />
           <Route path="/" element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />

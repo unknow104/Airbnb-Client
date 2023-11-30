@@ -33,5 +33,8 @@ export let userService = {
   },
   unlock: (idUser) => {
     return https.put(`/api/v1/users/${idUser}/status/ACTIVE`)
+  },
+  setHost: (idUser) => {
+    return https.put(`/api/v1/users/host/${idUser}`)
   }
 };

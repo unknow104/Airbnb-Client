@@ -272,5 +272,8 @@
     "GENDER_MALE": "MALE",
     "GENDER_FEMALE": "FEMALE",
     "profile": "Thông tin",
-    "night": "đêm"
+    "night": "đêm",
+    "Quantity": "Số lượng",
+    "Host_label": "Đăng kí căn hộ đầu tiên",
+    "Host_setup": "Đăng ký cho thuê"
 }

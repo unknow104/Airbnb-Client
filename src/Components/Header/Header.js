@@ -36,10 +36,6 @@ export default function Header() {
       });
   }, []);
   const closeNav = () => {
-    // if (location.pathname === "/") {
-    // }
-    // window.scrollY === 0 ? setBg(true) : setBg(false);
-    // console.log(window.location.href);
     if (window.scrollY >= 100) {
       setOpen(false);
       setBg(false);
@@ -71,17 +67,17 @@ export default function Header() {
       guests: quantity, // Số lượng người
     };
     if (!startDay || !endDay || !idLocation) {
-      openNotificationIcon('error', 'Error', 'Please select enough information')
+      openNotificationIcon('error', 'Lỗi', 'Vui lòng điền đẩy đủ thông tin')
     } else {
       roomService.searchRoom(searchData)
         .then((res) => {
           setDataContext(res.data)
-          openNotificationIcon('success', 'Success', 'Search Success')
+          openNotificationIcon('success', 'Thành công', 'Tìm kiếm thành công')
 
           navigate('/search', { state: { dataContext: res.data } });
         })
         .catch((err) => {
-          openNotificationIcon('error', 'Error', 'Please Try Again')
+          openNotificationIcon('error', 'Lỗi', 'Vui lòng thử lại')
 
         });
     }
@@ -111,10 +107,10 @@ export default function Header() {
         <div className="flex items-center justify-center  h-full">
           <div className="flex items-center border-[1px] rounded-full">
             {/*  Location */}
-            <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-full flex flex-wrap justify-center items-center">
+            <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-[76px] flex flex-wrap justify-center items-center">
               <label
                 className={`${bg ? 'text-white' : 'text-black'
-                  } block text-sm font-medium  mr-3 lg:block md:block sm:hidden mb:hidden`}
+                  }text-sm font-medium  mr-3 lg:block md:block sm:hidden mb:hidden`}
               >
                 {t('Any Location')}
               </label>
@@ -122,8 +118,8 @@ export default function Header() {
                 style={{
                   width: 160,
                 }}
-                showSearch
-                placeholder={t('Location')}
+                allowClear
+                bordered={false}
                 optionFilterProp="children"
                 className="dropdow-header"
                 onChange={onChange}
@@ -137,31 +133,30 @@ export default function Header() {
             {/* End Location */}
 
             {/*  Date */}
-            <div className=" px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-full flex flex-wrap justify-center items-center">
+            <div className=" px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-[76px] flex flex-wrap justify-center items-center">
               <Space direction="vertical" size={12}>
-                <DatePicker.RangePicker onChange={onChangeRangePicker} />
+                <DatePicker.RangePicker onChange={onChangeRangePicker} bordered={false} />
               </Space>
             </div>
             {/* End Date */}
 
-
             {/* Quantity  */}
-            <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-full flex flex-wrap justify-center items-center">
+            <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-[76px]  flex flex-wrap justify-center items-center">
               <label
                 className={`${bg ? 'text-white' : 'text-black'
                   } block text-sm font-medium  mr-3 lg:block md:block sm:hidden mb:hidden`}
               >
                 {t('Quantity')}
               </label>
-              <InputNumber min={1} max={10} defaultValue={1} onChange={onChangeQuantity} />
+              <InputNumber min={1} max={10} defaultValue={1} onChange={onChangeQuantity} bordered={false} />
             </div>
             {/*End Quantity */}
 
             {/* Search Button */}
-            <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-full flex flex-wrap justify-center items-center">
+            <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-[76px] flex flex-wrap justify-center items-center">
               <button
                 onClick={searchBtn}
-                className="bg-[#FF385C] hover:bg-red-500 transition duration-300 px-5 py-2 rounded font-bold text-white"
+                className="bg-[#FF385C] hover:bg-red-500 transition duration-300 px-5 py-2 rounded-2xl font-bold text-white"
               >
                 {t('Search')}
               </button>
@@ -181,8 +176,8 @@ export default function Header() {
             <img
               className="w-[102px] h-[32px]"
               src={`${bg
-                  ? ' https://www.pngkey.com/png/full/60-606021_horizontal-white-transparent-for-web-airbnb-logo-white.png'
-                  : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/2560px-Airbnb_Logo_B%C3%A9lo.svg.png'
+                ? ' https://www.pngkey.com/png/full/60-606021_horizontal-white-transparent-for-web-airbnb-logo-white.png'
+                : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/2560px-Airbnb_Logo_B%C3%A9lo.svg.png'
                 }`}
               alt=""
             />
@@ -260,14 +255,13 @@ export default function Header() {
                   {`${quantity} ${t('Guest')}`}
                 </h1>
               </div>
-              <div className="p-2 bg-[#FF385C] rounded-3xl">
+              <div className="p-2 bg-[#FF385C] rounded-4xl h-[76px]">
                 <FaSearch className="text-white" />
               </div>
             </div>
           )}
         </>
         {/* END MIDDLE */}
-
 
         {/* RIGHT */}
         <UserNav bg={bg} />
