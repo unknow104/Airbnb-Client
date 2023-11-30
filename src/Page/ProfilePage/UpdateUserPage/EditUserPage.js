@@ -43,7 +43,7 @@ export default function EditUserPage() {
     formData.append('phone', values.phone);
     formData.append('email', values.email);
     formData.append('birthday', values.birthday);
-    // formData.append('gender', values.gender);
+    formData.append('gender', values.gender); 
     userService.update(id, formData)
       .then((res) => {
         form.resetFields();
@@ -100,7 +100,7 @@ export default function EditUserPage() {
           <Input />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           label="Birthday"
           name="birthday"
           rules={[
@@ -110,9 +110,9 @@ export default function EditUserPage() {
           wrapperCol={wrapperCol}
         >
           <DatePicker name='birthday' />
-        </Form.Item>
+        </Form.Item> */}
 
-        {/* <Form.Item
+        <Form.Item
           label="Gender"
           name="gender"
         
@@ -123,10 +123,10 @@ export default function EditUserPage() {
           wrapperCol={wrapperCol}
         >
           <Radio.Group defaultValue="gender">
-            <Radio value={1}>Nam</Radio>
-            <Radio value={0}>Nữ</Radio>
+            <Radio value={true}>Nam</Radio>
+            <Radio value={false}>Nữ</Radio>
           </Radio.Group>
-        </Form.Item> */}
+        </Form.Item>
 
         <Form.Item
           label="Status"
