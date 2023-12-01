@@ -1,10 +1,15 @@
 import React from 'react';
 import './BannerVideo.scss';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { openNotificationIcon } from '../NotificationIcon/NotificationIcon';
 
 function BannerVideo() {
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
+  const toHostPage = () => {
+    navigate('/register-owner');
+  }
   return (
     <>
       <div className="container flex mx-auto h-full mb:hidden sm:hidden lg:flex">
@@ -21,7 +26,7 @@ function BannerVideo() {
             <p className="text-center  my-[40px] text-[1rem] text-[#A1A1A1] font-[400]">
               {t('Join us! We’ll help you every')} <br /> {t('step of the way')}
             </p>
-            <button className="btn__try-hosting px-[26px] py-[14px] text-white text-[0.8rem] font-[500]">
+            <button onClick={toHostPage} className="btn__try-hosting px-[26px] py-[14px] text-white text-[0.8rem] font-[500]">
               {t('Try hosting')}
             </button>
           </div>

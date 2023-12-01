@@ -3,7 +3,7 @@ import './BlogList.scss';
 import { Link } from 'react-router-dom';
 import { Pagination } from 'antd';
 
-export default function BlogList({blog}) {
+export default function BlogList({ blog }) {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 3;
   const [displayedBlogs, setDisplayedBlogs] = useState([]);
@@ -13,7 +13,7 @@ export default function BlogList({blog}) {
     const endIdx = startIdx + pageSize;
     const paginatedBlogs = blog?.slice(startIdx, endIdx);
     setDisplayedBlogs(paginatedBlogs);
-  }, [currentPage,blog]);
+  }, [currentPage, blog]);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -32,7 +32,7 @@ export default function BlogList({blog}) {
           <div className='blogItem h-[150px] rounded-lg flex justify-between mb-5 p-5'>
             <div className='w-3/4'>
               <h1 className='font-bold font-sans text-[#292929] text-[16px]'>{item.title}</h1>
-              <p className='m-0'>{item.shortDescription}</p>
+              <p className='m-0'>{item.shortDescription} từ</p>
             </div>
             <img className='w-1/4 object-cover rounded-lg' src={item.image} alt='Blog thumbnail' />
           </div>

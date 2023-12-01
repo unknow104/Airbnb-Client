@@ -37,14 +37,7 @@ export default function UserNav({ bg }) {
     navigate('/login')
   };
   const handleHost = () => {
-    const storedUser = localStorage.getItem('USER');
-
-    if (!storedUser || !storedUser.userDTO || !storedUser.userDTO.userName) {
-      openNotificationIcon('error', 'Lỗi', 'Vui lòng đăng nhập');
-      navigate('/login');
-    } else {
-      navigate('/register-owner');
-    }
+    navigate('/register-owner');
   };
   const closeDropDown = () => {
     setOpen(false);

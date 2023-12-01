@@ -1,9 +1,15 @@
 import React from 'react';
+import { openNotificationIcon } from '../NotificationIcon/NotificationIcon';
 
 import './Banner.scss';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 function Banner() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const toHostPage = () => {
+    navigate('/register-owner');
+  }
   return (
     <div className="w-full relative lg:rounded-[1.2rem]  py-[8rem] flex items-center overflow-hidden">
       <img
@@ -19,7 +25,7 @@ function Banner() {
             {t('Earn extra income and unlock new')} <br />{' '}
             {t('opportunities by sharing your space')}.
           </p>
-          <button className="font-bold text-[0.8rem] rounded-[0.5rem] py-[0.8rem] px-[1.2rem] bg-white">
+          <button onClick={toHostPage} className="font-bold text-[0.8rem] rounded-[0.5rem] py-[0.8rem] px-[1.2rem] bg-white">
             {t('Learn more')}
           </button>
         </div>
