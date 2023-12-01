@@ -160,33 +160,33 @@ function RegisterPage() {
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <p className="">{t('Gender')}</p>
+                  <p className="">Giới tính</p>
                   <Form.Item
                     className="mb-4"
                     wrapperCol={{ sm: 24 }}
                     style={{ width: '100%', borderRadius: 'none', marginRight: 0 }}
                     name="gender"
                   >
-                    <Select className="w-full dropdowregister " placeholder={t('Gender')}>
-                      <Option value="true">{t('male')}</Option>
-                      <Option value="false">{t('female')}</Option>
+                    <Select className="w-full dropdowregister " placeholder={"Giới tính"}>
+                      <Option value="true">Nam</Option>
+                      <Option value="false">Nữ</Option>
                     </Select>
                   </Form.Item>
                 </Col>
               </Row>
-              <p className="">{t('Phone Number')}</p>
+              <p className="">Số điện thoại</p>
               <Form.Item
                 className="mb-4"
                 name="phone"
                 rules={[
-                  { max: 10, message: t('User phone must be maximum 9 characters.') },
+                  { max: 10, message: "Số điện thoại không được quá 10 số" },
                   {
                     required: true,
-                    message: t('Please input your phone number!'),
+                    message: "Vui lòng số điện thoại của bạn!",
                   },
                   {
                     pattern: /^(?:\d*)$/,
-                    message: t('Please input a valid phone number!'),
+                    message: "Vui lòng đúng định dạng!",
                   },
                 ]}
               >

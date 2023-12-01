@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { localStorageService } from '../../services/localStorageService';
-import { Button, Image, Table, Tabs, Upload } from 'antd';
+import { Button, Image, Table, Tabs, Upload, message } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
 import OrderPage from '../OrderPage/OrderPage';
 import { FaHeart } from 'react-icons/fa';
@@ -9,22 +9,12 @@ import { userService } from '../../services/userService';
 import { favoriteService } from '../../services/favoriteService';
 import { Link, useLocation } from 'react-router-dom';
 import { openNotificationIcon } from '../../Components/NotificationIcon/NotificationIcon';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
 
 
 export default function ProfilePage() {
-  const [openLanguage, setOpenLanguage] = useState(false);
-  const [selectedImages, setSelectedImages] = useState();
-
-  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-
-  const handleChangeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-    setOpenLanguage(false);
-  };
   const [user, setuser] = useState(localStorageService.get('USER'));
   const [infor, setinfor] = useState({});
   const [listFavorite, setListFavorite] = useState();
@@ -94,19 +84,33 @@ export default function ProfilePage() {
     try {
       const response = await favoriteService.remove(user?.userDTO?.id, idroom)
       setReloadPage(!reloadPage)
-      openNotificationIcon("success", "Success", "Remove Favority Success")
+      openNotificationIcon("success", "Thành công", "Bỏ yêu thích thành công")
     } catch (error) {
-      openNotificationIcon("error", "Error", "Remove Favority Error")
+      openNotificationIcon("error", "Lỗi", "Bỏ yêu thích lỗi")
       console.log(error);
     }
   };
 
-  const handleImagesChange = (info) => {
-    setSelectedImages(info);
-    console.log(info.originFileObj)
-  };
+  const [imageInfo, setImageInfo] = useState({
+    image: null,
+    name: '',
+  });
 
-  
+  const handleImagesChange = (info) => {
+    if (info.file.status === 'done') {
+      // Bạn có thể thực hiện các hành động sau khi tải ảnh lên thành công ở đây
+      console.log(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      console.log(`${info.file.name} file upload failed.`);
+    }
+    if (info.fileList.length > 0) {
+      const selectedImage = info.fileList[0];
+      setImageInfo({
+        image: selectedImage.thumbUrl, // hoặc selectedImage.url tùy thuộc vào dữ liệu trả về từ API
+        name: selectedImage.name || 'ABC', // hoặc lấy từ dữ liệu khác tùy thuộc vào API
+      });
+    }
+  };
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -118,42 +122,39 @@ export default function ProfilePage() {
           <div className="grid grid-cols-4 gap-6">
             <div className="col-span-1 flex justify-end">
               <label className="w-32 h-32 relative rounded-full overflow-hidden" htmlFor='images'>
-                {infor?.imageUrl ? "22" : (
+                {infor.image ? (
                   <>
-                      <img
-                      
-                        src="https://img.freepik.com/free-photo/vivid-blurred-colorful-wallpaper-background_58702-3798.jpg?w=900&t=st=1691678392~exp=1691678992~hmac=43eeaa7f69b2aebacc7d96446027ae499e180298cb30fd23b870dc5d6798b92d"
-                        alt="Profile"
-                        className="object-cover w-full h-full"
-                      />
-                      <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-                        <span className="text-white text-4xl">{infor?.name ? infor.name[0].toUpperCase() : 'ABC'}</span>
-                      </div>      
+                    <img
+                      src={infor.image}
+                      alt="Profile"
+                      className="object-cover w-full h-full"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                      <span className="text-white text-4xl">{infor.name[0].toUpperCase()}</span>
+                    </div>
                   </>
+                ) : (
+                  <div className='w-full h-full border-dashed border-2 border-gray-300 flex items-center justify-center'>
+                    <input
+                      type="file"
+                      id='images'
+                      className='hidden'
+                      onChange={(e) => handleImagesChange({ fileList: [{ thumbUrl: URL.createObjectURL(e.target.files[0]), name: e.target.files[0].name, status: 'done' }] })}
+                    />
+                    <label htmlFor='images' className='cursor-pointer'>
+                      <PlusOutlined className='text-4xl text-gray-500' />
+                    </label>
+                  </div>
                 )}
-                
-                <Upload
-                  name="images"
-                  id='images'
-                  listType="picture-card"
-                  beforeUpload={() => false} // Tắt tự động tải lên
-                  onChange={handleImagesChange}
-                >
-                  <PlusOutlined />
-                </Upload>
-                      </label> 
-
+              </label>
             </div>
-
             <div className="col-span-3 flex flex-col justify-center items-start">
               <h2 className="text-3xl font-bold">{infor?.name}</h2>
               <p className="text-gray-600">{infor?.email}</p>
             </div>
           </div>
         </div>
-
         <div className="container mx-auto mt-5">
-
           <Tabs defaultActiveKey={activeTab} className='mx-10'>
             <TabPane tab={
               <Link to="/profile?tab=profile">
@@ -162,54 +163,43 @@ export default function ProfilePage() {
                     <path fill="currentColor" d="M10 4h4c3.771 0 5.657 0 6.828 1.172C22 6.343 22 8.229 22 12c0 3.771 0 5.657-1.172 6.828C19.657 20 17.771 20 14 20h-4c-3.771 0-5.657 0-6.828-1.172C2 17.657 2 15.771 2 12c0-3.771 0-5.657 1.172-6.828C4.343 4 6.229 4 10 4Zm3.25 5a.75.75 0 0 1 .75-.75h5a.75.75 0 0 1 0 1.5h-5a.75.75 0 0 1-.75-.75Zm1 3a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75Zm1 3a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5h-3a.75.75 0 0 1-.75-.75ZM11 9a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm-2 8c4 0 4-.895 4-2s-1.79-2-4-2s-4 .895-4 2s0 2 4 2Z" >
                     </path>
                   </svg>
-                  <h2 className='ml-2'>{t('profile')}</h2>
+                  <h2 className='ml-2'>Hồ sơ</h2>
                 </span></Link>
             } key="profile">
               <div className=" py-4 grid grid-cols-3 gap-4">
                 <div className="col-span-1 bg-white shadow rounded p-4">
                   {/* Personal Information */}
-                  <h3 className="text-xl font-bold mb-4">About</h3>
-                  <div className='w-9/12 mx-auto space-y-2'>
-                    <div className='flex items-center font-semibold text-base bg-slate-100 p-2'>
-                      <p className='w-32'>{t('USER_NAME')}</p>
+                  <h3 className="text-xl font-bold mb-4">Thông tin cơ bản</h3>
+                  <div className='space-y-4'>
+                    <div className='flex items-center'>
+                      <p className='w-32'>Họ và tên</p>
                       <span className='font-medium'>{infor?.name}</span>
                     </div>
-                    <div className='flex items-center font-semibold text-base '>
-                      <p className='w-32'>{t('USER_PHONE')}</p>
+                    <div className='flex items-center'>
+                      <p className='w-32'>Số điện thoại</p>
                       <span className='font-medium'>{infor?.phone}</span>
                     </div>
-                    <div className='flex items-center font-semibold text-base bg-slate-100 p-2'>
-                      <p className='w-32'>{t('USER_EMAIL')}</p>
+                    <div className='flex items-center'>
+                      <p className='w-32'>Địa chỉ email</p>
                       <span className='font-medium'>{infor?.email}</span>
                     </div>
-                    <div className='flex items-center font-semibold text-base '>
-                      <p className='w-32'>{t('USER_BIRTHDAY')}</p>
+                    <div className='flex items-center'>
+                      <p className='w-32'>Ngày sinh</p>
                       <span className='font-medium'>{infor?.birthday}</span>
                     </div>
-                    <div className='flex items-center font-semibold text-base bg-slate-100 p-2'>
-                      <p className='w-32'>{t('USER_GENDER')}</p>
-                      <span className='font-medium'>{infor?.gender ? "Male" : "Female"}</span>
+                    <div className='flex items-center'>
+                      <p className='w-32'>Giới tính</p>
+                      <span className='font-medium'>{infor?.gender ? "Nam" : "Nữ"}</span>
                     </div>
-                    <div className='flex items-center font-semibold text-base '>
-                      <p className='w-32'>Is Confirmed: </p>
-                      <span className='font-medium'>{infor?.isConfirmed === 1 ? "No" : "Yes"}</span>
-                    </div>
-                    <div className='flex items-center font-semibold text-base bg-slate-100 p-2'>
-                      <p className='w-32'>{t('USER_ACTIVE')} </p>
-                      <span className='font-medium'>{infor?.status}</span>
-                    </div>
-                    <div className='w-full flex justify-center'>
-                    <button 
-                      className='font-semibold text-white py-3 px-5 rounded bg-gradient-to-r from-pink-600 to-red-500 hover:border hover:border-3 hover:shadow'
+                    <button
+                      className='underline font-semibold'
                       onClick={() => {
                         navigate(`/profile/edit-user/${infor?.id}`)
                       }}
                     >
                       Cập nhập tài khoản
                     </button>
-                    </div>
                   </div>
-
                   {/* Add more personal information here */}
                 </div>
                 <div className="col-span-2 bg-white shadow rounded p-4 h-[450px]">
@@ -218,18 +208,17 @@ export default function ProfilePage() {
                 </div>
               </div>
             </TabPane>
-
             <TabPane tab={
               <Link to="/profile?tab=liked">
                 <span className='flex items-center' >
                   <FaHeart className='w-[19px] h-[19px]' />
-                  <span className='ml-2'>Liked</span>
+                  <span className='ml-2'>Yêu thích</span>
                 </span> </Link>
             } key="liked">
               {/* Content for Posts tab */}
               <div className="p-4">
                 <div className="bg-white shadow rounded p-4">
-                  <p>Liked room here</p>
+                  <p>Phòng bạn đã yêu thích</p>
                   <Table
                     dataSource={listFavorite}
                     columns={columns}
@@ -247,22 +236,19 @@ export default function ProfilePage() {
               <Link to="/profile?tab=order">
                 <span className='flex items-center' >
                   <IoMdCart className='w-[22px] h-[22px]' />
-                  <span className='ml-2'>Order</span>
+                  <span className='ml-2'>Chuyến đi</span>
                 </span>
               </Link>
             } key="order">
               {/* Content for Photos tab */}
               <div className="p-4">
-                <h3 className="text-xl font-bold mb-[-4.5rem]">Your Booked</h3>
+                <h3 className="text-xl font-bold mb-[-4.5rem]">Phòng bạn đã đặt</h3>
                 <OrderPage />
               </div>
             </TabPane>
-
           </Tabs>
         </div>
       </div>
-
-
     </div>
   );
 
