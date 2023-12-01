@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { logoutUser } from '../../Redux/auth/authSlice';
+import { openNotificationIcon } from '../NotificationIcon/NotificationIcon';
 export default function UserNav({ bg }) {
   const [open, setOpen] = useState(false);
   const [openLanguage, setOpenLanguage] = useState(false);
@@ -36,8 +37,15 @@ export default function UserNav({ bg }) {
     navigate('/login')
   };
   const handleHost = () => {
-    navigate('/register-owner')
-  }
+    const storedUser = localStorage.getItem('USER');
+
+    if (!storedUser || !storedUser.userDTO || !storedUser.userDTO.userName) {
+      openNotificationIcon('error', 'Lỗi', 'Vui lòng đăng nhập');
+      navigate('/login');
+    } else {
+      navigate('/register-owner');
+    }
+  };
   const closeDropDown = () => {
     setOpen(false);
     setOpenLanguage(false);
