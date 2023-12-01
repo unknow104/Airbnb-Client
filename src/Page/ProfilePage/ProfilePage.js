@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { localStorageService } from '../../services/localStorageService';
-import { Button, Image, Table, Tabs } from 'antd';
+import { Button, Image, Table, Tabs, Upload } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
 import OrderPage from '../OrderPage/OrderPage';
 import { FaHeart } from 'react-icons/fa';
@@ -11,10 +11,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { openNotificationIcon } from '../../Components/NotificationIcon/NotificationIcon';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { PlusOutlined } from '@ant-design/icons';
 
 
 export default function ProfilePage() {
   const [openLanguage, setOpenLanguage] = useState(false);
+  const [selectedImages, setSelectedImages] = useState();
+
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
 
@@ -98,6 +101,13 @@ export default function ProfilePage() {
     }
   };
 
+  const handleImagesChange = (info) => {
+    setSelectedImages(info);
+    console.log(info.originFileObj)
+  };
+
+  
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const activeTab = searchParams.get('tab') || 'profile';
@@ -107,16 +117,32 @@ export default function ProfilePage() {
         <div className="container mx-auto py-10 rounded-lg bg-cover" style={{ backgroundImage: "url('https://img.freepik.com/free-photo/vivid-blurred-colorful-wallpaper-background_58702-3798.jpg?w=900&t=st=1691678392~exp=1691678992~hmac=43eeaa7f69b2aebacc7d96446027ae499e180298cb30fd23b870dc5d6798b92d')" }}>
           <div className="grid grid-cols-4 gap-6">
             <div className="col-span-1 flex justify-end">
-              <div className="w-32 h-32 relative rounded-full overflow-hidden">
-                <img
-                  src="https://img.freepik.com/free-photo/vivid-blurred-colorful-wallpaper-background_58702-3798.jpg?w=900&t=st=1691678392~exp=1691678992~hmac=43eeaa7f69b2aebacc7d96446027ae499e180298cb30fd23b870dc5d6798b92d"
-                  alt="Profile"
-                  className="object-cover w-full h-full"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-                  <span className="text-white text-4xl">{infor?.name ? infor.name[0].toUpperCase() : 'A'}</span>
-                </div>
-              </div>
+              <label className="w-32 h-32 relative rounded-full overflow-hidden" htmlFor='images'>
+                {infor?.imageUrl ? "22" : (
+                  <>
+                      <img
+                      
+                        src="https://img.freepik.com/free-photo/vivid-blurred-colorful-wallpaper-background_58702-3798.jpg?w=900&t=st=1691678392~exp=1691678992~hmac=43eeaa7f69b2aebacc7d96446027ae499e180298cb30fd23b870dc5d6798b92d"
+                        alt="Profile"
+                        className="object-cover w-full h-full"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                        <span className="text-white text-4xl">{infor?.name ? infor.name[0].toUpperCase() : 'ABC'}</span>
+                      </div>      
+                  </>
+                )}
+                
+                <Upload
+                  name="images"
+                  id='images'
+                  listType="picture-card"
+                  beforeUpload={() => false} // Tắt tự động tải lên
+                  onChange={handleImagesChange}
+                >
+                  <PlusOutlined />
+                </Upload>
+                      </label> 
+
             </div>
 
             <div className="col-span-3 flex flex-col justify-center items-start">

@@ -101,6 +101,8 @@ export default function AddHouseManager() {
         return [...prevSelectedAmenities, amenityId];
       }
     });
+
+    console.log(selectedAmenities);
   };
 
   useEffect(() => {
