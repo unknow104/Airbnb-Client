@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router-dom";
 import { roomService } from "../../../../services/RoomService";
 import { Form, Input, Checkbox, Row, Col, Select } from "antd";
+import { amenityService } from "../../../../services/amenityService";
 
 const { Option } = Select;
 
@@ -14,6 +15,13 @@ export default function UpdateHouseManager() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [amenities, setAmenities] = useState([])
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  
+
+
+
+
 
   useEffect(() => {
     roomService
@@ -28,13 +36,7 @@ export default function UpdateHouseManager() {
           price: res.data.price || 0,
           codeLocation: res.data.codeLocation || undefined,
           address: res.data.address.fullAddress || "",
-          washingMachine: res.data.washingMachine || false,
-          television: res.data.television || false,
-          airConditioner: res.data.airConditioner || false,
-          wifi: res.data.wifi || false,
-          kitchen: res.data.kitchen || false,
-          parking: res.data.parking || false,
-          pool: res.data.pool || false,
+          
           maxGuests: res.data.maxGuests || 1,
           numLivingRooms: res.data.numLivingRooms || 0,
           numBathrooms: res.data.numBathrooms || 0,
@@ -45,8 +47,43 @@ export default function UpdateHouseManager() {
         console.log(err);
       });
 
-    // Fetch the list of locations
+      if (roomDetail.amenities) {
+        setSelectedAmenities(roomDetail.amenities.map((amenity) => amenity.id));
+      }
+      
   }, [id, form]);
+
+  useEffect(() => {
+    const getAmenities = async () => {
+      try {
+        const items = await amenityService.getAmenityList();
+        setAmenities(items.data);
+      } catch (error) {
+        console.log(error);
+      }
+
+    };
+    getAmenities();
+  },[])
+
+  const handleCheckboxChange = (amenityId) => {
+    setRoomDetail((prevRoomData) => {
+      const isAmenitySelected = prevRoomData.amenities.includes(amenityId);
+
+      if (isAmenitySelected) {
+        return {
+          ...prevRoomData,
+          selectedAmenities: prevRoomData.amenities.filter((id) => id !== amenityId),
+        };
+      } else {
+        return {
+          ...prevRoomData,
+          selectedAmenities: [...prevRoomData.amenities, amenityId],
+        };
+      }
+    });
+  };
+
 
   const onFinish = (values) => {
     console.log(values);
@@ -199,95 +236,25 @@ export default function UpdateHouseManager() {
 
         <Form.Item label={t("Amenities")} wrapperCol={{ span: 16 }}>
           <Row>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("washingMachine")}
-                onChange={(e) => {
-                  console.log(e.target.checked);
-                  form.setFieldsValue({ washingMachine: e.target.checked });
-                }}
-                name="washingMachine"
-              >
-                {t("Washing Machine")}
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("television")}
-                onChange={(e) =>
-                  form.setFieldsValue({ television: e.target.checked })
-                }
-                name="television"
-              >
-                {t("Television")}
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("airConditioner")}
-                onChange={(e) =>
-                  form.setFieldsValue({ airConditioner: e.target.checked })
-                }
-                name="airConditioner"
-              >
-                {t("Air Conditioner")}
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("wifi")}
-                onChange={(e) =>
-                  form.setFieldsValue({ wifi: e.target.checked })
-                }
-                name="wifi"
-              >
-                {t("Wifi")}
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("kitchen")}
-                onChange={(e) =>
-                  form.setFieldsValue({ kitchen: e.target.checked })
-                }
-                name="kitchen"
-              >
-                {t("Kitchen")}
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("parking")}
-                onChange={(e) =>
-                  form.setFieldsValue({ parking: e.target.checked })
-                }
-                name="parking"
-              >
-                {t("Parking")}
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("pool")}
-                onChange={(e) =>
-                  form.setFieldsValue({ pool: e.target.checked })
-                }
-                name="pool"
-              >
-                {t("Pool")}
-              </Checkbox>
-            </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("hotAndColdMachine")}
-                onChange={(e) =>
-                  form.setFieldsValue({ hotAndColdMachine: e.target.checked })
-                }
-                name="hotAndColdMachine"
-              >
-                {t("Hot and Cold Machine")}
-              </Checkbox>
-            </Col>
+            {amenities && amenities?.map((amenity) => (
+              <Col span={8} key={amenity.id}>
+                <Form.Item
+                  name={amenity.name}
+                  valuePropName="checked"
+
+                  // initialValue={false}
+                >
+                  <Checkbox
+                    value={amenity.id}
+                    checked={selectedAmenities.includes(amenity.id)}
+                    onChange={() => handleCheckboxChange(amenity.id)}
+                    defaultChecked={selectedAmenities.includes(amenity.id)}
+                    
+                  >{amenity.name}
+                  </Checkbox>
+                </Form.Item>
+              </Col>
+            ))}
           </Row>
         </Form.Item>
 
