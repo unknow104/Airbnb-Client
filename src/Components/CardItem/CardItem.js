@@ -29,7 +29,6 @@ function CardItem({ roomInfor }) {
     try {
       const response = await favoriteService.get(user.id);
       const wishlistItems = response.data;
-
       // Kiểm tra xem roomId có trong danh sách mong muốn không
       const isLiked = wishlistItems.some(item => item.roomDTO.id === roomId);
 
@@ -135,18 +134,8 @@ function CardItem({ roomInfor }) {
           <div className="w-full flex justify-between">
             <h1 className="text-[1rem] font-[500]">{roomInfor.name.length > 20 ? roomInfor.name.slice(0, 20) + "..." : roomInfor.name}</h1>
             <div className="flex justify-center items-center">
-              {isNewRoom && roomInfor.created_at ? (
-                <>
-                  <span className="text-[0.8rem] font-[500] rounded bg-yellow-500 text-white px-1">{t('New Room')}</span>
-                  <FaStar size="0.8rem" className="mr-2" />
-                  <span className="text-[1rem] font-[300]">{roomInfor?.totalStar && roomInfor.totalStar.toFixed(1)}</span>
-                </>
-              ) : (
-                <>
-                  <FaStar size="0.8rem" className="mr-2" />
-                  <span className="text-[1rem] font-[300]">{roomInfor?.totalStar && roomInfor.totalStar.toFixed(1)}</span>
-                </>
-              )}
+              <FaStar size="0.8rem" className="mr-2 text-yellow-500" />
+              <span className="text-[1rem] font-[300]">{roomInfor?.totalStar && roomInfor.totalStar.toFixed(1)}</span>
             </div>
           </div>
           <p className="text-[0.8rem] text-left font-[400] text-[black] opacity-60">
@@ -156,8 +145,16 @@ function CardItem({ roomInfor }) {
             {moment(roomInfor.created_at).format('Do-MMMM-YYYY')}
           </p>
           <p className="text-[0.8rem] text-left text-[black] opacity-60">{roomInfor.codeLocation}</p>
-          <div className="flex items-center">
-            <p className="text-[0.9rem] mr-2 font-[500] text-[black]">{formattedPrice}/<span className="text-[0.8rem] font-[400] text-[black]">{t('đêm')}</span></p>
+          <div className="flex justify-between">
+            <p className="text-[0.9rem] mr-2 font-[500] text-[black]">{formattedPrice}/<span className="text-[0.8rem] font-[400] text-[black]">{t('night')}</span></p>
+            {isNewRoom && roomInfor.created_at ? (
+              <>
+                <span className="text-[0.8rem] font-[500] rounded bg-yellow-500 text-white px-1">{t('New Room')}</span>
+              </>
+            ) : (
+              <>
+              </>
+            )}
           </div>
         </div>
       </Link>

@@ -94,7 +94,7 @@ export default function RegisterOwner() {
       if (role === "CUSTOMER") {
         navigate("/");
       } else {
-        navigate("/manager")
+        navigate("/")
       }
     }
   }, [isLoggedIn, navigate]);

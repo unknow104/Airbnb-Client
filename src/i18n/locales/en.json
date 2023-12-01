@@ -231,5 +231,8 @@
     "USER_GENDER": "Gender:",
     "USER_ACTIVE": "Active:",
     "USER_ADDRESS": "Address:",
-    "profile": "Profile"
+    "profile": "Profile",
+    "night": "night",
+    "Host_label": "Ready to Airbnb it?",
+    "Host_setup": "Become an host"
 }

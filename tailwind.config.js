@@ -6,17 +6,17 @@ module.exports = {
   theme: {
 
     extend: {
-      fontFamily:{
+      fontFamily: {
         roboto: ['"Roboto Slab"'],
         popping: ['"Poppins"'],
-        playfair : ['"Playfair Display'],
+        playfair: ['"Playfair Display'],
         montserrat: ['Montserrat'],
       },
       colors: {
         primary: '#FF5A5F',
       }
     },
-    
+
     screens: {
       mb: { max: '640px' },
       sm: '640px',

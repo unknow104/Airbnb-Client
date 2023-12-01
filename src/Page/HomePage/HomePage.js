@@ -32,7 +32,7 @@ function HomePage() {
   const [queyFilter, setQueyFilter] = useState({});
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 24;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -115,7 +115,7 @@ function HomePage() {
       <div className="container  m-auto  grid mb:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 gap-6 ">
         {isfetching ? <SkeletonItem /> : renderRoomItem()}
       </div>
-      <div className="flex justify-center mb-10 mt-2 space-x-3">
+      <div className="flex justify-center my-10 space-x-3">
         {Array.from({ length: totalPages }).map((_, index) => (
           <Button key={index} onClick={() => paginate(index + 1)}>
             {index + 1}
@@ -124,9 +124,6 @@ function HomePage() {
       </div>
       <div className="mb:w-full sm:w-full lg:container mx-auto">
         <Banner />
-      </div>
-      <div className="container mx-auto my-10">
-        <Collection />
       </div>
       <div className="container mx-auto my-10">
         <BlogBanner />

@@ -36,5 +36,7 @@ export let userService = {
   },
   update: (idUser, data) => {
     return https.put(`/api/v1/users/profile/${idUser}`,data)
+  setHost: (idUser) => {
+    return https.put(`/api/v1/users/host/${idUser}`)
   }
 };
