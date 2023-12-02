@@ -29,7 +29,7 @@ import AmenityManger from "../Page/Manager/AmenityManager/AmenityManager";
 import AddAmenityPage from "../Page/Manager/AmenityManager/AddAmenityPage/AddAmenityPage";
 import UpdateAmenityPage from "../Page/Manager/AmenityManager/UpdateAmenityPage/UpdateAmenityPage";
 import EditUserPage from "../Page/ProfilePage/UpdateUserPage/EditUserPage";
-import { HostPage} from "../Page/HostPage/HostPage";
+import { HostPage } from "../Page/HostPage/HostPage";
 
 
 export default function Routers() {

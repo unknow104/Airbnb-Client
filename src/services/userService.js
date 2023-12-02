@@ -39,5 +39,8 @@ export let userService = {
   },
   setHost: (idUser) => {
     return https.put(`/api/v1/users/host/${idUser}`)
+  },
+  setImage: (idUser, data) => {
+    return https.put(`/api/v1/users/imageChange/${idUser}`, data)
   }
 };

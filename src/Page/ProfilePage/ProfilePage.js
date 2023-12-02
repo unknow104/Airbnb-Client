@@ -18,7 +18,9 @@ export default function ProfilePage() {
   const [user, setuser] = useState(localStorageService.get('USER'));
   const [infor, setinfor] = useState({});
   const [listFavorite, setListFavorite] = useState();
-  const [reloadPage, setReloadPage] = useState(false)
+  const [reloadPage, setReloadPage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   useEffect(() => {
     getUser();
     getFavorite();
@@ -97,20 +99,48 @@ export default function ProfilePage() {
   });
 
   const handleImagesChange = (info) => {
-    if (info.file.status === 'done') {
-      // Bạn có thể thực hiện các hành động sau khi tải ảnh lên thành công ở đây
-      console.log(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      console.log(`${info.file.name} file upload failed.`);
+    setSelectedFile(info.target.files[0])
+
+
+    // const selectedImage = info;
+    // setImageInfo({
+    //   image: selectedFile.thumbUrl, // hoặc selectedImage.url tùy thuộc vào dữ liệu trả về từ API
+    //   name: selectedFile.name || 'ABC', // hoặc lấy từ dữ liệu khác tùy thuộc vào API
+    // });
+
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("imageUrl", selectedFile);
+
+      userService
+        .setImage(user.userDTO.id, formData)
+        .then((res) => {
+          console.log(res);
+          setIsLoading(false);
+          navigate("/profile")
+          openNotificationIcon("success", "Thành công", "Đã thay đổi ảnh đại diện của bạn!")
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          openNotificationIcon("error", "Lỗi", "Có lỗi thay đổi ảnh đại diện của bạn!")
+          console.log("error", err.response.data.message);
+        });
     }
-    if (info.fileList.length > 0) {
-      const selectedImage = info.fileList[0];
-      setImageInfo({
-        image: selectedImage.thumbUrl, // hoặc selectedImage.url tùy thuộc vào dữ liệu trả về từ API
-        name: selectedImage.name || 'ABC', // hoặc lấy từ dữ liệu khác tùy thuộc vào API
-      });
-    }
+
+    // if (info.status === 'done') {
+    //   // Bạn có thể thực hiện các hành động sau khi tải ảnh lên thành công ở đây
+    //   console.log(`${info.name} file uploaded successfully`);
+
+
+
+    // }
+    // if (info.status === 'error') {
+    //   console.log(`${info.name} file upload failed.`);
+    // }
+
   };
+
+
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -139,7 +169,7 @@ export default function ProfilePage() {
                       type="file"
                       id='images'
                       className='hidden'
-                      onChange={(e) => handleImagesChange({ fileList: [{ thumbUrl: URL.createObjectURL(e.target.files[0]), name: e.target.files[0].name, status: 'done' }] })}
+                      onChange={handleImagesChange}
                     />
                     <label htmlFor='images' className='cursor-pointer'>
                       <PlusOutlined className='text-4xl text-gray-500' />
