@@ -86,71 +86,70 @@ export default function DetailRoomPage() {
       console.log(error);
     }
   };
-  const renderItemUtilities = () => {
-    const roomDetails = [
-      {
-        key: "wifi",
-        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892877/airBnB/icon%20offer%20detailpage/icon_ss0rmh.png",
-        label: "Wifi",
-      },
-      {
-        key: "pool",
-        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892879/airBnB/icon%20offer%20detailpage/Frame-3_zslq3h.png",
-        label: t('Pool'),
-      },
-      {
-        key: "television",
-        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892879/airBnB/icon%20offer%20detailpage/Frame_nsy3uv.png",
-        label: "TV",
-      },
-      {
-        key: "airConditioning",
-        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892878/airBnB/icon%20offer%20detailpage/Frame-4_ropqpj.png",
-        label: t('Air Conditioning'),
-      },
-      {
-        key: "hotAndColdMachine",
-        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892877/airBnB/icon%20offer%20detailpage/Frame-1_e5n14s.png",
-        label: t('Hair Dryer'),
-      },
-      {
-        key: "kitchen",
-        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892878/airBnB/icon%20offer%20detailpage/Frame-5_vobdtz.png",
-        label: t('Kitchen'),
-      },
-      {
-        key: "parking",
-        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892879/airBnB/icon%20offer%20detailpage/Frame_nsy3uv.png",
-        label: t('Parking'),
-      },
-    ];
+  // const renderItemUtilities = () => {
+  //   const roomDetails = [
+  //     {
+  //       key: "wifi",
+  //       icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892877/airBnB/icon%20offer%20detailpage/icon_ss0rmh.png",
+  //       label: "Wifi",
+  //     },
+  //     {
+  //       key: "pool",
+  //       icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892879/airBnB/icon%20offer%20detailpage/Frame-3_zslq3h.png",
+  //       label: t('Pool'),
+  //     },
+  //     {
+  //       key: "television",
+  //       icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892879/airBnB/icon%20offer%20detailpage/Frame_nsy3uv.png",
+  //       label: "TV",
+  //     },
+  //     {
+  //       key: "airConditioning",
+  //       icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892878/airBnB/icon%20offer%20detailpage/Frame-4_ropqpj.png",
+  //       label: t('Air Conditioning'),
+  //     },
+  //     {
+  //       key: "hotAndColdMachine",
+  //       icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892877/airBnB/icon%20offer%20detailpage/Frame-1_e5n14s.png",
+  //       label: t('Hair Dryer'),
+  //     },
+  //     {
+  //       key: "kitchen",
+  //       icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892878/airBnB/icon%20offer%20detailpage/Frame-5_vobdtz.png",
+  //       label: t('Kitchen'),
+  //     },
+  //     {
+  //       key: "parking",
+  //       icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892879/airBnB/icon%20offer%20detailpage/Frame_nsy3uv.png",
+  //       label: t('Parking'),
+  //     },
+  //   ];
 
-    return (
-      <>
-        <div className="w-full py-[2.2rem] border-b-[1px] border-[#dadada]">
-          <h1 className="text-[1.625rem] font-[600]">{t('what this place offers')}</h1>
-          <div className="grid grid-cols-2 w-3/4 gap-y-2 my-5 gap-x-16">
-            {renderUtilities(roomDetails)}
-          </div>
-        </div>
-      </>
-    );
-  };
-  const renderUtilities = (details) => {
-    return details.map((detail) => {
-      if (roomDetail[detail.key]) {
-        return (
-          <p className="flex items-center font-[300] text-[1rem]" key={detail.key}>
-            <img
+  //   return (
+  //     <>
+  //       <div className="w-full py-[2.2rem] border-b-[1px] border-[#dadada]">
+  //         <h1 className="text-[1.625rem] font-[600]">{t('what this place offers')}</h1>
+  //         <div className="grid grid-cols-2 w-3/4 gap-y-2 my-5 gap-x-16">
+  //           {renderUtilities(roomDetails)}
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
+  // };
+  const renderAmenities = (details) => {
+    return details?.map((detail) => {
+      {
+        (
+          <p className="flex items-center font-[300] text-[1rem]" key={detail.id}>
+            {/* <img
               src={detail.icon}
               className="w-[1.1rem] h-[1.1rem] mr-[1rem]"
               alt=""
-            />
-            {detail.label}
+            /> */}
+            {detail.name}
           </p>
         );
       }
-      return null;
     });
   };
   return (
@@ -243,7 +242,12 @@ export default function DetailRoomPage() {
                 </div>
               </div>
               {/* ================= what this place offers ==================== */}
-              {renderItemUtilities()}
+              <div className="w-full py-[2.2rem] border-b-[1px] border-[#dadada]">
+                <h1 className="text-[1.625rem] font-[600]">{t('what this place offers')}</h1>
+                <div className="grid grid-cols-2 w-3/4 gap-y-2 my-5 gap-x-16">
+                  {renderAmenities(roomDetail.amenities)}
+                </div>
+              </div>
               {/* ================= FeedBack ============= */}
               <Feedback room={roomDetail} />
             </div>
@@ -271,6 +275,7 @@ export default function DetailRoomPage() {
           </GoogleMap>
         </LoadScript>
       </div>
+
     </div>
 
   )
