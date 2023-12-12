@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { locationService } from '../../services/locationService';
 import { roomService } from '../../services/RoomService';
 import { openNotificationIcon } from '../NotificationIcon/NotificationIcon';
+import viVN from 'antd/lib/locale/vi_VN';
+
 export default function Header() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -110,59 +112,54 @@ export default function Header() {
             <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-[76px] flex flex-wrap justify-center items-center">
               <label
                 className={`${bg ? 'text-white' : 'text-black'
-                  }text-sm font-medium  mr-3 lg:block md:block sm:hidden mb:hidden`}
+                  }text-sm font-medium mr-3 lg:block md:block sm:hidden mb:hidden`}
               >
-                {t('Any Location')}
+                Địa điểm bất kỳ
               </label>
-              <Select
-                style={{
-                  width: 160,
-                }}
-                allowClear
-                bordered={false}
-                optionFilterProp="children"
-                className="dropdow-header"
-                onChange={onChange}
-                filterOption={(input, option) =>
-                  option.children.toLowerCase().includes(input.toLowerCase())
-                }
-              >
-                {renderOption()}
-              </Select>
+              <div className='pb-4'>
+                <Select
+                  allowClear
+                  bordered={false}
+                  optionFilterProp="children"
+                  className="dropdow-header w-[160px]"
+                  onChange={onChange}
+                  filterOption={(input, option) =>
+                    option.children.toLowerCase().includes(input.toLowerCase())
+                  }
+                >
+                  {renderOption()}
+                </Select>
+              </div>
             </div>
             {/* End Location */}
-
             {/*  Date */}
             <div className=" px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-[76px] flex flex-wrap justify-center items-center">
               <Space direction="vertical" size={12}>
-                <DatePicker.RangePicker onChange={onChangeRangePicker} bordered={false} />
+                <DatePicker.RangePicker onChange={onChangeRangePicker} bordered={false} locale={viVN} />
               </Space>
             </div>
             {/* End Date */}
-
             {/* Quantity  */}
             <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-[76px]  flex flex-wrap justify-center items-center">
               <label
                 className={`${bg ? 'text-white' : 'text-black'
                   } block text-sm font-medium  mr-3 lg:block md:block sm:hidden mb:hidden`}
               >
-                {t('Quantity')}
+                thêm khách
               </label>
               <InputNumber min={1} max={10} defaultValue={1} onChange={onChangeQuantity} bordered={false} />
             </div>
             {/*End Quantity */}
-
             {/* Search Button */}
             <div className="px-5 py-3 hover:bg-gray-200 transition duration-300 rounded-full h-[76px] flex flex-wrap justify-center items-center">
               <button
                 onClick={searchBtn}
                 className="bg-[#FF385C] hover:bg-red-500 transition duration-300 px-5 py-2 rounded-2xl font-bold text-white"
               >
-                {t('Search')}
+                Tìm kiếm
               </button>
             </div>
             {/* End Search Button */}
-
           </div>
         </div>
       </div>
@@ -196,26 +193,26 @@ export default function Header() {
               className="flex z-20 items-center px-3 py-2 rounded-3xl border border-gray-300 "
             >
               <div
-                className={`font-medium cursor-pointer px-2 lg:border-r-2 md:border-r-2 lg:w-[130px] md:w[130px] sm:w-[280px] mb:w-[280px]`}
+                className={`font-medium cursor-pointer px-2 lg:border-r-2 md:border-r-2 lg:w-[150px] md:w[150px] sm:w-[270px] mb:w-[270px]`}
               >
                 <h1
                   className={`${bg ? 'md:text-black sm:text-black lg:text-white' : 'lg:text-black'}`}
                 >
-                  {t('Any Location')}
+                  Địa điểm bất kỳ
                 </h1>
               </div>
               <div className="font-medium  cursor-pointer  px-2 lg:block md:hidden sm:hidden mb:hidden border-r-2">
                 <h1
                   className={`${bg ? 'md:text-black sm:text-black lg:text-white' : 'lg:text-black'}`}
                 >
-                  {t('Any Week')}
+                  tuần bất kỳ
                 </h1>
               </div>
               <div className="font-medium  cursor-pointer  px-2 lg:block md:hidden sm:hidden mb:hidden ">
                 <h1
-                  className={`${bg ? 'md:text-black sm:text-black lg:text-white' : 'lg:text-black'}`}
+                  className={`${bg ? 'md:text-gray-300 sm:text-gray-300 lg:text-white' : 'lg:text-gray-300'}`}
                 >
-                  {t('Add Guest')}
+                  thêm khách
                 </h1>
               </div>
               <div className="p-2 bg-[#FF385C] rounded-3xl">

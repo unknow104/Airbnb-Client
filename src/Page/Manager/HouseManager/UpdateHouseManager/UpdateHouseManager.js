@@ -119,7 +119,6 @@ export default function UpdateHouseManager() {
         console.log("Update failed:", err);
       });
   };
-
   const handleStreetChange = (e) => {
     form.setFieldsValue({
       address:
@@ -146,7 +145,6 @@ export default function UpdateHouseManager() {
         >
           <Input />
         </Form.Item>
-
         <Form.Item
           label={t("Description")}
           name="description"
@@ -156,8 +154,6 @@ export default function UpdateHouseManager() {
         >
           <Input.TextArea />
         </Form.Item>
-
-
         <Form.Item
           label={t("Address")}
           name="address"
@@ -165,7 +161,6 @@ export default function UpdateHouseManager() {
         >
           <Input.TextArea />
         </Form.Item>
-
         <Row gutter={16}>
           <Col span={8}>
             <Form.Item
@@ -241,7 +236,6 @@ export default function UpdateHouseManager() {
                 <Form.Item
                   name={amenity.name}
                   valuePropName="checked"
-
                   // initialValue={false}
                 >
                   <Checkbox
@@ -249,7 +243,6 @@ export default function UpdateHouseManager() {
                     checked={selectedAmenities.includes(amenity.id)}
                     onChange={() => handleCheckboxChange(amenity.id)}
                     defaultChecked={selectedAmenities.includes(amenity.id)}
-                    
                   >{amenity.name}
                   </Checkbox>
                 </Form.Item>
@@ -263,7 +256,7 @@ export default function UpdateHouseManager() {
             className="px-3 py-2 rounded-lg bg-primary text-whitefont-medium hover:bg-[#FF2171] font-bold text-white transition-all"
             htmlType="submit"
           >
-            {t("Update")}
+            Cập nhập
           </button>
         </Form.Item>
       </Form>

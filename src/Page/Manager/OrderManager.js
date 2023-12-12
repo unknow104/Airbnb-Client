@@ -42,33 +42,31 @@ export default function OrderManager() {
         return "red";
     }
   };
-  // Các cột cho bảng
   const columns = [
-
     {
-      title: 'Name Room',
+      title: 'Phòng/căn hộ',
       dataIndex: 'roomDTO',
       key: 'roomDTO',
       render: (roomDTO) => roomDTO.name
     },
 
     {
-      title: 'Quantity ',
+      title: 'Số lượng khách',
       dataIndex: 'numGuests',
       key: 'numGuests',
     },
     {
-      title: 'Received Date',
+      title: 'Ngày nhận phòng',
       dataIndex: 'receivedDate',
       key: 'receivedDate',
     },
     {
-      title: 'Checkout Date',
+      title: 'Ngày trả phòng',
       dataIndex: 'checkoutDate',
       key: 'checkoutDate',
     },
     {
-      title: 'Status',
+      title: 'Trạng thái',
       dataIndex: 'status',
       key: 'status',
       render: (status) => <Tag color={getStatusColor(status)}>{status}</Tag>,
@@ -79,7 +77,7 @@ export default function OrderManager() {
       render: (text, record) => {
         return (
           <Button disabled={record.status === order.CANCEL || record.status === order.CHECK_OUT} type="" className='bg-[#068FFF] text-white disabled:bg-gray-200 disabled:cursor-not-allowed ' danger onClick={() => showModal(record.id, record.status)}>
-            Update
+            Cập nhập
           </Button>
         );
       }
@@ -103,7 +101,7 @@ export default function OrderManager() {
     setIsCancelModalVisible(false);
     await orderService.update(orderIdSelected, status)
       .then((res) => {
-        openNotificationIcon("success", "Success", "Order cancelled successfully")
+        openNotificationIcon("success", "Thành công", "Cập nhập thành công")
         if (isDataLoaded) {
           userService
             .getOrderByOwner(idUser)
@@ -113,10 +111,11 @@ export default function OrderManager() {
             .catch((err) => {
               console.log(err);
             });
+          console.log(idUser);
         }
       })
       .catch((err) => {
-        openNotificationIcon("error", "Lỗi", "Hủy phòng bị lỗi")
+        openNotificationIcon("error", "Lỗi", "Cập nhập phòng bị lỗi")
         console.log(err);
       });
   };
@@ -138,12 +137,12 @@ export default function OrderManager() {
         >
           <div className='text-center flex-col flex space-y-3'>
             {orderStatus === order.BOOKED &&
-              <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={() => handleUpdateStatus(order.CONFIRM)}>CONFIRM</button>}
+              <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={() => handleUpdateStatus(order.CONFIRM)}>XÁC NHẬN</button>}
             {orderStatus === order.CONFIRM &&
-              <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={() => handleUpdateStatus(order.CHECK_IN)}>CHECK IN</button>}
+              <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={() => handleUpdateStatus(order.CHECK_IN)}>NHẬN PHÒNG</button>}
             {orderStatus === order.CHECK_IN &&
-              <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={() => handleUpdateStatus(order.CHECK_OUT)}>CHECK OUT</button>}
-            <button className='px-4 py-2 bg-primary rounded-lg text-white' onClick={() => handleUpdateStatus(order.CANCEL)}>CANCEL</button>
+              <button className='px-4 py-2 bg-[#1c6c59] rounded-lg text-white' onClick={() => handleUpdateStatus(order.CHECK_OUT)}>TRẢ PHÒNG</button>}
+            <button className='px-4 py-2 bg-primary rounded-lg text-white' onClick={() => handleUpdateStatus(order.CANCEL)}>HỦY</button>
           </div>
         </Modal>
       </div>

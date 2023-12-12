@@ -61,7 +61,7 @@ export default function UserNav({ bg }) {
             } font-medium text-sm rounded-3xl py-2 px-4  transition duration-300 cursor-pointer`}
           onClick={() => handleHost()}
         >
-          {t('Become a Host')}
+          Đón tiếp khách
         </h1>
         <div
           onClick={() => {
@@ -129,32 +129,30 @@ export default function UserNav({ bg }) {
                   to="/profile"
                   className="hover:text-black font-[700] transition duration-100 text-[#FF385C] text-left overflow-hidden w-full"
                 >
-                  {t('Hello ') + ' ' + (user?.userDTO?.userName.length > 15 ? user?.userDTO?.userName.slice(0, 15) + "..." : user?.userDTO?.userName)}
+                  {"Xin chào" + ' ' + (user?.userDTO?.userName.length > 15 ? user?.userDTO?.userName.slice(0, 15) + "..." : user?.userDTO?.userName)}
                 </Link>
               ) : (
                 <Link
                   to="/register"
                   className="w-full block h-full hover:text-black transition duration-100"
                 >
-                  {t('Register')}
+                  Đăng kí
                 </Link>
               )}
             </li>
-            {user?.userDTO?.role[0] === 'CUSTOMER' &&
-              <Link
-                onClick={() => {
-                  closeDropDown();
-                }}
-                to="/trip"
-              >
-                <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
-                  <p className="w-full block h-full text-left hover:text-black transition duration-100">
-                    {t('My Trips')}
-                  </p>
-                </li>
-              </Link>
-            }
-            {user?.userDTO?.role[0] === 'ADMIN' || user?.userDTO?.role[0] === 'OWNER' ? (
+            <Link
+              onClick={() => {
+                closeDropDown();
+              }}
+              to="/order"
+            >
+              <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
+                <p className="w-full block h-full text-left hover:text-black transition duration-100">
+                  Chuyến đi của bạn
+                </p>
+              </li>
+            </Link>
+            {user?.userDTO?.role[0] === 'OWNER' ? (
               <Link
                 onClick={() => {
                   closeDropDown();
@@ -163,41 +161,59 @@ export default function UserNav({ bg }) {
               >
                 <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
                   <p className="w-full block h-full text-left hover:text-black transition duration-100">
-                    {'Manager'}
+                    Quản lý nhà/phòng cho thuê
                   </p>
                 </li>
               </Link>
             ) : (
               ''
             )}
+            {user?.userDTO?.role[0] === 'ADMIN' ?
+              (
+                <Link
+                  onClick={() => {
+                    closeDropDown();
+                  }}
+                  to="/manager"
+                >
+                  <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
+                    <p className="w-full block h-full text-left hover:text-black transition duration-100">
+                      Quản lý ứng dụng
+                    </p>
+                  </li>
+                </Link>
+              ) : (
+                ''
+              )
+            }
             <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
               {isUser ? (
                 <button
                   onClick={handleLogOut}
                   className="w-full block h-full text-left hover:text-black transition duration-100"
                 >
-                  {t('Logout')}
+                  Đăng xuất
                 </button>
               ) : (
                 <Link
                   to="/Login"
                   className="w-full block h-full hover:text-black transition duration-100"
                 >
-                  {t('Login')}
+                  Đăng nhập
                 </Link>
               )}
             </li>
             <div className="bg-gray-300 w-full h-[1px] my-[5px]"></div>
             <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
-              <p className="hover:text-black transition duration-100">{t('House for rent')}</p>
+              <p className="hover:text-black transition duration-100">Đón tiếp khách</p>
             </li>
             <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
               <p className="hover:text-black transition duration-100">
-                {t('Organize the experience')}
+                Tổ chức trải nghiệm
               </p>
             </li>
             <li className="dropdownItem  hover:bg-gray-200 transition duration-300">
-              <p className="hover:text-black transition duration-100">{t('Help')}</p>
+              <p className="hover:text-black transition duration-100">Trợ giúp</p>
             </li>
           </ul>
         </div>

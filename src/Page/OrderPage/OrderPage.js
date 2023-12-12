@@ -22,10 +22,14 @@ export default function OrderPage() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [feedbackContent, setFeedbackContent] = useState("");
   const [selectedOrderId, setSelectedOrderId] = useState(null);
-  const [feedbackStars, setFeedbackStars] = useState(3); 
-  const [feedbacks, setFeedbacks] = useState(); 
+  const [feedbackStars, setFeedbackStars] = useState(3);
+  const [feedbacks, setFeedbacks] = useState();
   const [pageSize, setPageSize] = useState(5);
-  
+  // Định dạng giá thành VND
+  const formattedPrice = (values) => new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  }).format(values);
   useEffect(() => {
     userService
       .getOrder(idUser)
@@ -56,8 +60,8 @@ export default function OrderPage() {
         return "yellow";
       case order.CHECK_IN:
         return "green";
-        case order.CHECK_OUT:
-          return "orange";
+      case order.CHECK_OUT:
+        return "orange";
       default:
         return "red";
     }
@@ -69,7 +73,7 @@ export default function OrderPage() {
       title: "Name Room",
       dataIndex: "roomDTO",
       key: "roomDTO",
-      render: (roomDTO) => <Link to={`/detail-room/${roomDTO.id}`}>{ roomDTO.name}</Link>,
+      render: (roomDTO) => <Link to={`/detail-room/${roomDTO.id}`}>{roomDTO.name}</Link>,
     },
     {
       title: "Quantity ",
@@ -99,14 +103,14 @@ export default function OrderPage() {
         return (
           <div className="space-x-2">
             {
-              record.status !== order.CANCEL &&  <Button
-              disabled={record.status !== order.CHECK_OUT|| feedbacks?.some((item) => item.idOrder === record.id)}
-              type="default"
-              danger
-              onClick={() => showFeedbackModal(record.id)}
-            >
-              FeedBack
-            </Button>
+              record.status !== order.CANCEL && <Button
+                disabled={record.status !== order.CHECK_OUT || feedbacks?.some((item) => item.idOrder === record.id)}
+                type="default"
+                danger
+                onClick={() => showFeedbackModal(record.id)}
+              >
+                FeedBack
+              </Button>
             }
             {
               record.status === order.BOOKED && <Button
@@ -138,7 +142,7 @@ export default function OrderPage() {
     setIsCancelModalVisible(false);
     await orderService.update(cancelOrderId, order.CANCEL)
       .then((res) => {
-        openNotificationIcon("success", "Success", "Order cancelled successfully")
+        openNotificationIcon("success", "Thành công", "Hủy đặt phòng thành công")
         if (isDataLoaded) {
           userService
             .getOrder(idUser)
@@ -151,7 +155,7 @@ export default function OrderPage() {
         }
       })
       .catch((err) => {
-        openNotificationIcon("error", "Error", "Order cancelled error")
+        openNotificationIcon("error", "Lỗi", "Hủy đặt phòng thất bại")
         console.log(err);
       });
   };
@@ -253,7 +257,7 @@ export default function OrderPage() {
         onOk={handleCancel}
         onCancel={handleCancelModal}
       >
-        <p>Are you sure you want to cancel this order?</p>
+        <p>Bạn có chắc chắn muốn hủy đặt phòng ?</p>
       </Modal>
       <Modal
         title="Order Feedback"

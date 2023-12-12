@@ -20,8 +20,8 @@ function RegisterPage() {
   const [confirmCode, setConfirmCode] = useState("");
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [isLoading, setIsLoading] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState(null);
   const navigate = useNavigate();
   const onFinish = async (values) => {
     setIsLoading(true)
@@ -43,7 +43,7 @@ function RegisterPage() {
         setIsLoading(false)
 
         if (err.response.data.message === 'email already taken') {
-          openNotificationIcon('warning', 'Email already exists', `Please go back to login by email: ${email}!`);
+          openNotificationIcon('warning', 'Email đã được sử dụng', `Trở lại đăng nhập với email: ${email}!`);
           navigate('/login');
         } else {
           console.log(err.response.data.message);
@@ -68,7 +68,7 @@ function RegisterPage() {
           setModalOpen(false);
           dispatch(loginUser({ email: email, password: password }));
         } else {
-          openNotificationIcon('warning', 'Wrong character', 'Please re-enter character into input!');
+          openNotificationIcon('warning', 'Ký tự bị lỗi', 'Vui lòng nhập lại thông tin!');
         }
 
       })
@@ -106,19 +106,9 @@ function RegisterPage() {
   return (
     <div className="login flex items-center justify-center h-screen mb:p-0 sm:p-0 lg:p-[24px]">
       <div className="flex bg-white items-center relative w-[70rem] border rounded-[0.5rem] login-wrapper p-5 mb:h-screen sm:h-screen md:h-screen lg:h-[100%]  animate__animated animate__fadeInUp">
-        <Link className="absolute top-[24px] left-[24px]" to="/">
-          <img
-            className=" w-[6rem]"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/2560px-Airbnb_Logo_B%C3%A9lo.svg.png"
-            alt=""
-          />
-        </Link>
-
         <div className=" mb:w-full sm:w-full lg:w-2/4 h-screen flex justify-center items-center">
           <div className="animate__delay-1s animate__animated animate__fadeInUp w-[320px]">
-            <div className="flex justify-between mb-2 items-center animate__delay-1s animate__animated animate__fadeInUp">
-              <h1 className="font-bold text-[20px]">{t('REGISTER')}</h1>
-            </div>
+            <h1 className='mx-[90px] font-semibold'>Đăng kí tài khoản</h1>
             <Form
               name="basic"
               className="register-form"
@@ -129,27 +119,27 @@ function RegisterPage() {
               onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
-              <p className="">{t('Full name')}</p>
+              <p className="">Họ và tên</p>
               <Form.Item
                 className="mb-4"
                 name="name"
                 rules={[
                   {
                     required: true,
-                    message: t('Please input your username!'),
+                    message: t('Vui lòng nhập họ và tên!'),
                   },
                 ]}
               >
                 <Input
                   style={{ width: '100%' }}
                   className="input border px-[14px] py-[14px] rounded-[0.5rem]"
-                  placeholder={t('Full name')}
+                  placeholder="Họ và tên"
                 />
               </Form.Item>
 
               <Row span={24} style={{ width: '100%' }}>
                 <Col span={12} style={{ paddingRight: '0.2rem' }}>
-                  <p className="">{t('Birthday')}</p>
+                  <p className="">Ngày sinh</p>
                   <Form.Item
                     className="mb-4"
                     name="birthday"
@@ -193,7 +183,7 @@ function RegisterPage() {
                 <Input
                   style={{ width: '100%' }}
                   className="input border px-[14px] py-[14px] rounded-[0.5rem]"
-                  placeholder={t('+84 Phone Number')}
+                  placeholder="Vui lòng nhập số điện thoại"
                 />
               </Form.Item>
 
@@ -206,11 +196,11 @@ function RegisterPage() {
                 rules={[
                   {
                     type: 'email',
-                    message: t('The input is not a valid email!'),
+                    message: t('Định dạng của email không hợp lệ !'),
                   },
                   {
                     required: true,
-                    message: t('Please input your email!'),
+                    message: t('Vui lòng nhập email của bạn !'),
                   },
                 ]}
               >
@@ -219,7 +209,7 @@ function RegisterPage() {
                   placeholder="Email"
                 />
               </Form.Item>
-              <p className="">{t('Password')}</p>
+              <p className="">Mật khẩu</p>
               <Form.Item
                 className="mb-4"
                 name="password"
@@ -228,36 +218,44 @@ function RegisterPage() {
                 rules={[
                   {
                     required: true,
-                    message: t('Please input your password!'),
+                    message: t('Vui lòng nhập mật của bạn !'),
                   },
-                  { max: 16, message: t('Your password must be maximum 16 characters.') },
-                  { min: 6, message: t('Your password must be at least 6 characters.') },
+                  { max: 30, message: t('Mật khẩu của bạn bị xai định dạng') },
+                  { min: 6, message: t('Mật khẩu của bạn không được ngắn quá 6 kí tự !') },
                 ]}
               >
                 <Input.Password
                   style={{ width: '100%' }}
                   className="border password px-[14px] py-[14px] rounded-[0.5rem]"
-                  placeholder={t('Password')}
+                  placeholder="Mật khẩu"
                 />
               </Form.Item>
               {/* chưa làm confirm */}
-              <p className="">{t('Confirm Password')}</p>
+              <p className="">Nhập lại mật khẩu</p>
               <Form.Item
                 className="mb-4"
-                name="confirm-password"
+                name="confirmPassword"
+                values={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 rules={[
                   {
                     required: true,
-                    message: t('Please confirm your password!'),
+                    message: t('Vui lòng nhập lại nhận mật khẩu!'),
                   },
-                  { max: 16, message: t('Your password must be maximum 16 characters.') },
-                  { min: 6, message: t('Your password must be at least 6 characters.') },
+                  { max: 30, message: t('Mật khẩu của bạn bị xai định dạng') },
+                  { min: 6, message: t('Mật khẩu của bạn không được ngắn quá 6 kí tự !') },
+                  {
+                    validator: (_, value) =>
+                      value === password
+                        ? Promise.resolve()
+                        : Promise.reject(new Error(t('Mật khẩu không giống nhau !'))),
+                  },
                 ]}
               >
                 <Input.Password
                   style={{ width: '100%' }}
                   className="border password px-[14px] py-[14px] rounded-[0.5rem]"
-                  placeholder={t('Password')}
+                  placeholder={t('Nhập lại mật khẩu')}
                 />
               </Form.Item>
 
@@ -269,15 +267,15 @@ function RegisterPage() {
                 htmlType="submit"
                 disabled={isLoading}
               >
-                {isLoading ? t('Loading...') : t('Register')}
+                {isLoading ? t('Loading...') : t('Đăng kí')}
               </Button>
             </Form>
             <div className="flex justify-between w-full">
-              <Link to="/Login" className="mt-5 text-blue text-left text-bold">
-                {t('Login')}
+              <Link to="/Login" className="mt-5 text-blue text-left text-bold underline">
+                {t('Đăng nhập vào Panther')}
               </Link>
-              <Link to="/" className="mt-5 text-blue text-left text-bold">
-                {t('Home')}
+              <Link to="/" className="mt-5 text-blue text-left text-bold underline">
+                {t('Trang chính')}
               </Link>
             </div>
           </div>
@@ -285,23 +283,23 @@ function RegisterPage() {
         <div className="w-2/4  mb:hidden sm:hidden lg:flex relative bg-[#e86f7d] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
           <div className="glass h-[80%] relative w-[30rem] rouded-[0.5rem] bg-white p-8">
             <h1 className="text-[30px] text-center font-bold mb-[20px] text-black">
-              {t('Discover unique places to stay')}
+              Khám phá những nơi tuyệt vời
             </h1>
             <p className="text-xl text-center text-black">
-              {t('Rent from people in over 65,000 cities and 191 countries.')}
+              để bắt đầu một hành trình đầy thú vị
             </p>
           </div>
         </div>
       </div>
       <Modal
-        title="Verify your email"
+        title="Xác nhận email của bạn"
         centered
         open={modalOpen}
         onOk={() => handleVerify()}
         onCancel={() => handleDeleteUserNotConfirm()}
       >
         <br />
-        <p className='mb-1 ml-1'>{t('Enter 6 characters already sent to your gmail')}</p>
+        <p className='mb-1 ml-1'>{t('Nhập mã otp mà chúng tôi đã gửi cho bạn')}</p>
         <Input value={confirmCode} onChange={(e) => setConfirmCode(e.target.value)} placeholder="large size" prefix={<IoIosMailOpen className='ml-4 text-[24px] ' />} />
       </Modal>
     </div>

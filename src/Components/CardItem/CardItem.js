@@ -9,7 +9,6 @@ import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper';
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Image } from 'antd';
-import { openNotificationIcon } from '../../Components/NotificationIcon/NotificationIcon';
 import { localStorageService } from '../../services/localStorageService';
 import moment from 'moment';
 import 'moment-timezone';
@@ -31,7 +30,7 @@ function CardItem({ roomInfor }) {
       const wishlistItems = response.data;
       // Kiểm tra xem roomId có trong danh sách mong muốn không
       const isLiked = wishlistItems.some(item => item.roomDTO.id === roomId);
-
+      
       if (isLiked) {
         setIsLiked(true);
       } else {
@@ -139,17 +138,17 @@ function CardItem({ roomInfor }) {
             </div>
           </div>
           <p className="text-[0.8rem] text-left font-[400] text-[black] opacity-60">
-            {t('Max Guests')}: {roomInfor.maxGuests}
+            Khách tối đa: {roomInfor.maxGuests}
           </p>
           <p className="text-[0.8rem] text-left font-[400] text-[black] opacity-60">
             {moment(roomInfor.created_at).format('Do-MMMM-YYYY')}
           </p>
           <p className="text-[0.8rem] text-left text-[black] opacity-60">{roomInfor.codeLocation}</p>
           <div className="flex justify-between">
-            <p className="text-[0.9rem] mr-2 font-[500] text-[black]">{formattedPrice}/<span className="text-[0.8rem] font-[400] text-[black]">{t('night')}</span></p>
+            <p className="text-[0.9rem] mr-2 font-[500] text-[black]">{formattedPrice}/<span className="text-[0.8rem] font-[400] text-[black]">đêm</span></p>
             {isNewRoom && roomInfor.created_at ? (
               <>
-                <span className="text-[0.8rem] font-[500] rounded bg-yellow-500 text-white px-1">{t('New Room')}</span>
+                <span className="text-[0.8rem] font-[500] rounded bg-yellow-500 text-white px-1">Phòng mới</span>
               </>
             ) : (
               <>

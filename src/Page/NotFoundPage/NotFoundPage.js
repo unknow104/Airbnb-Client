@@ -28,13 +28,12 @@ function NotFoundPage() {
           </div>
           <div className="number">4</div>
         </div>
-        <div className="text mt-10">{t("Oops. The page you're looking for doesn't exist.")}</div>
-
+        <div className="text mt-10">Rất tiếc. Trang bạn đang tìm kiếm không tồn tại.</div>
         <Link
           to="/"
           className=" mt-10 border rounded-[5rem] px-[1.2rem] hover:bg-[#FF385C] transition-all hover:text-white hover:border-white border-black p-2"
         >
-          {t('Back Home')}
+          Trở về trang chính
         </Link>
       </div>
     </div>

@@ -12,8 +12,8 @@ export default function ExploreNearby() {
           alt=""
         />
         <div className="">
-          <h1 className="text-[0.9rem] font-bold">{t("MoonLight")}</h1>
-          <p className="opacity-60 text-[0.8rem]">350km</p>
+          <h1 className="text-[0.9rem] font-bold">Về đêm</h1>
+          <p className="opacity-60 text-[0.8rem]">250/địa điểm</p>
         </div>
       </div>
       <div className="flex justify-start items-center">
@@ -23,8 +23,8 @@ export default function ExploreNearby() {
           alt=""
         />
         <div className="">
-          <h1 className="text-[0.9rem] font-bold">{t("WaterFall")}</h1>
-          <p className="opacity-60 text-[0.8rem]">250km</p>
+          <h1 className="text-[0.9rem] font-bold">Thành phố</h1>
+          <p className="opacity-60 text-[0.8rem]">250/địa điểm</p>
         </div>
       </div>
       <div className="flex justify-start items-center">
@@ -34,8 +34,8 @@ export default function ExploreNearby() {
           alt=""
         />
         <div className="">
-          <h1 className="text-[0.9rem] font-bold">{t("River")}</h1>
-          <p className="opacity-60 text-[0.8rem]">550km</p>
+          <h1 className="text-[0.9rem] font-bold">Thung lũng</h1>
+          <p className="opacity-60 text-[0.8rem]">250/địa điểm</p>
         </div>
       </div>
       <div className="flex justify-start items-center">
@@ -45,8 +45,8 @@ export default function ExploreNearby() {
           alt=""
         />
         <div className="">
-          <h1 className="text-[0.9rem] font-bold">{t("Sea")}</h1>
-          <p className="opacity-60 text-[0.8rem]">20km</p>
+          <h1 className="text-[0.9rem] font-bold">Sa mạc</h1>
+          <p className="opacity-60 text-[0.8rem]">250/địa điểm</p>
         </div>
       </div>
       <div className="flex justify-start items-center">
@@ -56,8 +56,8 @@ export default function ExploreNearby() {
           alt=""
         />
         <div className="">
-          <h1 className="text-[0.9rem] font-bold">{t("Peace")}</h1>
-          <p className="opacity-60 text-[0.8rem]">200km</p>
+          <h1 className="text-[0.9rem] font-bold">Nông thôn</h1>
+          <p className="opacity-60 text-[0.8rem]">250/địa điểm</p>
         </div>
       </div>
       <div className="flex justify-start items-center">
@@ -67,8 +67,8 @@ export default function ExploreNearby() {
           alt=""
         />
         <div className="">
-          <h1 className="text-[0.9rem] font-bold">{t("Tropical")}</h1>
-          <p className="opacity-60 text-[0.8rem]">250km</p>
+          <h1 className="text-[0.9rem] font-bold">Biển</h1>
+          <p className="opacity-60 text-[0.8rem]">250/địa điểm</p>
         </div>
       </div>
       <div className="flex justify-start items-center">
@@ -78,8 +78,8 @@ export default function ExploreNearby() {
           alt=""
         />
         <div className="">
-          <h1 className="text-[0.9rem] font-bold">{t("River Side")}</h1>
-          <p className="opacity-60 text-[0.8rem]">30km</p>
+          <h1 className="text-[0.9rem] font-bold">Ven sông</h1>
+          <p className="opacity-60 text-[0.8rem]">250/địa điểm</p>
         </div>
       </div>
       <div className="flex justify-start items-center">
@@ -89,8 +89,8 @@ export default function ExploreNearby() {
           alt=""
         />
         <div className="">
-          <h1 className="text-[0.9rem] font-bold">{t("Star")}</h1>
-          <p className="opacity-60 text-[0.8rem]">100km</p>
+          <h1 className="text-[0.9rem] font-bold">Ngắm trăng</h1>
+          <p className="opacity-60 text-[0.8rem]">250/địa điểm</p>
         </div>
       </div>
     </div>

@@ -26,6 +26,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { openNotificationIcon } from "../../../../Components/NotificationIcon/NotificationIcon";
 import { amenityService } from "../../../../services/amenityService";
+import FormItem from "antd/es/form/FormItem";
 
 const PROVINCES_API_URL = "https://provinces.open-api.vn/api";
 
@@ -55,7 +56,7 @@ export default function AddHouseManager() {
   const [selectedAmenities, setSelectedAmenities] = useState([]);
 
   const MINIMUM_IMAGES = 5;
-
+  console.log(user.userDTO.id)
   const handleProvinceChange = (value, option) => {
     setSelectedProvince(value);
     setNameProvince(option?.label ?? "");
@@ -65,6 +66,7 @@ export default function AddHouseManager() {
     setSelectedDistrict(value);
     setNameDistrict(option?.label ?? "");
   };
+
 
   const handleWardChange = (value, option) => {
     setSelectedWard(value);
@@ -79,19 +81,21 @@ export default function AddHouseManager() {
   useEffect(() => {
     const getAmenities = async () => {
       try {
-        const items = await amenityService.getAmenityList();
-        setAmenities(items.data);
+        const response = await amenityService.getAmenityList();
+        // Kiểm tra xem response có chứa thuộc tính 'data' không
+        if (response && response.data) {
+          setAmenities(response.data);
+        }
       } catch (error) {
         console.log(error);
       }
     };
     getAmenities();
-  },[])
+  }, []);
 
   const handleCheckboxChange = (amenityId) => {
     // Kiểm tra xem amenityId có trong selectedAmenities không
     const isAmenitySelected = selectedAmenities.includes(amenityId);
-  
     // Nếu amenityId đã được chọn, loại bỏ nó khỏi danh sách
     // Nếu amenityId chưa được chọn, thêm nó vào danh sách
     setSelectedAmenities((prevSelectedAmenities) => {
@@ -208,11 +212,10 @@ export default function AddHouseManager() {
     formData.append("numLivingRooms", values.numLivingRooms);
     formData.append("numBathrooms", values.numBathrooms);
     formData.append("numBedrooms", values.numBedrooms);
-
+    formData.append("allowPet", values.allowPet);
     selectedImages.forEach((image) => {
       formData.append(`images`, image.originFileObj);
     });
-
     roomService
       .addRoom(user.userDTO.id, formData)
       .then((res) => {
@@ -345,7 +348,6 @@ export default function AddHouseManager() {
                     label="Phòng tắm"
                     name="numBathrooms"
                     rules={[{ required: true }]}
-
                   >
                     <Input type="number" />
                   </Form.Item>
@@ -371,7 +373,6 @@ export default function AddHouseManager() {
                   </Form.Item>
                 </Col>
               </Row>
-
               <Form.Item
                 label="Tải ảnh lên"
                 name="images"
@@ -397,25 +398,32 @@ export default function AddHouseManager() {
             <div className="col-span-6">
               <Form.Item label="Tiện nghi" labelCol={labelCol}
                 wrapperCol={wrapperCol}>
-                <Row>          
+                <Row>
                   {amenities.map((amenity) => (
-                      <Col span={8} key={amenity.id}>
-                        <Form.Item
-                          name={amenity.name}
-                          valuePropName="checked"
-                          initialValue={false}
-                        >
-                          <Checkbox
-                            value={amenity.id}
-                            checked={selectedAmenities.includes(amenity.id)}
-                            onChange={() => handleCheckboxChange(amenity.id)
+                    <Col span={8} key={amenity.id}>
+                      <Form.Item
+                        name={amenity.name}
+                        valuePropName="checked"
+                        initialValue={false}
+                      >
+                        <Checkbox
+                          value={amenity.id}
+                          checked={selectedAmenities.includes(amenity.id)}
+                          onChange={() => handleCheckboxChange(amenity.id)
                           }>{amenity.name}</Checkbox>
-                        </Form.Item>
-                      </Col>
+                      </Form.Item>
+                    </Col>
                   ))}
                 </Row>
+                <Form.Item
+                  name="allowPet"
+                  valuePropName="checked"
+                  initialValue={false}
+                >
+                  <Checkbox>Cho phép mang thú cưng</Checkbox>
+                </Form.Item>
               </Form.Item>
-              <Form.Item label="Location" labelCol={labelCol}
+              <Form.Item label="Vị trí" labelCol={labelCol}
                 wrapperCol={wrapperCol}>
                 <Select
                   style={{

@@ -3,12 +3,10 @@ import { Button, Skeleton } from "antd";
 import "./HomePage.scss";
 import { useDispatch, useSelector } from "react-redux";
 import Banner from "../../Components/Banner/Banner";
-import Collection from "../../Components/Collection/Collection";
 import BlogBanner from "./BlogBanner";
 import { useTranslation } from "react-i18next";
 import BannerVideo from "../../Components/Banner/BannerVideo";
 import ExploreNearby from "./ExploreNearby";
-import { dataIMG } from "../../Data/Data";
 import CardItem from "../../Components/CardItem/CardItem";
 import { getRoomList } from "../../Redux/room/roomList";
 import SkeletonItem from "../../Components/Skeleton/SkeletonItem";
@@ -92,7 +90,7 @@ function HomePage() {
       </div>
       <div className="container m-auto mb:mt-[10rem] sm:mt-[10rem] lg:mt-10 mb-10">
         <div className="mb-10">
-          <h1 className="text-[3rem] font-bold mb-10">{t("Explore nearby")}</h1>
+          <h1 className="text-[3rem] font-bold mb-10">Danh mục</h1>
           <ExploreNearby />
         </div>
       </div>
@@ -102,14 +100,14 @@ function HomePage() {
           onClick={handleDecrease}
           icon={<AiOutlineSortAscending />}
         >
-          {t("Decrease")}
+          Từ thấp
         </Button>
         <Button
           className="font-bold text-primary"
           onClick={handleIncrease}
           icon={<AiOutlineSortDescending />}
         >
-          {t("Increase")}
+          Từ cao
         </Button>
       </div>
       <div className="container  m-auto  grid mb:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 gap-6 ">

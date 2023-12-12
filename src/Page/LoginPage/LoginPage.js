@@ -44,7 +44,7 @@ function LoginPage() {
         <div className=" mb:w-full sm:w-full lg:w-2/4 h-screen flex justify-center items-center">
           <div className="animate__delay-1s animate__animated animate__fadeInUp">
             <div className="flex justify-between mb-2 items-center animate__delay-1s animate__animated animate__fadeInUp">
-              <h1 className="font-bold text-[20px]">{t('LOGIN')}</h1>
+              <h1 className="font-bold text-[20px]">Đăng nhập</h1>
             </div>
             <Form
               name="basic"
@@ -67,57 +67,53 @@ function LoginPage() {
                 rules={[
                   {
                     required: true,
-                    message: t('Please input your email!'),
+                    message: 'Vui lòng điền thông tin vào!',
                   },
                 ]}
               >
                 <Input
                   className="input border px-[14px] py-[14px] rounded-[0.5rem] w-[320px] input-user"
-                  placeholder={t('Input your email/phone number')}
+                  placeholder='Email hoặc số điện thoại của bạn'
                 />
               </Form.Item>
-
               <Form.Item
                 name="password"
                 rules={[
                   {
                     required: true,
-                    message: t('Please input your password!'),
+                    message: 'Vui lòng điền thông tin vào!',
                   },
                 ]}
               >
                 <Input.Password
                   className="border password px-[14px] py-[14px] rounded-[0.5rem] w-[320px] "
-                  placeholder={t('Input your email/phone number')}
+                  placeholder='Mật khẩu'
                 />
               </Form.Item>
-
               <button
                 className=" w-full py-3 rounded-[0.5rem] bg-primary hover:bg-[#0A4D68] transition-all btn-login text-white"
                 type="primary"
                 size="large"
                 htmlType="submit"
               >
-                {t('Login')}
+                Đăng nhập
               </button>
             </Form>
             <div className="w-full flex justify-between">
-              <Link to="/register" className="mt-5 text-blue w-full inline text-left text-bold">
-                {t('Register')}
+              <Link to="/register" className="mt-5 text-blue w-full inline text-left text-bold underline">
+                Bạn chưa có tài khoản
               </Link>
-              <a to="/" className="mt-5 text-blue w-full inline text-right text-bold">
-                {t('forget password')}
+              <a to="/" className="mt-5 text-blue w-full inline text-right text-bold underline">
+                quên mật khẩu
               </a>
             </div>
-
             <div className="relative">
               <p
-                className="my-5 text-center opacity-40 relative login-with"
+                className="my-5 text-center opacity-50 relative login-with"
               >
-                {t('login with')}
+                tiếp tục
               </p>
             </div>
-            <div className=""></div>
             <div>
               <button className="flex mt-5 justify-center items-center text-[16px] w-full border p-3 rounded-[0.5rem]">
                 <img
@@ -133,7 +129,7 @@ function LoginPage() {
         <div className="w-2/4 mb:hidden sm:hidden lg:flex relative bg-[#e86f7d] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
           <div className="glass h-[80%] relative w-[30rem] rouded-[0.5rem] bg-mainColor z-10 animate__delay-1s animate__animated animate__fadeInUp">
             <h1 className="text-white text-[30px] text-left p-5">
-              Start your journey by one click, explore beautiful world!
+              Bắt đầu hành trình tuyệt vời của bạn chỉ qua 1 nhấp chuột
             </h1>
             <img src="../img/img.png" className="bottom-0 w-[70%] absolute left-20 " alt="" />
           </div>

@@ -18,7 +18,7 @@ export default function ProfilePage() {
   const [user, setuser] = useState(localStorageService.get('USER'));
   const [infor, setinfor] = useState({});
   const [listFavorite, setListFavorite] = useState();
-  const [reloadPage, setReloadPage] = useState(false)
+  const [reloadPage, setReloadPage] = useState(false);
   useEffect(() => {
     getUser();
     getFavorite();
@@ -44,21 +44,26 @@ export default function ProfilePage() {
         console.log(err);
       });
   }
+  // Định dạng giá thành VND
+  const formattedPrice = (values) => new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  }).format(values);
   const columns = [
     {
-      title: 'Name',
+      title: 'Tên phòng',
       dataIndex: 'name',
       key: 'name',
       render: (text, record) => <Link to={`/detail-room/${record?.roomDTO?.id}`}>{record?.roomDTO?.name}</Link>,
     },
     {
-      title: 'Price',
+      title: 'Giá phòng',
       dataIndex: 'price',
       key: 'price',
-      render: (text, record) => <span>${record?.roomDTO?.price}</span>,
+      render: (text, record) => <span>{formattedPrice(record?.roomDTO?.price)}</span>,
     },
     {
-      title: 'Images',
+      title: 'Ảnh',
       dataIndex: 'images',
       key: 'images',
       render: (text, record) => (
@@ -66,20 +71,19 @@ export default function ProfilePage() {
       ),
     },
     {
-      title: 'Description',
+      title: 'Thông tin thêm',
       dataIndex: 'description',
       key: 'description',
       render: (text, record) => <span>{record?.roomDTO?.description}</span>,
     },
     {
-      title: 'Action',
+      title: 'Hành động',
       key: 'action',
       render: (text, record) => (
-        <Button onClick={() => handleRemoveFavorite(record?.roomDTO?.id)}>Remove</Button>
+        <Button onClick={() => handleRemoveFavorite(record?.roomDTO?.id)}>Xóa yêu thích</Button>
       ),
     },
   ];
-
   const handleRemoveFavorite = async (idroom) => {
     try {
       const response = await favoriteService.remove(user?.userDTO?.id, idroom)
@@ -90,28 +94,6 @@ export default function ProfilePage() {
       console.log(error);
     }
   };
-
-  const [imageInfo, setImageInfo] = useState({
-    image: null,
-    name: '',
-  });
-
-  const handleImagesChange = (info) => {
-    if (info.file.status === 'done') {
-      // Bạn có thể thực hiện các hành động sau khi tải ảnh lên thành công ở đây
-      console.log(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      console.log(`${info.file.name} file upload failed.`);
-    }
-    if (info.fileList.length > 0) {
-      const selectedImage = info.fileList[0];
-      setImageInfo({
-        image: selectedImage.thumbUrl, // hoặc selectedImage.url tùy thuộc vào dữ liệu trả về từ API
-        name: selectedImage.name || 'ABC', // hoặc lấy từ dữ liệu khác tùy thuộc vào API
-      });
-    }
-  };
-
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const activeTab = searchParams.get('tab') || 'profile';
@@ -121,7 +103,7 @@ export default function ProfilePage() {
         <div className="container mx-auto py-10 rounded-lg bg-cover" style={{ backgroundImage: "url('https://img.freepik.com/free-photo/vivid-blurred-colorful-wallpaper-background_58702-3798.jpg?w=900&t=st=1691678392~exp=1691678992~hmac=43eeaa7f69b2aebacc7d96446027ae499e180298cb30fd23b870dc5d6798b92d')" }}>
           <div className="grid grid-cols-4 gap-6">
             <div className="col-span-1 flex justify-end">
-              <label className="w-32 h-32 relative rounded-full overflow-hidden" htmlFor='images'>
+              <div className="w-32 h-32 relative rounded-full overflow-hidden">
                 {infor.image ? (
                   <>
                     <img
@@ -129,24 +111,15 @@ export default function ProfilePage() {
                       alt="Profile"
                       className="object-cover w-full h-full"
                     />
-                    <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-                      <span className="text-white text-4xl">{infor.name[0].toUpperCase()}</span>
-                    </div>
                   </>
                 ) : (
-                  <div className='w-full h-full border-dashed border-2 border-gray-300 flex items-center justify-center'>
-                    <input
-                      type="file"
-                      id='images'
-                      className='hidden'
-                      onChange={(e) => handleImagesChange({ fileList: [{ thumbUrl: URL.createObjectURL(e.target.files[0]), name: e.target.files[0].name, status: 'done' }] })}
-                    />
-                    <label htmlFor='images' className='cursor-pointer'>
-                      <PlusOutlined className='text-4xl text-gray-500' />
-                    </label>
-                  </div>
+                  <img
+                    src={"https://th.bing.com/th/id/OIP.YMkyugibGv-ktXpsLdiRlAHaFL?rs=1&pid=ImgDetMain"}
+                    alt="Profile"
+                    className="object-cover w-full h-full"
+                  />
                 )}
-              </label>
+              </div>
             </div>
             <div className="col-span-3 flex flex-col justify-center items-start">
               <h2 className="text-3xl font-bold">{infor?.name}</h2>
@@ -217,8 +190,8 @@ export default function ProfilePage() {
             } key="liked">
               {/* Content for Posts tab */}
               <div className="p-4">
-                <div className="bg-white shadow rounded p-4">
-                  <p>Phòng bạn đã yêu thích</p>
+                <h3 className="text-xl font-bold ">Phòng bạn yêu thích</h3>
+                <div className="bg-white shadow rounded p-4 mt-6">
                   <Table
                     dataSource={listFavorite}
                     columns={columns}
@@ -251,5 +224,4 @@ export default function ProfilePage() {
       </div>
     </div>
   );
-
 };

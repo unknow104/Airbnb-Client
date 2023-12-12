@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, DatePicker, Radio, Upload, message } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import 'react-quill/dist/quill.snow.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -14,22 +13,16 @@ export default function EditUserPage() {
   const [user, setUser] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState(null);
-
-
 
   useEffect(() => {
     const fetchDetailProduct = async () => {
       try {
         const response = await userService.getInformation(id);
         setUser(response.data);
-        setImageUrl(response.data.image);
         form.setFieldsValue({
           name: response.data.name,
           phone: response.data.phone,
           email: response.data.email,
-          image: response.data.image,
           birthday: dayjs(response.data.birthday, 'DD/MM/YYYY'),
           gender: response.data.gender,
           status: response.data.status,
@@ -48,7 +41,6 @@ export default function EditUserPage() {
       formData.append('name', values.name);
       formData.append('phone', values.phone);
       formData.append('email', values.email);
-      formData.append('image', values.image);
       formData.append('birthday', dayjs(values.birthday).format('DD/MM/YYYY'));
       formData.append('gender', values.gender);
       await userService.update(id, formData);

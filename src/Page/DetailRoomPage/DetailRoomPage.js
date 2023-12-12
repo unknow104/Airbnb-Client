@@ -3,6 +3,7 @@ import { roomService } from '../../services/RoomService'
 import { useNavigate, useParams } from 'react-router-dom';
 import SkeletonDetail from '../../Components/Skeleton/SkeletonDetail';
 import { useTranslation } from 'react-i18next';
+import { IoBedOutline } from "react-icons/io5";
 // import TotalReserce from './TotalReserce'
 import './DetailRoomPage.scss';
 import OrderForm from './OrderForm/OrderForm';
@@ -12,14 +13,16 @@ import { favoriteService } from '../../services/favoriteService';
 import { openNotificationIcon } from '../../Components/NotificationIcon/NotificationIcon';
 import Map from '../SearchPage/Map';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { FaHeart } from 'react-icons/fa';
 
 export default function DetailRoomPage() {
   const { id } = useParams();
-  const [roomDetail, setRoomDetail] = useState({})
+  const [roomDetail, setRoomDetail] = useState({});
   const [dataDate, setDataDate] = useState();
-  const [isFetch, setIsFecth] = useState(false)
-  const { t } = useTranslation()
-  const navigate = useNavigate()
+  const [isFetch, setIsFecth] = useState(false);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [isLiked, setIsLiked] = useState(false);
   const containerStyle = {
     width: '100%',
     height: '500px'
@@ -29,14 +32,9 @@ export default function DetailRoomPage() {
       {
         featureType: 'poi',
         elementType: 'labels',
-        stylers: [{ visibility: 'off' }]
+        stylers: [{ visibility: 'on' }]
       }
     ],
-    // mapTypeControlOptions: {
-    //   mapTypeIds: ['roadmap', 'hybrid'], // Chỉ hiển thị kiểu bản đồ roadmap và hybrid
-    //   style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-    //   position: google.maps.ControlPosition.TOP_LEFT
-    // },
   };
   const icon = {
     url: '/img/airbnb.png',
@@ -45,11 +43,13 @@ export default function DetailRoomPage() {
       height: 45
     },
   };
+  const [user, setuser] = useState(localStorageService.get('USER')?.userDTO);
+
   useEffect(() => {
     setIsFecth(true)
     roomService.getHouseById(id)
       .then((res) => {
-        setRoomDetail(res.data)
+        setRoomDetail(res.data);
         console.log(res.data);
         setIsFecth(false)
       })
@@ -57,7 +57,8 @@ export default function DetailRoomPage() {
         console.log(err);
         setIsFecth(false)
       });
-  }, [])
+    checkIfLiked(id);
+  }, [id, user])
   useEffect(() => {
     roomService.getRoomCalendar(id).then((res) => {
       console.log(res);
@@ -67,22 +68,31 @@ export default function DetailRoomPage() {
         console.log(err);
       });
   }, [])
-  const [user, setuser] = useState(localStorageService.get('USER')?.userDTO);
-
+  const checkIfLiked = async (idroom) => {
+    try {
+      const response = await favoriteService.get(user.id);
+      const wishlistItems = response.data;
+      // Kiểm tra xem roomId có trong danh sách mong muốn không
+      const isLiked = wishlistItems.some(item => item.roomDTO && item.roomDTO.id === parseInt(idroom));
+      console.log(isLiked);
+      // Set giá trị của isLiked vào state
+      setIsLiked(isLiked);
+    } catch (error) {
+      console.error('Lỗi khi kiểm tra phòng đã like chưa', error);
+    }
+  };
   const handlefavorite = async (idroom) => {
     try {
       if (user) {
         const formData = new FormData();
         formData.append("roomId", idroom);
         const response = await favoriteService.add(user.id, formData)
-        openNotificationIcon("success", "Success", "Add Favority Success")
+        openNotificationIcon("success", "Thành công", "Thêm vào thư mục yêu thích thành công")
       } else {
-        openNotificationIcon("error", "Error", "Please Login")
-
+        openNotificationIcon("error", "Lỗi", "Vui lòng đăng nhập vào hệ thống")
       }
-
     } catch (error) {
-      openNotificationIcon("error", "Error", "Add Favority Error")
+      openNotificationIcon("error", "Lỗi", "Bạn đã yêu thích phòng này rồi")
       console.log(error);
     }
   };
@@ -157,8 +167,22 @@ export default function DetailRoomPage() {
     <div className='container mx-auto pb-5 mb:pt-[0px] sm:pt-[0px] md:pt-[6rem]'>
       {isFetch ? <SkeletonDetail /> :
         <>
-          <div className="image mb-2 mb:hidden sm:hidden md:block">
-            <div className="grid grid-cols-4 grid-rows-2 gap-4 h-[350px]">
+          <div className='flex justify-between mt-5'>
+            <h2 className="text-[1.5rem] font-[500]">{roomDetail?.name}</h2>
+            <button
+              className="flex items-center px-6 py-1 hover:bg-black/5 rounded-2xl underline"
+              onClick={() => {
+                handlefavorite(id);
+              }}
+            >
+              <FaHeart
+                className={`mr-2 ${isLiked ? 'text-red-500' : 'text-gray-500'}`}
+              />
+              {isLiked ? 'Lưu' : 'Chưa lưu'}
+            </button>
+          </div>
+          <div className="image mt-5 mb:hidden sm:hidden md:block">
+            <div className="grid grid-cols-4 grid-rows-2 gap-4 h-[450px]">
               {roomDetail?.images && roomDetail.images.length > 0 ? (
                 <>
                   <img
@@ -194,52 +218,30 @@ export default function DetailRoomPage() {
           </div>
           <div className="w-full flex h-full">
             <div className="mb:w-full sm:w-full md:w-3/5 lg:w-3/5">
-              <div className="w-full mb:py-[1rem] sm:py-[1rem] md:py-[2.2rem] border-b-[1px] border-[#dadada]">
-                <div className='flex justify-between'>
-                  <h2 className="text-[1.5rem] font-[500]">{roomDetail?.name}</h2>
-                  <button
-                    className="px-4 py-1 rounded-lg bg-primary text-white font-medium hover:bg-[#068FFF] hover:text-white transition-all"
-                    onClick={() => {
-                      handlefavorite(id)
-                    }}>SAVE</button>
-                </div>
-                <span className="text-[1rem] font-[400] text-[#717171]">
-                  {roomDetail?.maxGuests} {t('Guest')} - {roomDetail?.numBedrooms} {t('Bed Room')} - {roomDetail?.numLivingRooms} {t('Living Room')} -  {roomDetail?.numBathrooms} {t('Bath Room')}
-                </span>
-                <p className="text-[1rem] font-[400] text-[#717171]">{roomDetail?.codeLocation}</p>
-                <p className="text-[1rem] font-[400] text-[#717171]">{roomDetail?.address?.fullAddress}</p>
-              </div>
+              <p className="text-2xl font-semibold my-[0.7rem] text-[#222222]">
+                {roomDetail?.description}
+              </p>
               {/* ================================== AIRCOVER =================================== */}
-              <div className="aircover py-[2.2rem] border-b-[1px] border-[#dadada]">
+              <div className="aircover border-b-[1px] border-[#dadada]">
                 <h1 className="font-[700] text-[red] text-[32px]">
                   air<span className="font-[700] text-black text-[32px]">cover</span>
                 </h1>
-                <p className="text-[1rem] font-[300] my-[0.7rem] text-[#222222]">
-                  {roomDetail?.description}
-                </p>
-                <span className="font-[700] underline text-[1rem]">{t('Learn more')}</span>
+                <div className="w-full mb:py-[1rem] sm:py-[1rem] md:py-[2.2rem] border-b-[1px] border-[#dadada]">
+                  <span className="text-[1rem] font-[400] text-[#717171]">
+                    {roomDetail?.maxGuests} khách - {roomDetail?.numBedrooms} phòng ngủ - {roomDetail?.numLivingRooms} phòng khách -  {roomDetail?.numBathrooms} nhà tắm
+                  </span>
+                  <p className="text-[1rem] font-[400] text-[#717171]">{roomDetail?.codeLocation}</p>
+                  <p className="text-[1rem] font-[400] text-[#717171]">{roomDetail?.address?.fullAddress}</p>
+                </div>
               </div>
               {/* ================= Where you'll sleep ==================== */}
               <div className="w-full py-[2.2rem] border-b-[1px] border-[#dadada]">
                 <h1 className="text-[1.625rem] mb-[1.25rem] font-[600]">
-                  {t("Where you'll sleep")}
+                  Chỗ ở của bạn
                 </h1>
                 <div className="p-[1.2rem] text-left border rounded-[0.4rem] block">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0l-3-3m3 3l3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
-                    />
-                  </svg>
-                  <h2 className="font-[500] mt-3 mb-1 text-[1rem]">{roomDetail?.numBedrooms} {t('Bedroom')}</h2>
+                  <IoBedOutline size={30} />
+                  <h2 className="font-[500] mt-3 mb-1 text-[1rem]">{roomDetail?.numBedrooms} phòng ngủ</h2>
                 </div>
               </div>
               {/* ================= what this place offers ==================== */}

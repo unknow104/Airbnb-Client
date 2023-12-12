@@ -3,21 +3,6 @@ import { useState } from "react";
 
 function AddUserManager() {
 
-  // const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-  //   console.log(date, dateString);
-  // };
-
-  // const handleGender = (e: RadioChangeEventTarget) => {
-  //   console.log("radio checked", e.target.value);
-  //   setValue(e.target.value);
-  // };
-  // const handleRole = (value: string) => {
-  //   console.log(`selected ${value}`);
-  // };
-  // const handleStatus = (value: string) => {
-  //   console.log(`selected ${value}`);
-  // };
-
   const [value, setValue] = useState();
   const onChange = (date, dateString) => {
     console.log(date, dateString);
@@ -87,8 +72,8 @@ function AddUserManager() {
           </Form.Item>
           <Form.Item label="Giới tính">
             <Radio.Group onChange={handleGender} value={value}>
-              <Radio value={1}>Male</Radio>
-              <Radio value={2}>Female</Radio>
+              <Radio value={1}>Nam</Radio>
+              <Radio value={2}>Nữ</Radio>
             </Radio.Group>
           </Form.Item>
           <Form.Item label="Confirmed">
