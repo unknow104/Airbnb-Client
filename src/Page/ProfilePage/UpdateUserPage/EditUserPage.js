@@ -6,11 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { userService } from '../../../services/userService';
 import dayjs from 'dayjs';
 import { openNotificationIcon } from '../../../Components/NotificationIcon/NotificationIcon';
+import { FaArrowLeft, FaPlus } from 'react-icons/fa';
+import { AiOutlineLoading } from 'react-icons/ai';
+import { IoPulseOutline } from 'react-icons/io5';
 
 export default function EditUserPage() {
   const [form] = Form.useForm();
   const [content, setContent] = useState('');
   const [user, setUser] = useState({});
+  const [imageUrl, setImageUrl] = useState();
+  const [imageChange, setImageChange] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -26,7 +31,9 @@ export default function EditUserPage() {
           birthday: dayjs(response.data.birthday, 'DD/MM/YYYY'),
           gender: response.data.gender,
           status: response.data.status,
+          image: response.data.image
         });
+        setImageUrl(response.data.image)
       } catch (error) {
         console.log(error);
         openNotificationIcon('error', 'Lỗi', 'Có lỗi khi cập nhập!');
@@ -43,29 +50,78 @@ export default function EditUserPage() {
       formData.append('email', values.email);
       formData.append('birthday', dayjs(values.birthday).format('DD/MM/YYYY'));
       formData.append('gender', values.gender);
+      formData.append('image', imageChange.originFileObj);
       await userService.update(id, formData);
-      form.resetFields();
       navigate('/profile');
+      openNotificationIcon("success", "Thành công", "Bạn đã cập nhật thông tin thành công")
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleChangeContent = (value) => {
-    console.log(value);
-    setContent(value);
+  const handleImageChange = (value) => {
+    const files = [...value.fileList];
+    setImageChange(files[0])
   };
+
+  const uploadButton = (
+    <div>
+      <FaPlus />
+      {/* {loading ? <AiOutlineLoading /> : <IoPulseOutline />} */}
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
 
   const labelCol = { span: 4 };
   const wrapperCol = { span: 16 };
 
   return (
-    <div className="w-full h-max mt-32">
+    <div className="container h-max mt-32">
+      <div className='ms-40'>
+        <button className='flex h-12 align-middle' onClick={() => { navigate('/profile') }}>
+          <FaArrowLeft className='my-auto' /> <span className='font-semibold ms-3 text-lg my-auto'>Quay lại</span>
+        </button>
+      </div>
       <h1 className="uppercase font-bold text-primary text-[20px] text-center my-5">
         Cập nhật thông tin của bạn.
       </h1>
 
       <Form form={form} onFinish={onFinish} initialValues={{ gender: 'gender' }}>
+        <Form.Item
+          label="Ảnh của bạn"
+          name="image"
+          labelCol={labelCol}
+          wrapperCol={wrapperCol}
+        >
+          <Upload
+            name="avatar"
+            listType="picture-circle"
+            className="avatar-uploader"
+            showUploadList={true}
+            action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+            // beforeUpload={beforeUpload}
+            beforeUpload={() => false}
+            onChange={handleImageChange}
+          >
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt="avatar"
+                style={{
+                  width: '100%',
+                }}
+              />
+            ) : (
+              uploadButton
+            )}
+          </Upload>
+        </Form.Item>
         <Form.Item
           label="Họ và tên"
           name="name"
@@ -75,7 +131,6 @@ export default function EditUserPage() {
         >
           <Input />
         </Form.Item>
-
         <Form.Item
           label="Số điện thoại"
           name="phone"
