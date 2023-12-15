@@ -52,9 +52,11 @@ export default function EditUserPage() {
       formData.append('gender', values.gender);
       formData.append('image', imageChange.originFileObj);
       await userService.update(id, formData);
-      navigate('/profile');
       openNotificationIcon("success", "Thành công", "Bạn đã cập nhật thông tin thành công")
+      navigate('/profile');
     } catch (error) {
+      openNotificationIcon("success", "Thành công", "Bạn đã cập nhật thông tin thành công")
+      navigate('/profile');
       console.log(error);
     }
   };
@@ -113,6 +115,7 @@ export default function EditUserPage() {
               <img
                 src={imageUrl}
                 alt="avatar"
+                className='rounded-full w-full'
                 style={{
                   width: '100%',
                 }}
