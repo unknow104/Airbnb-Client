@@ -29,7 +29,8 @@ import AmenityManger from "../Page/Manager/AmenityManager/AmenityManager";
 import AddAmenityPage from "../Page/Manager/AmenityManager/AddAmenityPage/AddAmenityPage";
 import UpdateAmenityPage from "../Page/Manager/AmenityManager/UpdateAmenityPage/UpdateAmenityPage";
 import EditUserPage from "../Page/ProfilePage/UpdateUserPage/EditUserPage";
-import { HostPage} from "../Page/HostPage/HostPage";
+import { HostPage } from "../Page/HostPage/HostPage";
+import ChangePasswordPage from "../Page/ProfilePage/ChangePasswordPage/ChangePasswordPage";
 
 
 export default function Routers() {
@@ -49,6 +50,7 @@ export default function Routers() {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/edit-user/:id" element={<EditUserPage />} />
+            <Route path="/profile/change-password/:id" element={<ChangePasswordPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogDetailPage />} />
           </Route>
