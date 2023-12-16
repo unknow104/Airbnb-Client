@@ -60,26 +60,26 @@ export default function HouseManager() {
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
         }}
       >
-        <Column title="Name" dataIndex="name" key="name" />
+        <Column title="Tên" dataIndex="name" key="name" />
         <Column
-          title="Image"
+          title="Ảnh"
           dataIndex="images"
           key="images"
           render={(images) => (
             <img src={images[0]} className="w-[70px] h-[70px] object-cover rounded-lg" alt="house" />
           )}
         />
-        <Column title="Location" dataIndex="codeLocation" key="codeLocation" />
-        <Column title="Description" dataIndex="description" key="description" />
+        <Column title="Địa chỉ" dataIndex="codeLocation" key="codeLocation" />
+        <Column title="Mô tả thêm" dataIndex="description" key="description" />
         <Column
-          title="Price"
+          title="Giá phòng"
           dataIndex="price"
           key="price"
           render={(price) => <Tag color="green">{price.toLocaleString()} VNĐ</Tag>}
         />
 
         <Column
-          title="Action"
+          title=""
           key="action"
           render={(text, record) => (
             <div className='flex'>

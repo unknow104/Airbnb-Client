@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { localStorageService } from '../../services/localStorageService';
 import { RiAccountCircleFill, RiFeedbackFill } from 'react-icons/ri';
-import { BsHouse, BsFillCartFill,BsFillHouseGearFill } from 'react-icons/bs';
-import { CiLogout } from 'react-icons/ci'; 
-import { AiOutlineBarChart } from 'react-icons/ai'; 
+import { BsHouse, BsFillCartFill, BsFillHouseGearFill } from 'react-icons/bs';
+import { CiLogout } from 'react-icons/ci';
+import { AiOutlineBarChart } from 'react-icons/ai';
 import { MdLocationOn, MdCalendarToday } from 'react-icons/md'
 import { BsFillPencilFill } from 'react-icons/bs';
 import { logoutUser } from '../../Redux/auth/authSlice';
@@ -23,11 +23,9 @@ export default function SideBarManager() {
   useEffect(() => {
     if (isLoggedIn === false) {
       navigate('/login')
-      openNotificationIcon("error", "Error", "Please Login")
-
     } else if (user.role[0] === role.CUSTOMER) {
       navigate("/");
-      openNotificationIcon("error", "Error", "Not Have Access")
+      openNotificationIcon("error", "Lỗi", "Không có quyền truy cập")
     }
   }, [isLoggedIn, navigate, user]);
   const handleLogout = () => {
@@ -41,22 +39,22 @@ export default function SideBarManager() {
 
   const adminData = [
     {
-      name: "Users",
+      name: "Người dùng",
       path: "/manager/user",
       Icon: RiAccountCircleFill,
     },
     {
-      name: "Blog",
+      name: "Bài viết",
       path: "/manager/blog",
       Icon: BsFillPencilFill,
     },
     {
-      name: "Statistical",
+      name: "Thống kê",
       path: "/manager/statistical",
       Icon: AiOutlineBarChart,
     },
     {
-      name: "Amenity",
+      name: "Tiện ích",
       path: "/manager/amenity",
       Icon: BsFillHouseGearFill,
     },
@@ -66,37 +64,37 @@ export default function SideBarManager() {
   const ownerData = [
 
     {
-      name: "House",
+      name: "Căn hộ",
       path: "/manager/house",
       Icon: BsHouse,
     },
     {
-      name: "Statistical",
+      name: "Thống kê",
       path: "/manager/statistical",
       Icon: AiOutlineBarChart,
     },
     {
-      name: "Calendar",
+      name: "Lịch",
       path: "/manager/calendar",
       Icon: MdCalendarToday,
     },
     {
-      name: "Feedback",
+      name: "Phản hồi",
       path: "/manager/feedback",
       Icon: RiFeedbackFill,
     },
     {
-      name: "Order",
+      name: "Đặt phòng",
       path: "/manager/order",
       Icon: BsFillCartFill,
     },
     {
-      name: "Location",
+      name: "Vị trí",
       path: "/manager/location",
       Icon: MdLocationOn,
     },
     {
-      name: "Blog",
+      name: "Bài viết",
       path: "/manager/blog",
       Icon: BsFillPencilFill,
     },
@@ -158,7 +156,7 @@ export default function SideBarManager() {
                     className="flex  cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <CiLogout className='text-[20px]' />
-                    <span className=" ml-3 whitespace-nowrap">Logout</span>
+                    <span className=" ml-3 whitespace-nowrap">Đăng xuất</span>
                   </div>
                 </li>
               </div>

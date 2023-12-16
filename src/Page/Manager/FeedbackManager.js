@@ -8,7 +8,7 @@ export default function FeedbackManager() {
   const [orders, setOrders] = useState([]);
   const [isCancelModalVisible, setIsCancelModalVisible] = useState(false);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 5 });
-  
+
   const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
   useEffect(() => {
@@ -22,37 +22,37 @@ export default function FeedbackManager() {
         console.log(err);
       });
   }, [idUser]);
-  
+
   // Các cột cho bảng
   const columns = [
     {
-      title: 'Name Room',
+      title: 'Tên phòng',
       dataIndex: 'nameRoom',
       key: 'nameRoom',
     },
     {
-      title: 'Customer',
+      title: 'Khách hàng',
       dataIndex: 'nameUser',
       key: 'nameUser'
     },
     {
-      title: 'Feedback',
+      title: 'Đánh giá',
       dataIndex: 'content',
       key: 'content',
     },
     {
-      title: 'Star rating',
+      title: 'Xếp hạng sao',
       dataIndex: 'numberOfStars',
       key: 'numberOfStars',
       render: (numberOfStars) => <Rate disabled defaultValue={numberOfStars} />,
     },
     {
-      title: 'Date',
+      title: 'Ngày',
       dataIndex: 'createDate',
       key: 'createDate',
     },
   ];
-  
+
 
   const handleCancel = () => {
     // orderService.canceluser(cancelOrderId).then((res) => {
@@ -71,8 +71,9 @@ export default function FeedbackManager() {
     setIsCancelModalVisible(false);
   };
   return (
-    <div className="container mx-auto pb-5 mb:pt-[0px] sm:pt-[0px] md:pt-[6rem]">
-      <Table dataSource={orders} columns={columns}  pagination={pagination}/>
+    <div className="container mx-auto">
+      <h1 className='text-center mb-5 font-semibold text-2xl'>Đánh giá</h1>
+      <Table dataSource={orders} columns={columns} pagination={pagination} />
       <Modal
         title="Order Cancellation Confirmation"
         visible={isCancelModalVisible}

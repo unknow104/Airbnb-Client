@@ -30,6 +30,17 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAP
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
+//FORGOT PASSWORD
+export const forgotPassword = createAsyncThunk('auth/forgotPassword', async (email, thunkAPI) => {
+  try {
+    const res = await https.post('/api/v1/auth/forgot-password', { email });
+    // Xử lý phản hồi thành công (nếu cần)
+    return res.data;
+  } catch (error) {
+    // Xử lý lỗi
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
 
 //LOGOUT
 export const logoutUser = createAsyncThunk('auth/logoutUser', async (user, thunkAPI) => {
@@ -123,7 +134,32 @@ const authSlice = createSlice({
           registerSuccess: false,
           isRegisterAccountSuccess: true,
         };
+      })
+      .addCase(forgotPassword.pending, (state) => {
+        return {
+          ...state,
+          isLoading: true,
+        };
+      })
+      .addCase(forgotPassword.fulfilled, (state, { payload }) => {
+        // Xử lý phản hồi thành công (nếu cần)
+        return {
+          ...state,
+          isLoading: false,
+          forgotPasswordSuccess: true,
+          // Cập nhật trạng thái hoặc dispatch các action cần thiết
+        };
+      })
+      .addCase(forgotPassword.rejected, (state, { payload }) => {
+        // Xử lý phản hồi thất bại
+        return {
+          ...state,
+          isLoading: false,
+          forgotPasswordSuccess: false,
+          // Cập nhật trạng thái hoặc dispatch các action cần thiết
+        };
       });
+
   },
 });
 // Action creators are generated for each case reducer function

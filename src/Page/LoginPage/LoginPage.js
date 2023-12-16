@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, Modal } from 'antd';
 import './Login.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { loginUser } from '../../Redux/auth/authSlice';
 import { localStorageService } from '../../services/localStorageService';
+import { authService } from '../../services/authService';
+import { openNotificationIcon } from '../../Components/NotificationIcon/NotificationIcon';
 function LoginPage() {
+  const [email, setEmail] = useState('');
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
   const onFinish = (values) => {
     console.log(values)
     dispatch(loginUser(values))
@@ -27,6 +31,24 @@ function LoginPage() {
       }
     }
   }, [isLoggedIn, navigate]);
+
+  const handleForgotPassword = async () => {
+    try {
+      await authService.forgotPassword(email);
+      // Hiển thị thông báo thành công nếu cần
+      openNotificationIcon('success', 'Thành công', 'Gửi yêu cầu thành công!');
+      setModalOpen(false);
+    } catch (error) {
+      console.error('Quên mật khẩu thất bại:', error);
+      // Hiển thị thông báo lỗi
+      openNotificationIcon('erorr', 'Thất bại', 'Gửi yêu cầu thất bại!');
+    }
+  };
+
+  const handleCancelForgotPassword = () => {
+    // Đặt lại trạng thái hoặc thực hiện các tác vụ khác nếu cần
+    setModalOpen(false);
+  };
   const onFinishFailed = (errorInfo) => { };
 
 
@@ -103,7 +125,7 @@ function LoginPage() {
               <Link to="/register" className="mt-5 text-blue w-full inline text-left text-bold underline">
                 Bạn chưa có tài khoản
               </Link>
-              <a to="/" className="mt-5 text-blue w-full inline text-right text-bold underline">
+              <a onClick={() => setModalOpen(true)} className="mt-5 text-blue w-full inline text-right text-bold underline">
                 quên mật khẩu
               </a>
             </div>
@@ -140,6 +162,21 @@ function LoginPage() {
           />
         </div>
       </div>
+      <Modal
+        title="Quên mật khẩu"
+        centered
+        visible={modalOpen}
+        onOk={handleForgotPassword}
+        onCancel={handleCancelForgotPassword}
+      >
+        <br />
+        <p className='mb-1 ml-1'>{t('Nhập email của bạn để đặt lại mật khẩu')}</p>
+        <Input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Nhập email"
+        />
+      </Modal>
     </div>
   );
 }

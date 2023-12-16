@@ -15,42 +15,36 @@ export default function UpdateHouseManager() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const [amenities, setAmenities] = useState([])
+  const [amenities, setAmenities] = useState([]);
   const [selectedAmenities, setSelectedAmenities] = useState([]);
-  
-
-
-
-
 
   useEffect(() => {
     roomService
       .getHouseById(id)
       .then((res) => {
-        console.log(res);
         setRoomDetail(res.data);
-        // Set form initial values after receiving the room details
         form.setFieldsValue({
+          // Set initial form values based on the received data
           name: res.data.name || "",
           description: res.data.description || "",
           price: res.data.price || 0,
           codeLocation: res.data.codeLocation || undefined,
           address: res.data.address.fullAddress || "",
-          
           maxGuests: res.data.maxGuests || 1,
           numLivingRooms: res.data.numLivingRooms || 0,
           numBathrooms: res.data.numBathrooms || 0,
           numBedrooms: res.data.numBedrooms || 0,
+          allowPet: res.data.allowPet,
         });
+
+        // If there are amenities, set the selected amenities
+        if (res.data.amenities) {
+          setSelectedAmenities(res.data.amenities.map((amenity) => amenity.id));
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-
-      if (roomDetail.amenities) {
-        setSelectedAmenities(roomDetail.amenities.map((amenity) => amenity.id));
-      }
-      
   }, [id, form]);
 
   useEffect(() => {
@@ -61,64 +55,49 @@ export default function UpdateHouseManager() {
       } catch (error) {
         console.log(error);
       }
-
     };
     getAmenities();
-  },[])
+  }, []);
 
   const handleCheckboxChange = (amenityId) => {
-    setRoomDetail((prevRoomData) => {
-      const isAmenitySelected = prevRoomData.amenities.includes(amenityId);
-
-      if (isAmenitySelected) {
-        return {
-          ...prevRoomData,
-          selectedAmenities: prevRoomData.amenities.filter((id) => id !== amenityId),
-        };
-      } else {
-        return {
-          ...prevRoomData,
-          selectedAmenities: [...prevRoomData.amenities, amenityId],
-        };
-      }
+    // Update the selected amenities directly
+    setSelectedAmenities((prevSelectedAmenities) => {
+      return prevSelectedAmenities.includes(amenityId)
+        ? prevSelectedAmenities.filter((id) => id !== amenityId)
+        : [...prevSelectedAmenities, amenityId];
     });
   };
 
-
   const onFinish = (values) => {
-    console.log(values);
     const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    formData.append("price", values.price);
+    formData.append("codeLocation", values.codeLocation);
+    formData.append("address", values.address);
+    formData.append("allowPet", values.allowPet ? "true" : "false");
+    formData.append("maxGuests", values.maxGuests);
+    formData.append("numLivingRooms", values.numLivingRooms);
+    formData.append("numBathrooms", values.numBathrooms);
+    formData.append("numBedrooms", values.numBedrooms);
+    formData.append("images", []);
 
-    formData.append('name', values.name);
-    formData.append('description', values.description);
-    formData.append('price', values.price);
-    formData.append('codeLocation', values.codeLocation);
-    formData.append('address', values.address);
-    formData.append('washingMachine', values.washingMachine ? 'true' : 'false');
-    formData.append('television', values.television ? 'true' : 'false');
-    formData.append('airConditioner', values.airConditioner ? 'true' : 'false');
-    formData.append('wifi', values.wifi ? 'true' : 'false');
-    formData.append('kitchen', values.kitchen ? 'true' : 'false');
-    formData.append('parking', values.parking ? 'true' : 'false');
-    formData.append('pool', values.pool ? 'true' : 'false');
-    formData.append('maxGuests', values.maxGuests);
-    formData.append('numLivingRooms', values.numLivingRooms);
-    formData.append('numBathrooms', values.numBathrooms);
-    formData.append('numBedrooms', values.numBedrooms);
-    formData.append('images', []);
+    // Append selected amenity IDs to FormData
+    selectedAmenities.forEach((amenityId) => {
+      formData.append("amenities", amenityId);
+    });
 
-
-    // Call the API to update the room
     roomService
       .update(id, formData)
       .then((res) => {
-        console.log("Room updated:", res);
-        navigate("/manager/house"); // Redirect to the home page after successful update
+        console.log("Phòng được cập nhật:", res);
+        navigate("/manager/house");
       })
       .catch((err) => {
-        console.log("Update failed:", err);
+        console.log("Cập nhật thất bại:", err);
       });
   };
+
   const handleStreetChange = (e) => {
     form.setFieldsValue({
       address:
@@ -132,51 +111,52 @@ export default function UpdateHouseManager() {
     });
   };
 
+
   return (
     <div className="update-house-manager-container">
-      <h1 className="update-house-manager-title">
-        {t("Update House Manager")}
+      <h1 className="font-semibold mx-auto text-center text-2xl">
+        {t("Cập Nhật Phòng Trọ")}
       </h1>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item
-          label={t("Name")}
+          label={t("Tên")}
           name="name"
-          rules={[{ required: true, message: t("Please enter the name") }]}
+          rules={[{ required: true, message: t("Vui lòng nhập tên") }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label={t("Description")}
+          label={t("Mô Tả")}
           name="description"
           rules={[
-            { required: true, message: t("Please enter the description") },
+            { required: true, message: t("Vui lòng nhập mô tả") },
           ]}
         >
           <Input.TextArea />
         </Form.Item>
         <Form.Item
-          label={t("Address")}
+          label={t("Địa Chỉ")}
           name="address"
-          rules={[{ required: true, message: t("Please select the address") }]}
+          rules={[{ required: true, message: t("Vui lòng chọn địa chỉ") }]}
         >
           <Input.TextArea />
         </Form.Item>
         <Row gutter={16}>
           <Col span={8}>
             <Form.Item
-              label={t("Price")}
+              label={t("Giá")}
               name="price"
-              rules={[{ required: true, message: t("Please enter the price") }]}
+              rules={[{ required: true, message: t("Vui lòng nhập giá") }]}
             >
               <Input type="number" min={1} />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item
-              label={t("Max Guests")}
+              label={t("Số Khách Tối Đa")}
               name="maxGuests"
               rules={[
-                { required: true, message: t("Please enter the max guests") },
+                { required: true, message: t("Vui lòng nhập số khách tối đa") },
               ]}
             >
               <Input type="number" min={1} />
@@ -184,12 +164,12 @@ export default function UpdateHouseManager() {
           </Col>
           <Col span={8}>
             <Form.Item
-              label={t("Number of Living Rooms")}
+              label={t("Số Phòng Khách")}
               name="numLivingRooms"
               rules={[
                 {
                   required: true,
-                  message: t("Please enter the number of living rooms"),
+                  message: t("Vui lòng nhập số phòng khách"),
                 },
               ]}
             >
@@ -201,12 +181,12 @@ export default function UpdateHouseManager() {
         <Row gutter={16}>
           <Col span={8}>
             <Form.Item
-              label={t("Number of Bathrooms")}
+              label={t("Số Phòng Tắm")}
               name="numBathrooms"
               rules={[
                 {
                   required: true,
-                  message: t("Please enter the number of bathrooms"),
+                  message: t("Vui lòng nhập số phòng tắm"),
                 },
               ]}
             >
@@ -215,12 +195,12 @@ export default function UpdateHouseManager() {
           </Col>
           <Col span={8}>
             <Form.Item
-              label={t("Number of Bedrooms")}
+              label={t("Số Phòng Ngủ")}
               name="numBedrooms"
               rules={[
                 {
                   required: true,
-                  message: t("Please enter the number of bedrooms"),
+                  message: t("Vui lòng nhập số phòng ngủ"),
                 },
               ]}
             >
@@ -229,14 +209,13 @@ export default function UpdateHouseManager() {
           </Col>
         </Row>
 
-        <Form.Item label={t("Amenities")} wrapperCol={{ span: 16 }}>
+        <Form.Item label={t("Tiện Ích")} wrapperCol={{ span: 16 }}>
           <Row>
             {amenities && amenities?.map((amenity) => (
               <Col span={8} key={amenity.id}>
                 <Form.Item
                   name={amenity.name}
                   valuePropName="checked"
-                  // initialValue={false}
                 >
                   <Checkbox
                     value={amenity.id}
@@ -248,6 +227,12 @@ export default function UpdateHouseManager() {
                 </Form.Item>
               </Col>
             ))}
+            <Form.Item
+              name="allowPet"
+              valuePropName="checked"
+            >
+              <Checkbox>Cho phép mang thú cưng</Checkbox>
+            </Form.Item>
           </Row>
         </Form.Item>
 
@@ -256,7 +241,7 @@ export default function UpdateHouseManager() {
             className="px-3 py-2 rounded-lg bg-primary text-whitefont-medium hover:bg-[#FF2171] font-bold text-white transition-all"
             htmlType="submit"
           >
-            Cập nhập
+            Cập Nhật
           </button>
         </Form.Item>
       </Form>

@@ -13,20 +13,15 @@ import {
   Upload,
   message
 } from "antd";
-import { UploadOutlined } from '@ant-design/icons';
-
 import { PlusOutlined } from '@ant-design/icons';
 import axios from "axios";
 import { locationService } from "../../../../services/locationService";
 import { roomService } from "../../../../services/RoomService";
-import { useDispatch } from "react-redux";
-import Loading from "../../../../Components/Loading/Loading";
 import { localStorageService } from "../../../../services/localStorageService";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { openNotificationIcon } from "../../../../Components/NotificationIcon/NotificationIcon";
 import { amenityService } from "../../../../services/amenityService";
-import FormItem from "antd/es/form/FormItem";
 
 const PROVINCES_API_URL = "https://provinces.open-api.vn/api";
 
