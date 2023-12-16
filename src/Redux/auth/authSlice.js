@@ -16,7 +16,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAP
     const res = await https.post(`/api/v1/auth/login`, user);
     localStorageService.set('accessToken', res.data.token);
     localStorageService.set('USER', res.data);
-    openNotificationIcon('success', 'Success', 'Login Success!');
+    openNotificationIcon('success', 'Thành công', 'Đăng nhập thành công!');
     console.log(res)
     return res.data;
   } catch (error) {

@@ -182,7 +182,7 @@ export default function OrderPage() {
     feedBackService
       .create(feedbackData)
       .then((res) => {
-        openNotificationIcon("success", "Success", "Feedback submitted successfully")
+        openNotificationIcon("success", "Thành công", "Thêm bình luận thành công!")
         setFeedbackContent("");
         userService
           .getFeedBack(idUser)

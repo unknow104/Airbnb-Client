@@ -39,7 +39,7 @@ export default function Feedback(room) {
         <div className="p-[1.2rem] text-left border rounded-[0.4rem] block bg-[#ffffff]" key={i}>
 
           <div className="flex items-start gap-5 w-full">
-          <Avatar className="bg-[#87d068]" size={35}>{item.nameUser.charAt(0)}</Avatar>
+            <Avatar className="bg-[#87d068]" size={35}>{item.nameUser.charAt(0)}</Avatar>
             <div className="flex-1">
               <div className="flex items-center justify-between mb-[-0.5rem]">
                 <p className="font-bold">{item.nameUser}</p>
@@ -52,7 +52,7 @@ export default function Feedback(room) {
         </div>
       ));
     } else {
-      return <div className="">No Feed Back</div>;
+      return <div className="">Chưa có dữ liệu</div>;
     }
   };
 
@@ -69,7 +69,7 @@ export default function Feedback(room) {
   return (
     <div className="w-full py-[2.2rem] border-b-[1px] border-[#dadada]">
       <h1 className="text-[1.625rem] mb-[1.25rem] font-[600]">
-        {t("Feed Back")}
+        Đánh giá
       </h1>
       <div className="space-y-2">{renderFeedBack()}</div>
       <div className="flex justify-center mt-4">
@@ -80,14 +80,14 @@ export default function Feedback(room) {
               onClick={handlePrevPage}
               disabled={currentPage === 1}
             >
-              Previous
+              Trước
             </button>
             <button
               className={`bg-primary text-white font-bold py-2 px-4 rounded ${currentPage === totalPages ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : ''}`}
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              Next
+              Sau
             </button>
           </div>
         )}
