@@ -3,14 +3,14 @@ import { roomService } from '../../services/RoomService';
 import { useNavigate, useParams } from 'react-router-dom';
 import SkeletonDetail from '../../Components/Skeleton/SkeletonDetail';
 import { useTranslation } from 'react-i18next';
-import { IoBedOutline } from 'react-icons/io5';
+import { IoBedOutline, IoListCircle } from 'react-icons/io5';
 import './DetailRoomPage.scss';
 import OrderForm from './OrderForm/OrderForm';
 import Feedback from './Feedback/Feedback';
 import { favoriteService } from '../../services/favoriteService';
 import { openNotificationIcon } from '../../Components/NotificationIcon/NotificationIcon';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaMinus } from 'react-icons/fa';
 import { localStorageService } from '../../services/localStorageService';
 import { MdOutlineLiving, MdOutlineBathtub, MdOutlinePets } from "react-icons/md";
 import { FaBan } from "react-icons/fa";
@@ -206,6 +206,17 @@ export default function DetailRoomPage() {
 
               </div>
               {/* {renderItemUtilities()} */}
+              <div className="w-full py-[2.2rem] border-b-[1px] border-[#dadada]">
+                <h1 className="text-[1.625rem] mb-[1.25rem] font-[600]">
+                  Tiện ích của phòng
+                </h1>
+                <div className='flex'>
+                  <FaMinus size={20} />
+                  {roomDetail?.amenities.map((amenity) => {
+                    <h2 className="font-[500] mx-2 text-[1rem]">{amenity.name}</h2>
+                  })}
+                </div>
+              </div>
               <Feedback room={roomDetail} />
             </div>
             <div className="pl-[6rem] mb:hidden sm:hidden md:block w-2/5 h-[800px]">
