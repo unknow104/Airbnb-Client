@@ -175,7 +175,7 @@ export default function ProfilePage() {
                     <button
                       className='underline font-semibold block'
                       onClick={() => {
-                        navigate(`/profile/edit-user/${infor?.id}`)
+                        navigate(`/profile/change-password/${infor?.id}`)
                       }}
                     >
                       Thay đổi mật khẩu
