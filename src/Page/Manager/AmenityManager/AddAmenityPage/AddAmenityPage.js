@@ -5,30 +5,36 @@ import 'react-quill/dist/quill.snow.css';
 import { amenityService } from '../../../../services/amenityService';
 import { localStorageService } from '../../../../services/localStorageService';
 import { useNavigate } from 'react-router-dom';
+import { openNotificationIcon } from '../../../../Components/NotificationIcon/NotificationIcon';
 
 export default function AddAmenityPage() {
   const [form] = Form.useForm();
-  const [user] = useState(localStorageService.get("USER"));
   const navigate = useNavigate();
+  const [imageChange, setImageChange] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const handleImageChange = (value) => {
+    const files = [...value.fileList];
+    setImageChange(files[0])
+  };
   const onFinish = (values) => {
+    setIsLoading(true)
     console.log('Form submitted:', values);
     const formData = new FormData();
-    formData.append('id', 0);
     formData.append('name', values.name);
-    // Check if imageUrl is a File object
-    if (values.imageUrl && values.imageUrl.file) {
-      formData.append('imageUrl', values.imageUrl.file);
-    }
+    formData.append('imageUrl', imageChange.originFileObj);
+
     console.log(formData);
     amenityService.addAmenity(formData)
       .then((res) => {
         form.resetFields();
         console.log(res);
         navigate('/manager/amenity');
+        openNotificationIcon("susses", "Thành công", "Thêm mới tiện ích thành công");
       })
       .catch((err) => {
         console.log(err);
+        console.error('Error adding amenity:', err);
       });
   };
 
@@ -50,7 +56,7 @@ export default function AddAmenityPage() {
           <Input />
         </Form.Item>
         <Form.Item
-          label="imageUrl"
+          label="Icon"
           name="imageUrl"
           rules={[{ required: true, message: 'Vui lòng tải ảnh lên' }]}
           labelCol={labelCol}
@@ -60,13 +66,14 @@ export default function AddAmenityPage() {
             maxCount={1}
             beforeUpload={() => false}
             listType="picture-card"
+            onChange={handleImageChange}
           >
             <Button icon={<UploadOutlined />}>Icon</Button>
           </Upload>
         </Form.Item>
         <Form.Item wrapperCol={{ offset: labelCol.span, span: wrapperCol.span }}>
           <Button className='bg-primary text-white font-bold w-32' htmlType="submit">
-            Thêm mới
+            {isLoading ? 'Loading...' : 'Thêm mới'}
           </Button>
         </Form.Item>
       </Form>

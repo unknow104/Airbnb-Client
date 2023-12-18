@@ -48,7 +48,7 @@ export default function AddHouseManager() {
   const { Option } = Select;
   const navigate = useNavigate();
   const [amenities, setAmenities] = useState([])
-  const [selectedAmenities, setSelectedAmenities] = useState([]);
+  const [selectedAmenities, setSelectedAmenities] = useState(new Set());
 
   const MINIMUM_IMAGES = 5;
   console.log(user.userDTO.id)
@@ -89,19 +89,15 @@ export default function AddHouseManager() {
   }, []);
 
   const handleCheckboxChange = (amenityId) => {
-    // Kiểm tra xem amenityId có trong selectedAmenities không
-    const isAmenitySelected = selectedAmenities.includes(amenityId);
-    // Nếu amenityId đã được chọn, loại bỏ nó khỏi danh sách
-    // Nếu amenityId chưa được chọn, thêm nó vào danh sách
     setSelectedAmenities((prevSelectedAmenities) => {
-      if (isAmenitySelected) {
-        return prevSelectedAmenities.filter((id) => id !== amenityId);
+      const newSelectedAmenities = new Set(prevSelectedAmenities);
+      if (newSelectedAmenities.has(amenityId)) {
+        newSelectedAmenities.delete(amenityId);
       } else {
-        return [...prevSelectedAmenities, amenityId];
+        newSelectedAmenities.add(amenityId);
       }
+      return newSelectedAmenities;
     });
-
-    console.log(selectedAmenities);
   };
 
   useEffect(() => {
@@ -202,7 +198,7 @@ export default function AddHouseManager() {
     formData.append("price", values.price);
     formData.append("codeLocation", idLocation);
     formData.append("address", address);
-    formData.append("amenities", selectedAmenities);
+    formData.append("amenities", [...selectedAmenities]);
     formData.append("maxGuests", values.maxGuests);
     formData.append("numLivingRooms", values.numLivingRooms);
     formData.append("numBathrooms", values.numBathrooms);
@@ -403,7 +399,7 @@ export default function AddHouseManager() {
                       >
                         <Checkbox
                           value={amenity.id}
-                          checked={selectedAmenities.includes(amenity.id)}
+                          checked={selectedAmenities.has(amenity.id)}
                           onChange={() => handleCheckboxChange(amenity.id)
                           }>{amenity.name}</Checkbox>
                       </Form.Item>

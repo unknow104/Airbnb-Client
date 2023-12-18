@@ -11,6 +11,7 @@ import { AiOutlineLoading } from 'react-icons/ai';
 import { IoPulseOutline } from 'react-icons/io5';
 
 export default function EditUserPage() {
+  const [isLoading, setIsLoading] = useState(false);
   const [form] = Form.useForm();
   const [content, setContent] = useState('');
   const [user, setUser] = useState({});
@@ -43,6 +44,7 @@ export default function EditUserPage() {
   }, []);
 
   const onFinish = async (values) => {
+    setIsLoading(true)
     try {
       const formData = new FormData();
       formData.append('name', values.name);
@@ -69,7 +71,6 @@ export default function EditUserPage() {
   const uploadButton = (
     <div>
       <FaPlus />
-      {/* {loading ? <AiOutlineLoading /> : <IoPulseOutline />} */}
       <div
         style={{
           marginTop: 8,
@@ -84,7 +85,7 @@ export default function EditUserPage() {
   const wrapperCol = { span: 16 };
 
   return (
-    <div className="container h-max mt-32">
+    <div className="container h-max mt-32 justify-center">
       <div className='ms-40'>
         <button className='flex h-12 align-middle' onClick={() => { navigate('/profile') }}>
           <FaArrowLeft className='my-auto' /> <span className='font-semibold ms-3 text-lg my-auto'>Quay lại</span>
@@ -93,7 +94,6 @@ export default function EditUserPage() {
       <h1 className="uppercase font-bold text-primary text-[20px] text-center my-5">
         Cập nhật thông tin của bạn.
       </h1>
-
       <Form form={form} onFinish={onFinish} initialValues={{ gender: 'gender' }}>
         <Form.Item
           label="Ảnh của bạn"
@@ -186,8 +186,14 @@ export default function EditUserPage() {
           <Input readOnly />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: labelCol.span, span: wrapperCol.span }}>
-          <Button className="font-semibold text-white bg-gradient-to-r from-pink-600 to-red-500" htmlType="submit">
-            Cập nhật
+          <Button
+            className="hover:blacks w-[120px] rounded-[0.5rem] bg-primary btn-login text-white py-[6px] px-[12px]"
+            type="primary"
+            size="large"
+            htmlType="submit"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Loading...' : 'Cập nhập'}
           </Button>
         </Form.Item>
       </Form>
