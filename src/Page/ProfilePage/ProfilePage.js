@@ -172,6 +172,14 @@ export default function ProfilePage() {
                     >
                       Cập nhập tài khoản
                     </button>
+                    <button
+                      className='underline font-semibold block'
+                      onClick={() => {
+                        navigate(`/profile/edit-user/${infor?.id}`)
+                      }}
+                    >
+                      Thay đổi mật khẩu
+                    </button>
                   </div>
                   {/* Add more personal information here */}
                 </div>
