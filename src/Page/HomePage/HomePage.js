@@ -56,10 +56,10 @@ function HomePage() {
   };
 
   const handleDecrease = () => {
-    setRoom([...room].sort((a, b) => (a.price > b.price ? -1 : 1)));
+    setRoom([...room].sort((a, b) => (a.price > b.price ? 1 : -1)));
   };
   const handleIncrease = () => {
-    setRoom([...room].sort((a, b) => (a.price > b.price ? 1 : -1)));
+    setRoom([...room].sort((a, b) => (a.price > b.price ? -1 : 1)));
   };
 
   const paginate = (pageNumber) => {

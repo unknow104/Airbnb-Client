@@ -99,6 +99,10 @@ export default function NewBlogManagerPage() {
         <Form.Item
           label="Nội dung"
           name="content"
+          rules={[
+            { required: true, message: 'Please enter the short description' },
+            { max: 100, message: 'Short description must be less than 20 characters' },
+          ]}
           labelCol={labelCol}
           wrapperCol={wrapperCol}
         >

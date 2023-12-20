@@ -155,7 +155,7 @@ export default function AddHouseManager() {
       setSelectedWard(null);
     }
   }, [selectedDistrict]);
-
+  
   const labelCol = { span: 4 };
   const wrapperCol = { span: 24 };
 
