@@ -153,20 +153,21 @@ export default function DetailRoomPage() {
           </div>
           <div className="w-full flex h-full">
             <div className="mb:w-full sm:w-full md:w-3/5 lg:w-3/5">
-              <p className="text-2xl font-semibold my-[0.7rem] text-[#222222]">
+              <p className="text-2xl mt-4 font-semibold my-[0.7rem] text-[#222222]">
                 {roomDetail?.description}
               </p>
-              <div className="aircover border-b-[1px] border-[#dadada]">
-                <h1 className="font-[700] text-[red] text-[32px]">
-                  air<span className="font-[700] text-black text-[32px]">cover</span>
-                </h1>
-                <div className="w-full mb:py-[1rem] sm:py-[1rem] md:py-[2.2rem] border-b-[1px] border-[#dadada]">
+              <div className="border-b-[1px] border-[#dadada]">
+                <div className="w-full mb-3 border-[#dadada]">
                   <span className="text-[1rem] font-[400] text-[#717171]">
                     {roomDetail?.maxGuests} khách - {roomDetail?.numBedrooms} phòng ngủ - {roomDetail?.numLivingRooms} phòng khách -  {roomDetail?.numBathrooms} nhà tắm
                   </span>
                   <p className="text-[1rem] font-[400] text-[#717171]">{roomDetail?.codeLocation}</p>
                   <p className="text-[1rem] font-[400] text-[#717171]">{roomDetail?.address?.fullAddress}</p>
                 </div>
+                <hr />
+                <p className='mt-5 mb-3 font-semibold'>
+                  Chủ nhà/người tổ chức: {roomDetail?.userName}
+                </p>
               </div>
               <div className="w-full py-[2.2rem] border-b-[1px] border-[#dadada]">
                 <h1 className="text-[1.625rem] mb-[1.25rem] font-[600]">

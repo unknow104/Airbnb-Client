@@ -70,28 +70,28 @@ export default function OrderPage() {
   // Các cột cho bảng
   const columns = [
     {
-      title: "Name Room",
+      title: "Tên phòng",
       dataIndex: "roomDTO",
       key: "roomDTO",
       render: (roomDTO) => <Link to={`/detail-room/${roomDTO.id}`}>{roomDTO.name}</Link>,
     },
     {
-      title: "Quantity ",
+      title: "Khách tối đa",
       dataIndex: "numGuests",
       key: "numGuests",
     },
     {
-      title: "Received Date",
+      title: "Ngày nhận phòng",
       dataIndex: "receivedDate",
       key: "receivedDate",
     },
     {
-      title: "Checkout Date",
+      title: "Ngày trả phòng",
       dataIndex: "checkoutDate",
       key: "checkoutDate",
     },
     {
-      title: "Status",
+      title: "Trạng thái",
       dataIndex: "status",
       key: "status",
       render: (status) => <Tag color={getStatusColor(status)}>{status}</Tag>,
@@ -109,7 +109,7 @@ export default function OrderPage() {
                 danger
                 onClick={() => showFeedbackModal(record.id)}
               >
-                FeedBack
+                Phản hồi
               </Button>
             }
             {
@@ -118,7 +118,7 @@ export default function OrderPage() {
                 danger
                 onClick={() => showCancelModal(record.id)}
               >
-                Cancel
+                Hủy
               </Button>
             }
           </div>
@@ -209,13 +209,13 @@ export default function OrderPage() {
     );
 
     if (!feedbacksForOrderId || feedbacksForOrderId.length === 0) {
-      return <p>No feedbacks found for this order.</p>;
+      return <p>Không tìm thấy phản hồi cho đơn đặt hàng này</p>;
     }
 
     return (
       <div>
         <h3 className="text-lg font-semibold mb-2">
-          Feedbacks for Order ID: {record.id}
+          Phản hồi về đơn hàng: {record.id}
         </h3>
         {feedbacksForOrderId.map((feedback) => (
           <div key={feedback.id} className="flex items-center mb-2">

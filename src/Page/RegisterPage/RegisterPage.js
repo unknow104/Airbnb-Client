@@ -259,7 +259,6 @@ function RegisterPage() {
                 />
               </Form.Item>
 
-
               <Button
                 className="hover:blacks w-full rounded-[0.5rem] bg-primary btn-login text-white py-[6px] px-[12px]"
                 type="primary"
@@ -280,15 +279,21 @@ function RegisterPage() {
             </div>
           </div>
         </div>
-        <div className="w-2/4  mb:hidden sm:hidden lg:flex relative bg-[#e86f7d] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
-          <div className="glass h-[80%] relative w-[30rem] rouded-[0.5rem] bg-white p-8">
-            <h1 className="text-[30px] text-center font-bold mb-[20px] text-black">
+        <div className="w-2/4 mb:hidden sm:hidden lg:flex relative bg-[#e86f7d] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
+          <div className="glass h-[80%] relative w-[30rem] rouded-[0.5rem] bg-mainColor z-10 animate__delay-1s animate__animated animate__fadeInUp">
+            <h1 className="text-[30px] text-left p-5 font-semibold text-black">
               Khám phá những nơi tuyệt vời
             </h1>
+            <img src="../img/img.png" className="bottom-0 w-[70%] absolute left-20 " alt="" />
             <p className="text-xl text-center text-black">
               để bắt đầu một hành trình đầy thú vị
             </p>
           </div>
+          <img
+            className="absolute right-[9rem] bottom-0 z-none"
+            src="../img/decoration.png"
+            alt=""
+          />
         </div>
       </div>
       <Modal
@@ -300,7 +305,7 @@ function RegisterPage() {
       >
         <br />
         <p className='mb-1 ml-1'>{t('Nhập mã otp mà chúng tôi đã gửi cho bạn')}</p>
-        <Input value={confirmCode} onChange={(e) => setConfirmCode(e.target.value)} placeholder="large size" prefix={<IoIosMailOpen className='ml-4 text-[24px] ' />} />
+        <Input value={confirmCode} onChange={(e) => setConfirmCode(e.target.value)} placeholder="Mã otp" prefix={<IoIosMailOpen className='ml-4 text-[24px] ' />} />
       </Modal>
     </div>
   );

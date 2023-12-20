@@ -14,20 +14,15 @@ function BannerVideo() {
     <>
       <div className="container flex mx-auto h-full mb:hidden sm:hidden lg:flex">
         <div className="left relative flex py-[1.5rem] mb:items-end sm:items-end lg:items-center mb:w-full sm:w-full justify-center  lg:w-2/4 bg-black">
-          <img
-            className="absolute top-[1.5rem] left-0 z-10 "
-            src="https://res.cloudinary.com/dvzingci9/image/upload/v1665423816/airBnB/logo/logo_alone_white_vnr65q.png"
-            alt=""
-          />
           <div className="max-w-[450px] flex flex-col justify-center mb:mb-8 lg:mb-0 sm:mb-8 items-center">
             <h1 className="text-[3.5rem] font-[700] text-center text-white">
-              {t('Try hosting on Airbnb')}
+              Trở thành chủ nhà cùng Panther
             </h1>
             <p className="text-center  my-[40px] text-[1rem] text-[#A1A1A1] font-[400]">
-              {t('Join us! We’ll help you every')} <br /> {t('step of the way')}
+              Tham gia với chúng tôi! Chúng tôi sẽ giúp bạn mọi <br /> Bước của con đường
             </p>
             <button onClick={toHostPage} className="btn__try-hosting px-[26px] py-[14px] text-white text-[0.8rem] font-[500]">
-              {t('Try hosting')}
+              Trở thành chủ phòng
             </button>
           </div>
         </div>
@@ -52,7 +47,7 @@ function BannerVideo() {
               {t('Join us! We’ll help you every')} <br /> {t('step of the way')}
             </p>
             <button className="btn__try-hosting px-[26px] py-[14px] text-white text-[0.8rem] font-[500]">
-              Try hosting
+              Trở thành chủ phòng
             </button>
           </div>
         </div>

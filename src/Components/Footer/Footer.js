@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { FaFacebook, FaInstagram, FaGithub } from "react-icons/fa";
-import { localStorageService } from "../../services/localStorageService";
+import React from "react";
 import "./Footer.scss";
 import { useTranslation } from "react-i18next";
 
@@ -10,11 +8,11 @@ function Footer() {
     <div className="footer-infor bg-[#F7F7F7] pt-8 pb-[5rem]  w-full border-t-[1px] border-[#DDDDDD] ">
       <div className="container m-auto grid mb:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <div className="text-left">
-          <h2 className="mb-4 font-[600] text-[0.8rem]">{t("Support")}</h2>
+          <h2 className="mb-4 font-[600] text-[0.8rem]">{t("Hỗ trợ")}</h2>
           <ul className="text-[0.8rem]">
             <li className="mb-4 font-[400]">
               {" "}
-              <a>{t("Help Center")}</a>
+              <a>{t("Trung tâm trợ giúp")}</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
@@ -22,110 +20,110 @@ function Footer() {
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Safety information</a>
+              <a>Thông tin an toàn</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Supporting people with disabilities</a>
+              <a>Hỗ trợ người khuyết tật</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Cancellation option</a>
+              <a>Lựa chọn hủy đặt phòng</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Out COVID-19 Respone</a>
+              <a>Đối phó với COVID-19</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Report a neightborhood concern</a>
+              <a>Báo cáo vấn đề hàng xóm</a>
             </li>
           </ul>
         </div>
         <div className="text-left">
-          <h2 className="mb-4 font-[600] text-[0.8rem]">{t("Community")}</h2>
+          <h2 className="mb-4 font-[600] text-[0.8rem]">{t("Cộng đồng")}</h2>
           <ul className="text-[0.8rem]">
             <li className="mb-4 font-[400]">
               {" "}
-              <a>Airbnb.org:disaster relief housing</a>
+              <a> Nhà ở cứu trợ thảm họa</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Support Afghan refugess</a>
+              <a>Ủng hộ người tị nạn Afghanistan</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Combating discrimination</a>
+              <a>Chống lại phân biệt đối xử</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Support Afghan refugess</a>
+              <a>Ủng hộ người tị nạn Afghanistan</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Combating discrimination</a>
+              <a>Chống lại phân biệt đối xử</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Support Afghan refugess</a>
+              <a>Ủng hộ người tị nạn Afghanistan</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Combating discrimination</a>
+              <a>Chống lại phân biệt đối xử</a>
             </li>
           </ul>
         </div>
         <div className="text-left">
-          <h2 className="mb-4 font-[600] text-[0.8rem]">{t("Hosting")}</h2>
+          <h2 className="mb-4 font-[600] text-[0.8rem]">{t("Đăng ký")}</h2>
           <ul className="text-[0.8rem]">
             <li className="mb-4 font-[400]">
               {" "}
-              <a>Try hosting</a>
+              <a>Thử nghiệm đăng ký</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>AirCover for Hosts</a>
+              <a>Panther cho Chủ nhà</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Explore hosting resources</a>
+              <a>Khám phá tài nguyên đăng ký</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Visit our community forum</a>
+              <a>Thăm diễn đàn cộng đồng của chúng tôi</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>How to host responsibly</a>
+              <a>Cách đăng ký một cách có trách nhiệm</a>
             </li>
           </ul>
         </div>
         <div className="text-left">
-          <h2 className="mb-4 font-[600] text-[0.8rem]">Airbnb</h2>
+          <h2 className="mb-4 font-[600] text-[0.8rem]">Panther</h2>
           <ul className="text-[0.8rem]">
             <li className="mb-4 font-[400]">
               {" "}
-              <a>Newsroom</a>
+              <a>Phòng báo cáo</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Learn about new feature</a>
+              <a>Tìm hiểu về tính năng mới</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Letter from our found</a>
+              <a>Thư từ từ người sáng lập chúng tôi</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Careers</a>
+              <a>Sự nghiệp</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Investors</a>
+              <a>Nhà đầu tư</a>
             </li>
             <li className="mb-4 font-200">
               {" "}
-              <a>Gift cards</a>
+              <a>Thẻ quà tặng</a>
             </li>
           </ul>
         </div>

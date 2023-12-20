@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { localStorageService } from '../../services/localStorageService';
-import { Button, Image, Table, Tabs, Upload, message } from 'antd';
+import { Button, Table, Tabs } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
 import OrderPage from '../OrderPage/OrderPage';
 import { FaHeart } from 'react-icons/fa';
@@ -10,7 +10,6 @@ import { favoriteService } from '../../services/favoriteService';
 import { Link, useLocation } from 'react-router-dom';
 import { openNotificationIcon } from '../../Components/NotificationIcon/NotificationIcon';
 import { useNavigate } from 'react-router-dom';
-import { PlusOutlined } from '@ant-design/icons';
 
 
 export default function ProfilePage() {
@@ -164,22 +163,24 @@ export default function ProfilePage() {
                       <p className='w-32'>Giới tính</p>
                       <span className='font-medium'>{infor?.gender ? "Nam" : "Nữ"}</span>
                     </div>
-                    <button
-                      className='underline font-semibold'
-                      onClick={() => {
-                        navigate(`/profile/edit-user/${infor?.id}`)
-                      }}
-                    >
-                      Cập nhập tài khoản
-                    </button>
-                    <button
-                      className='underline font-semibold block'
-                      onClick={() => {
-                        navigate(`/profile/change-password/${infor?.id}`)
-                      }}
-                    >
-                      Thay đổi mật khẩu
-                    </button>
+                    <div className='flex'>
+                      <button
+                        className='underline font-semibold'
+                        onClick={() => {
+                          navigate(`/profile/edit-user/${infor?.id}`)
+                        }}
+                      >
+                        Cập nhập tài khoản
+                      </button>
+                      <button
+                        className='underline font-semibold block mx-6'
+                        onClick={() => {
+                          navigate(`/profile/change-password/${infor?.id}`)
+                        }}
+                      >
+                        thay đổi mật khẩu
+                      </button>
+                    </div>
                   </div>
                   {/* Add more personal information here */}
                 </div>

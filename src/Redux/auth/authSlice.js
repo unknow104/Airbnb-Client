@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user, thunkAP
     if (error.response && error.response.status === 403) {
       message.error('Từ chối truy cập');
     } else if (error.response && error.response.status === 401) {
-      message.error('Có lỗi khi xác thực người dùng');
+      message.error('Địa chỉ email và người dùng không chính xác !');
     } else {
       message.error('Đăng nhập thất bại');
     }

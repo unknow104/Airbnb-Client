@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Form, Input, Select, Modal } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import './Login.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -8,6 +8,7 @@ import { loginUser } from '../../Redux/auth/authSlice';
 import { localStorageService } from '../../services/localStorageService';
 import { authService } from '../../services/authService';
 import { openNotificationIcon } from '../../Components/NotificationIcon/NotificationIcon';
+
 function LoginPage() {
   const [email, setEmail] = useState('');
   const { t } = useTranslation();
@@ -49,8 +50,6 @@ function LoginPage() {
     // Đặt lại trạng thái hoặc thực hiện các tác vụ khác nếu cần
     setModalOpen(false);
   };
-  const onFinishFailed = (errorInfo) => { };
-
 
   return (
     <div className="login flex items-center justify-center h-screen mb:p-0 sm :p-0 lg:p-[24px] ">
@@ -58,7 +57,7 @@ function LoginPage() {
         <Link className="absolute top-[24px] left-[24px]" to="/">
           <img
             className=" w-[6rem]"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/2560px-Airbnb_Logo_B%C3%A9lo.svg.png"
+            src="https://res-console.cloudinary.com/dzhdgoh2y/thumbnails/v1/image/upload/v1702968893/bG9nb19pbTN4aGM=/grid_landscape"
             alt=""
           />
         </Link>
@@ -81,7 +80,6 @@ function LoginPage() {
                 remember: true,
               }}
               onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
               <Form.Item
@@ -125,9 +123,9 @@ function LoginPage() {
               <Link to="/register" className="mt-5 text-blue w-full inline text-left text-bold underline">
                 Bạn chưa có tài khoản
               </Link>
-              <a onClick={() => setModalOpen(true)} className="mt-5 text-blue w-full inline text-right text-bold underline">
+              <Link onClick={() => setModalOpen(true)} className="mt-5 text-blue w-full inline text-right text-bold underline">
                 quên mật khẩu
-              </a>
+              </Link>
             </div>
             <div className="relative">
               <p
@@ -148,6 +146,7 @@ function LoginPage() {
             </div>
           </div>
         </div>
+        
         <div className="w-2/4 mb:hidden sm:hidden lg:flex relative bg-[#e86f7d] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
           <div className="glass h-[80%] relative w-[30rem] rouded-[0.5rem] bg-mainColor z-10 animate__delay-1s animate__animated animate__fadeInUp">
             <h1 className="text-white text-[30px] text-left p-5">

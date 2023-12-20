@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { blogService } from '../../../../services/blogService';
-import { useDispatch } from 'react-redux';
 import { localStorageService } from '../../../../services/localStorageService';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,28 +10,27 @@ export default function NewBlogManagerPage() {
   const [form] = Form.useForm();
   const [content, setContent] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
-  const [shortDescription, setShortDescription] = useState('');
-  const [user,setUser] = useState(localStorageService.get("USER"))
+  const [user, setUser] = useState(localStorageService.get("USER"))
   const navigate = useNavigate()
   const onFinish = (values) => {
     console.log('Form submitted:', values);
-  
+
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('image', selectedImage);
     formData.append('content', content);
     formData.append('shortDescription', values.shortDescription);
-      blogService.create(user.userDTO.id,formData)
-    .then((res) => {
-    form.resetFields()
-    console.log(res);
-    navigate('/manager/blog')
-  })
-  .catch((err) => {
+    blogService.create(user.userDTO.id, formData)
+      .then((res) => {
+        form.resetFields()
+        console.log(res);
+        navigate('/manager/blog')
+      })
+      .catch((err) => {
         console.log(err);
       });
-    
-   
+
+
   };
 
   const handleChangeContent = (value) => {

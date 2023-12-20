@@ -1,4 +1,4 @@
-import { message } from 'antd';
+
 import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react'
@@ -13,7 +13,6 @@ import { orderService } from '../../services/orderService';
 export default function ConfirmOrderPage() {
   const { id } = useParams();
   const location = useLocation()
-  const { t } = useTranslation()
   const navigate = useNavigate()
   const [roomDetail, setRoomDetail] = useState()
   const [isLoading, setIsLoading] = useState(false);

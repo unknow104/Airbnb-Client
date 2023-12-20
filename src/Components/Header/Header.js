@@ -173,8 +173,8 @@ export default function Header() {
             <img
               className="w-[102px] h-[32px]"
               src={`${bg
-                ? ' https://www.pngkey.com/png/full/60-606021_horizontal-white-transparent-for-web-airbnb-logo-white.png'
-                : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Airbnb_Logo_B%C3%A9lo.svg/2560px-Airbnb_Logo_B%C3%A9lo.svg.png'
+                ? ' https://res-console.cloudinary.com/dzhdgoh2y/thumbnails/v1/image/upload/v1702968893/bG9nb19pbTN4aGM=/grid_landscape'
+                : 'https://res-console.cloudinary.com/dzhdgoh2y/thumbnails/v1/image/upload/v1702968893/bG9nb19pbTN4aGM=/grid_landscape'
                 }`}
               alt=""
             />

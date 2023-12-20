@@ -57,11 +57,11 @@ export default function AmenityManger() {
 
   return (
     <div className="w-full">
-      <div className="headerManager font-roboto mb-5 flex justify-between">
+      <div className="headerManager mb-5 flex justify-between">
         <h1 className="font-bold text-[20px] uppercase ">
           Quản lý tiện ích
         </h1>
-        <button onClick={() => { navigate('/manager/amenity-add') }} className="text-white bg-primary font-medium rounded-lg text-sm px-4 py-2 flex items-center hover:scale-110 transition-all">Add <IoIosAddCircleOutline className='ml-2 text-[20px]' /> </button>
+        <button onClick={() => { navigate('/manager/amenity-add') }} className="text-white bg-primary font-medium rounded-lg text-sm px-4 py-2 flex items-center hover:scale-110 transition-all">Thêm mới <IoIosAddCircleOutline className='ml-2 text-[20px]' /> </button>
       </div>
       <Table
         dataSource={amenities}
@@ -72,10 +72,10 @@ export default function AmenityManger() {
         }}
       >
         <Column title="ID" dataIndex="id" key="id" />
-        <Column title="Name" dataIndex="name" key="name" />
-        <Column title="ImageUrl" dataIndex="imageUrl" key="imageUrl" />
+        <Column title="Tiện ích" dataIndex="name" key="name" />
+        <Column title="Ảnh" dataIndex="imageUrl" key="imageUrl" />
         <Column
-          title="Action"
+          title=""
           key="action"
           render={(text, record) => (
             <div className='flex'>
@@ -104,7 +104,8 @@ export default function AmenityManger() {
         visible={modalVisible}
         onOk={handleDeleteBlog}
         onCancel={() => setModalVisible(false)}
-      ></Modal>
+      >
+      </Modal>
     </div>
   )
 }

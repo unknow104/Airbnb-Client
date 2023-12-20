@@ -4,8 +4,8 @@ export let amenityService = {
     getAmenityList: () => {
         return https.get(`/api/v1/amenity`);
     },
-    addAmenity: (data) => {
-        return https.post(`/api/v1/amenity`, data);
+    addAmenity: async (values) => {
+        return await https.post(`/api/v1/amenity`, values);
     },
     update: (idAmenity, data) => {
         return https.put(`/api/v1/amenity/${idAmenity}`, data);
