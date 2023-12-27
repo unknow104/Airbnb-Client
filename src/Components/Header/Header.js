@@ -173,8 +173,8 @@ export default function Header() {
             <img
               className="w-[102px] h-[32px]"
               src={`${bg
-                ? ' https://res-console.cloudinary.com/dzhdgoh2y/thumbnails/v1/image/upload/v1702968893/bG9nb19pbTN4aGM=/grid_landscape'
-                : 'https://res-console.cloudinary.com/dzhdgoh2y/thumbnails/v1/image/upload/v1702968893/bG9nb19pbTN4aGM=/grid_landscape'
+                ? 'https://res.cloudinary.com/dzhdgoh2y/image/upload/v1702968893/logo_im3xhc.png'
+                : 'https://res.cloudinary.com/dzhdgoh2y/image/upload/v1702968893/logo_im3xhc.png'
                 }`}
               alt=""
             />
