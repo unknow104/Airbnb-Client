@@ -114,7 +114,72 @@ export default function DetailRoomPage() {
       console.log(error);
     }
   };
-
+  const renderItemUtilities = () => {
+    const roomDetails = [
+      {
+        key: "wifi",
+        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892877/airBnB/icon%20offer%20detailpage/icon_ss0rmh.png",
+        label: "Wifi",
+      },
+      {
+        key: "pool",
+        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892879/airBnB/icon%20offer%20detailpage/Frame-3_zslq3h.png",
+        label: t('Hồ bơi'),
+      },
+      {
+        key: "television",
+        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892879/airBnB/icon%20offer%20detailpage/Frame_nsy3uv.png",
+        label: "TV",
+      },
+      {
+        key: "airConditioning",
+        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892878/airBnB/icon%20offer%20detailpage/Frame-4_ropqpj.png",
+        label: t('Máy lạnh'),
+      },
+      {
+        key: "hotAndColdMachine",
+        icon: "https://cdn-icons-png.flaticon.com/128/4035/4035474.png",
+        label: t('Vòi xen nóng lạnh'),
+      },
+      {
+        key: "kitchen",
+        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892878/airBnB/icon%20offer%20detailpage/Frame-5_vobdtz.png",
+        label: t('Nhà bếp'),
+      },
+      {
+        key: "parking",
+        icon: "https://res.cloudinary.com/dvzingci9/image/upload/v1665892879/airBnB/icon%20offer%20detailpage/Frame_nsy3uv.png",
+        label: t('Chỗ đỗ xe'),
+      },
+    ]
+    return (
+      <>
+        <div className="w-full py-[2.2rem] border-b-[1px] border-[#dadada]">
+          <h1 className="text-[1.625rem] font-[600]">{t('Các dịch vụ kèm theo')}</h1>
+          <div className="grid grid-cols-2 w-3/4 gap-y-2 my-5 gap-x-16">
+            {renderUtilities(roomDetails)}
+          </div>
+        </div>
+      </>
+    );
+  };
+  const renderUtilities = (details) => {
+    return details.map((detail) => {
+      if (roomDetail[detail.key]) {
+        return (
+          <p className="flex items-center font-[400] text-[20px]" key={detail.key}>
+            <img
+              src={detail.icon}
+              className="w-[1.1rem] h-[1.1rem] mr-[1rem]"
+              alt=""
+            />
+            {detail.label}
+          </p>
+        );
+      }
+      return null;
+    });
+  };
   return (
     <div className='container mx-auto pb-5 mb:pt-[0px] sm:pt-[0px] md:pt-[6rem]'>
       {isFetch ? <SkeletonDetail /> :
@@ -206,7 +271,7 @@ export default function DetailRoomPage() {
                 </div>
 
               </div>
-              {/* {renderItemUtilities()} */}
+              {renderItemUtilities()}
               <Feedback room={roomDetail} />
             </div>
             <div className="pl-[6rem] mb:hidden sm:hidden md:block w-2/5 h-[800px]">

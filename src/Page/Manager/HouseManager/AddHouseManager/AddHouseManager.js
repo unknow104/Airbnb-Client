@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  Button,
   Checkbox,
   Col,
   Form,
@@ -9,9 +8,7 @@ import {
   InputNumber,
   Row,
   Select,
-  TextArea,
   Upload,
-  message
 } from "antd";
 import { PlusOutlined } from '@ant-design/icons';
 import axios from "axios";
@@ -21,7 +18,6 @@ import { localStorageService } from "../../../../services/localStorageService";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { openNotificationIcon } from "../../../../Components/NotificationIcon/NotificationIcon";
-import { amenityService } from "../../../../services/amenityService";
 
 const PROVINCES_API_URL = "https://provinces.open-api.vn/api";
 
@@ -44,7 +40,6 @@ export default function AddHouseManager() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(localStorageService.get("USER"));
-  const { register, handleSubmit } = useForm();
   const { Option } = Select;
   const navigate = useNavigate();
   const [amenities, setAmenities] = useState([])
@@ -71,33 +66,6 @@ export default function AddHouseManager() {
   const handleStreetChange = (e) => {
     setStreet(e.target.value);
 
-  };
-
-  useEffect(() => {
-    const getAmenities = async () => {
-      try {
-        const response = await amenityService.getAmenityList();
-        // Kiểm tra xem response có chứa thuộc tính 'data' không
-        if (response && response.data) {
-          setAmenities(response.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getAmenities();
-  }, []);
-
-  const handleCheckboxChange = (amenityId) => {
-    setSelectedAmenities((prevSelectedAmenities) => {
-      const newSelectedAmenities = new Set(prevSelectedAmenities);
-      if (newSelectedAmenities.has(amenityId)) {
-        newSelectedAmenities.delete(amenityId);
-      } else {
-        newSelectedAmenities.add(amenityId);
-      }
-      return newSelectedAmenities;
-    });
   };
 
   useEffect(() => {
@@ -390,29 +358,88 @@ export default function AddHouseManager() {
               <Form.Item label="Tiện nghi" labelCol={labelCol}
                 wrapperCol={wrapperCol}>
                 <Row>
-                  {amenities.map((amenity) => (
-                    <Col span={8} key={amenity.id}>
-                      <Form.Item
-                        name={amenity.name}
-                        valuePropName="checked"
-                        initialValue={false}
-                      >
-                        <Checkbox
-                          value={amenity.id}
-                          checked={selectedAmenities.has(amenity.id)}
-                          onChange={() => handleCheckboxChange(amenity.id)
-                          }>{amenity.name}</Checkbox>
-                      </Form.Item>
-                    </Col>
-                  ))}
+                  <Col span={8}>
+                    <Form.Item
+                      name="washingMachine"
+                      valuePropName="checked"
+                      initialValue={false}
+                    >
+                      <Checkbox>Máy giặt</Checkbox>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      name="television"
+                      valuePropName="checked"
+                      initialValue={false}
+                    >
+                      <Checkbox>Tivi</Checkbox>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      name="airConditioner"
+                      valuePropName="checked"
+                      initialValue={false}
+                    >
+                      <Checkbox>Máy lạnh</Checkbox>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      name="wifi"
+                      valuePropName="checked"
+                      initialValue={false}
+                    >
+                      <Checkbox>Wifi</Checkbox>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      name="kitchen"
+                      valuePropName="checked"
+                      initialValue={false}
+                    >
+                      <Checkbox>Phòng bếp</Checkbox>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      name="parking"
+                      valuePropName="checked"
+                      initialValue={false}
+                    >
+                      <Checkbox>Chỗ đỗ xe</Checkbox>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      name="pool"
+                      valuePropName="checked"
+                      initialValue={false}
+                    >
+                      <Checkbox>Hồ bơi</Checkbox>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      name="hotAndColdMachine"
+                      valuePropName="checked"
+                      initialValue={false}
+                    >
+                      <Checkbox>Máy nóng lạnh</Checkbox>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
+                      name="allowPet"
+                      valuePropName="checked"
+                      initialValue={false}
+                    >
+                      <Checkbox>Cho phép mang thú cưng</Checkbox>
+                    </Form.Item>
+                  </Col>
                 </Row>
-                <Form.Item
-                  name="allowPet"
-                  valuePropName="checked"
-                  initialValue={false}
-                >
-                  <Checkbox>Cho phép mang thú cưng</Checkbox>
-                </Form.Item>
               </Form.Item>
               <Form.Item label="Vị trí" labelCol={labelCol}
                 wrapperCol={wrapperCol}>
