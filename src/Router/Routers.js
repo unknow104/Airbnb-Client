@@ -22,12 +22,8 @@ import UpdateBlogManagerPage from "../Page/Manager/BlogManagerPage/UpdateBlogMan
 import BlogPage from "../Page/BlogPage/BlogPage";
 import BlogDetailPage from "../Page/BlogDetailPage/BlogDetailPage";
 import ConfirmOrderPage from "../Page/ConfirmOrderPage/ConfirmOrderPage";
-import RegisterOwner from "../Page/RegisterPage/RegisterOwner";
 import StatisticalManager from "../Page/Manager/StatisticalManager";
 import UserManagemer from "../Page/Manager/UserManager/UserManager";
-import AmenityManger from "../Page/Manager/AmenityManager/AmenityManager";
-import AddAmenityPage from "../Page/Manager/AmenityManager/AddAmenityPage/AddAmenityPage";
-import UpdateAmenityPage from "../Page/Manager/AmenityManager/UpdateAmenityPage/UpdateAmenityPage";
 import EditUserPage from "../Page/ProfilePage/UpdateUserPage/EditUserPage";
 import { HostPage } from "../Page/HostPage/HostPage";
 import ChangePasswordPage from "../Page/ProfilePage/ChangePasswordPage/ChangePasswordPage";
@@ -68,14 +64,10 @@ export default function Routers() {
             <Route path="/manager/blog" element={<BlogManagerPage />} />
             <Route path="/manager/blog-add" element={<NewBlogManagerPage />} />
             <Route path="/manager/statistical" element={<StatisticalManager />} />
-            <Route path="/manager/amenity" element={<AmenityManger />} />
-            <Route path="/manager/amenity-update/:id" element={<UpdateAmenityPage />} />
-
             <Route
               path="/manager/blog-update/:id"
               element={<UpdateBlogManagerPage />}
             />
-            <Route path="/manager/amenity-add" element={<AddAmenityPage />} />
           </Route>
         </Routes>
       </BrowserRouter>
