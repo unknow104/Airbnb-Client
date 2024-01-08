@@ -14,7 +14,12 @@ function LoginPage() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [otp, setOtp] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [otpModalOpen, setOtpModalOpen] = useState(false);
+  const [resetPasswordModalOpen, setResetPasswordModalOpen] = useState(false);
+
   const onFinish = (values) => {
     console.log(values)
     dispatch(loginUser(values))
@@ -29,28 +34,53 @@ function LoginPage() {
         navigate("/");
       } else {
         navigate("/")
+
       }
     }
   }, [isLoggedIn, navigate]);
 
   const handleForgotPassword = async () => {
     try {
-      await authService.forgotPassword(email);
-      // Hiển thị thông báo thành công nếu cần
+      await authService.sendOTPForPasswordReset(email);
       openNotificationIcon('success', 'Thành công', 'Gửi yêu cầu thành công!');
       setModalOpen(false);
+      setOtpModalOpen(true);
     } catch (error) {
       console.error('Quên mật khẩu thất bại:', error);
-      // Hiển thị thông báo lỗi
-      openNotificationIcon('erorr', 'Thất bại', 'Gửi yêu cầu thất bại!');
+      openNotificationIcon('error', 'Thất bại', 'Gửi yêu cầu thất bại!');
     }
   };
 
+  const handleVerifyOTPAndResetPassword = async () => {
+    try {
+      const isOTPValid = await authService.verifyOTPForPasswordReset(email, otp);
+      if (isOTPValid) {
+        openNotificationIcon('success', 'Thành công', 'Xác minh mã OTP thành công!');
+        setOtpModalOpen(false);
+        setResetPasswordModalOpen(true);
+      } else {
+        openNotificationIcon('error', 'Thất bại', 'Mã OTP không hợp lệ!');
+      }
+    } catch (error) {
+      console.error('Xác minh mã OTP thất bại:', error);
+      openNotificationIcon('error', 'Thất bại', 'Xác minh mã OTP thất bại!');
+    }
+  };
+
+  const handleResetPassword = async () => {
+    try {
+      await authService.resetPasswordWithOTP(email, otp, newPassword);
+      openNotificationIcon('success', 'Thành công', 'Đặt lại mật khẩu thành công!');
+      setResetPasswordModalOpen(false);
+    } catch (error) {
+      console.error('Đặt lại mật khẩu thất bại:', error);
+      openNotificationIcon('error', 'Thất bại', 'Đặt lại mật khẩu thất bại!');
+    }
+  };
   const handleCancelForgotPassword = () => {
     // Đặt lại trạng thái hoặc thực hiện các tác vụ khác nếu cần
     setModalOpen(false);
   };
-
   return (
     <div className="login flex items-center justify-center h-screen mb:p-0 sm :p-0 lg:p-[24px] ">
       <div className="flex bg-white items-center relative w-[70rem] border rounded-[0.5rem] login-wrapper p-5 mb:h-screen sm:h-screen md:h-screen lg:h-[100%] animate__animated animate__fadeInUp">
@@ -146,7 +176,7 @@ function LoginPage() {
             </div>
           </div>
         </div>
-        
+
         <div className="w-2/4 mb:hidden sm:hidden lg:flex relative bg-[#e86f7d] overflow-hidden h-full flex justify-center items-center rounded-[0.5rem]">
           <div className="glass h-[80%] relative w-[30rem] rouded-[0.5rem] bg-mainColor z-10 animate__delay-1s animate__animated animate__fadeInUp">
             <h1 className="text-white text-[30px] text-left p-5">
@@ -169,12 +199,34 @@ function LoginPage() {
         onCancel={handleCancelForgotPassword}
       >
         <br />
-        <p className='mb-1 ml-1'>{t('Nhập email của bạn để đặt lại mật khẩu')}</p>
+        <p className="mb-1 ml-1">{t('Nhập email của bạn để đặt lại mật khẩu')}</p>
         <Input
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Nhập email"
         />
+      </Modal>
+      {/* Modal Nhập OTP */}
+      <Modal
+        title="Nhập mã OTP"
+        centered
+        visible={otpModalOpen}
+        onOk={handleVerifyOTPAndResetPassword}
+        onCancel={() => setOtpModalOpen(false)}
+      >
+        <p>Nhập mã OTP được gửi đến email của bạn:</p>
+        <Input value={otp} onChange={(e) => setOtp(e.target.value)} placeholder="Mã OTP" />
+      </Modal>
+      {/* Modal for Resetting Password */}
+      <Modal
+        title="Đặt lại mật khẩu"
+        centered
+        visible={resetPasswordModalOpen}
+        onOk={handleResetPassword}
+        onCancel={() => setResetPasswordModalOpen(false)}
+      >
+        <p>Đặt mật khẩu mới:</p>
+        <Input.Password value={newPassword} onChange={(e) => setNewPassword(e.target.value)} placeholder="Mật khẩu mới" />
       </Modal>
     </div>
   );
