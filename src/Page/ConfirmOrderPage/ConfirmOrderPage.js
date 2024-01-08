@@ -56,12 +56,12 @@ export default function ConfirmOrderPage() {
       .then((res) => {
         setIsLoading(false);
         navigate("/profile?tab=order");
-        openNotificationIcon('success', 'Success', 'Order Success. Thank you very much!');
+        openNotificationIcon('success', 'Thành công', 'Đặt phòng thành công!');
       })
       .catch((err) => {
         setIsLoading(false);
         console.log(err);
-        openNotificationIcon('error', 'Error', 'Order Error. Please Try Again');
+        openNotificationIcon('error', 'Thất bại', 'Đặt phòng thất bại!');
       });
   }
   const calculateTax = () => {

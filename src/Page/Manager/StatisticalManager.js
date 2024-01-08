@@ -13,6 +13,8 @@ import { orderService } from "../../services/orderService";
 import { InputNumber } from 'antd';
 
 export default function StatisticalManager() {
+  const [userCount, setUserCount] = useState(0);
+  const isAdmin = localStorageService.get('USER')?.userDTO?.role?.[0] === 'ADMIN';
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const formatCurrency = (value) =>
     new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(value);
@@ -45,10 +47,18 @@ export default function StatisticalManager() {
   }, [selectedYear]);
 
   const getStatiscalByYear = async (year) => {
-    const id = localStorageService.get("USER").userDTO.id;
+    const user = localStorageService.get("USER").userDTO;
+    const id = user.id;
+    const role = user.role?.[0]; // assuming role is an array and taking the first role
 
+    let response;
     try {
-      const response = await orderService.getStatiscalByYear(id, year);
+      // Check if the user's role is 'admin'
+      if (role === 'ADMIN') {
+        response = await orderService.getStatisticalByYearForAllUsers(year);
+      } else {
+        response = await orderService.getStatiscalByYear(id, year);
+      }
 
       const sortedUniqueStatiscal = calculateMonthlyTotal(response.data);
       const sanitizedStatiscal = sortedUniqueStatiscal.map((item) => ({
@@ -59,11 +69,14 @@ export default function StatisticalManager() {
         tax: Math.abs(Number(item.reallyReceived) - Number(item.totalRevenue))
       }));
       setStatiscal(sanitizedStatiscal);
+      //Đếm số lượng người dùng
+      const statisticalCount = response.data.length;
+      console.log("Fetched data:", response.data);
+      setUserCount(statisticalCount);
     } catch (error) {
       console.error("Error fetching statistical data:", error);
     }
   };
-
   const totalRevenueBeforeTax = statiscal.reduce((acc, item) => acc + item.totalRevenue, 0);
   const totalRevenueAfterTax = statiscal.reduce((acc, item) => acc + item.reallyReceived, 0);
   const sortedStatiscal = statiscal.sort((a, b) => a.month - b.month);
@@ -75,20 +88,47 @@ export default function StatisticalManager() {
           <h1 className="font-medium text-3xl">Thống kê của bạn</h1>
         </div>
         <div className="mb-5">
-          <div className="justify-between flex">
-            <div className="mx-5">
-              <h1 className="font-bold">Tổng doanh thu</h1>
-              <p className="text-green-400 font-semibold">
-                + {formatCurrency(totalRevenueAfterTax)}
-              </p>
+          {isAdmin ? (
+            <div className="justify-between flex">
+              <div className="mx-5">
+                <h1 className="font-bold">Phí dịch vụ</h1>
+                <p className="text-green-400 font-semibold text-center">
+                  {formatCurrency(totalRevenueBeforeTax - totalRevenueAfterTax)}
+                </p>
+              </div>
+              <div>
+                <h1 className="font-bold">Hóa đơn</h1>
+                <p className="text-blue-400 font-semibold text-center">{userCount}</p>
+              </div>
+              <div className="mx-5">
+                <h1 className="font-bold">Tổng doanh thu</h1>
+                <p className="text-green-400 font-semibold text-center">
+                  {formatCurrency(totalRevenueBeforeTax)}
+                </p>
+              </div>
+              <div className="mx-5">
+                <h1 className="font-bold">Doanh thu căn hộ</h1>
+                <p className="text-green-400 font-semibold text-center">
+                  {formatCurrency(totalRevenueAfterTax)}
+                </p>
+              </div>
             </div>
-            <div>
-              <h1 className="font-bold">Thuế đã trả</h1>
-              <p className="text-red-400 font-semibold">
-                - {formatCurrency(totalRevenueBeforeTax - totalRevenueAfterTax)}
-              </p>
+          ) : (
+            <div className="justify-between flex">
+              <div className="mx-5">
+                <h1 className="font-bold">Tổng doanh thu</h1>
+                <p className="text-green-400 font-semibold text-center">
+                  + {formatCurrency(totalRevenueAfterTax)}
+                </p>
+              </div>
+              <div>
+                <h1 className="font-bold">Thuế đã trả</h1>
+                <p className="text-red-400 font-semibold text-center">
+                  - {formatCurrency(totalRevenueBeforeTax - totalRevenueAfterTax)}
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <div className="mb-5">

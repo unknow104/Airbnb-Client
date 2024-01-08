@@ -11,4 +11,7 @@ export let orderService = {
   getStatiscalByYear: (idUser, year) => {
     return https.get(`/api/v1/statisticals/${idUser}/${year}`);
   },
+  getStatisticalByYearForAllUsers: () => {
+    return https.get(`/api/v1/statisticals/all-users`);
+  }
 };
