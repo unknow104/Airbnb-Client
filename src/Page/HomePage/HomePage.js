@@ -10,6 +10,7 @@ import ExploreNearby from "./ExploreNearby";
 import CardItem from "../../Components/CardItem/CardItem";
 import { getRoomList } from "../../Redux/room/roomList";
 import SkeletonItem from "../../Components/Skeleton/SkeletonItem";
+import CategoryList from "../../Components/CategoryList/CategoryList";
 import {
   AiOutlineSortAscending,
   AiOutlineSortDescending,
@@ -91,7 +92,7 @@ function HomePage() {
       <div className="container m-auto mb:mt-[10rem] sm:mt-[10rem] lg:mt-10 mb-10">
         <div className="mb-10">
           <h1 className="text-[3rem] font-bold mb-10">Danh mục</h1>
-          <ExploreNearby />
+          <CategoryList />
         </div>
       </div>
       <div className="container mb-5 m-auto mt-10 flex justify-start space-x-3 ">

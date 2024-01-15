@@ -27,6 +27,7 @@ import UserManagemer from "../Page/Manager/UserManager/UserManager";
 import EditUserPage from "../Page/ProfilePage/UpdateUserPage/EditUserPage";
 import { HostPage } from "../Page/HostPage/HostPage";
 import ChangePasswordPage from "../Page/ProfilePage/ChangePasswordPage/ChangePasswordPage";
+import CategoryPage from "../Page/CategoryPage/CategoryPage";
 
 
 export default function Routers() {
@@ -49,6 +50,7 @@ export default function Routers() {
             <Route path="/profile/change-password/:id" element={<ChangePasswordPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogDetailPage />} />
+            <Route path="/category/:category" element={<CategoryPage />} />
           </Route>
           <Route path="/manager" element={<ManagerLayout />}>
             <Route path="/manager/house" element={<HouseManager />} />
