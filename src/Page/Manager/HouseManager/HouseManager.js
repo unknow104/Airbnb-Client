@@ -50,7 +50,7 @@ export default function HouseManager() {
     <div className="w-full">
       <div className="headerManager mb-5 flex justify-between">
         <h1 className='font-medium text-3xl'>Phòng của bạn</h1>
-        <button onClick={() => { navigate('/manager/house-add') }} className="text-white bg-primary font-medium rounded-lg text-sm px-4 py-2 flex items-center hover:scale-110 transition-all">Add <IoIosAddCircleOutline className='ml-2 text-[20px]' /> </button>
+        <button onClick={() => { navigate('/manager/house-add') }} className="text-white bg-primary font-medium rounded-lg text-sm px-4 py-2 flex items-center hover:scale-110 transition-all">Thêm phòng <IoIosAddCircleOutline className='ml-2 text-[20px]' /> </button>
       </div>
       <Table
         dataSource={houses}

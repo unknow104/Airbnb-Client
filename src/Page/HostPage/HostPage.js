@@ -55,12 +55,12 @@ export const HostPage = () => {
                     </NavLink>
                 </div>
                 <div className='mt-1 justify-between flex text-lg'>
-                    <p className='mt-3 mx-5 font-semibold'>{t('Hello ')}, {infor?.name}</p>
+                    <p className='mt-3 mx-5 font-semibold'>Xin chào, {infor?.name}</p>
                     <button
                         onClick={updatehost}
                         className=' mb-1 p-3 bg-gradient-to-r from-red-500 to-red-600 text-white rounded-2xl'
                     >
-                        {t('Host_setup')}
+                        Đăng ký cho thuê
                     </button>
                 </div>
             </div>
@@ -68,7 +68,7 @@ export const HostPage = () => {
             <div className='mt-4'>
                 <div className='mx-auto mt-5 text-center'>
                     <h1 className='text-4xl font-bold'>
-                        Airbnb it easily with Airbnb Setup
+                        Đăng ký trở thành đối tác của Panther
                     </h1>
                     <img
                         className='mt-8 w-[1480px]'

@@ -22,13 +22,29 @@
     align-items: center;
 }
 
+.card-item {
+    transition: border-radius 0.3s ease; // Thêm hiệu ứng chuyển đổi mượt mà
+
+    &:hover {
+        border-radius: 2rem; // Khi hover, sẽ thay đổi giá trị border-radius
+    }
+}
+
+.swiper-slide:hover {
+    border-radius: 2rem;
+    transition: all 0.3s ease-in-out;
+    /* Thêm hiệu ứng chuyển đổi mượt mà */
+}
+
 .swiper-wrapper {
     &:hover~.swiper-button-prev {
         opacity: 1;
+        border-radius: 2rem;
     }
 
     &:hover~.swiper-button-next {
         opacity: 1;
+        border-radius: 2rem;
     }
 }
 

@@ -12,16 +12,17 @@ import {
 } from "antd";
 import { PlusOutlined } from '@ant-design/icons';
 import axios from "axios";
-import { locationService } from "../../../../services/locationService";
 import { roomService } from "../../../../services/RoomService";
 import { localStorageService } from "../../../../services/localStorageService";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { openNotificationIcon } from "../../../../Components/NotificationIcon/NotificationIcon";
-
+import numeral from "numeral"; // Import thư viện numeral
+import "numeral/locales/vi"; // Import locale cho tiền tệ Việt Nam
+import { locationService } from "../../../../services/locationService";
 const PROVINCES_API_URL = "https://provinces.open-api.vn/api";
 
 export default function AddHouseManager() {
+  numeral.locale("vi");
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const [province, setProvince] = useState([]);
@@ -35,16 +36,44 @@ export default function AddHouseManager() {
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedWard, setSelectedWard] = useState(null);
-  const [location, setLocation] = useState();
-  const [idLocation, setIdLocation] = useState();
   const [selectedImages, setSelectedImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(localStorageService.get("USER"));
-  const { Option } = Select;
   const navigate = useNavigate();
-  const [amenities, setAmenities] = useState([])
-  const [selectedAmenities, setSelectedAmenities] = useState(new Set());
+  const [location, setLocation] = useState();
+  const [idLocation, setIdLocation] = useState();
+  const [price, setPrice] = useState(1);
+  const { Option } = Select;
 
+  useEffect(() => {
+    locationService
+      .getLocationList()
+      .then((res) => {
+        setLocation(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [street]);
+
+  const renderOption = () => {
+    return location?.map((item, index) => {
+      return (
+        <Option key={index} value={item.codeLocation}>
+          {item.name}
+        </Option>
+      );
+    });
+  };
+
+  const onChange = (value) => {
+    setIdLocation(value);
+    console.log(address);
+  };
+
+  const handlePriceChange = (value) => {
+    setPrice(value);
+  };
   const MINIMUM_IMAGES = 5;
   console.log(user.userDTO.id)
   const handleProvinceChange = (value, option) => {
@@ -73,32 +102,6 @@ export default function AddHouseManager() {
       street + ", " + nameWard + ", " + nameDistrict + ", " + nameProvince
     );
   }, [nameProvince, nameDistrict, nameWard, street]);
-
-  useEffect(() => {
-    locationService
-      .getLocationList()
-      .then((res) => {
-        setLocation(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [street]);
-
-  const renderOption = () => {
-    return location?.map((item, index) => {
-      return (
-        <Option key={index} value={item.codeLocation}>
-          {item.name}
-        </Option>
-      );
-    });
-  };
-
-  const onChange = (value) => {
-    setIdLocation(value);
-    console.log(address);
-  };
 
   useEffect(() => {
     axios
@@ -158,19 +161,23 @@ export default function AddHouseManager() {
   const onFinish = (values) => {
     setIsLoading(true);
     console.log("Form submitted:", values);
-    console.log(idLocation);
     console.log(address);
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("description", values.description);
     formData.append("price", values.price);
-    formData.append("codeLocation", idLocation);
     formData.append("address", address);
-    formData.append("amenities", [...selectedAmenities]);
-    formData.append("maxGuests", values.maxGuests);
+    formData.append("maxGuest", values.maxGuest);
     formData.append("numLivingRooms", values.numLivingRooms);
     formData.append("numBathrooms", values.numBathrooms);
     formData.append("numBedrooms", values.numBedrooms);
+    formData.append('washingMachine', values.washingMachine);
+    formData.append('television', values.television);
+    formData.append('airConditioner', values.airConditioner);
+    formData.append('wifi', values.wifi);
+    formData.append('kitchen', values.kitchen);
+    formData.append('parking', values.parking);
+    formData.append('pool', values.pool);
     formData.append("allowPet", values.allowPet);
     selectedImages.forEach((image) => {
       formData.append(`images`, image.originFileObj);
@@ -197,7 +204,7 @@ export default function AddHouseManager() {
   return (
     <>
       <div>
-        <div className="headerManager font-roboto mb-5 flex justify-between">
+        <div className="headerManager mb-5 flex justify-between">
           <h1 className="font-bold text-[20px] uppercase ">Thêm phòng</h1>
         </div>
         <Form form={form} onFinish={onFinish}>
@@ -325,7 +332,7 @@ export default function AddHouseManager() {
                 <Col>
                   <Form.Item
                     label="Lượng khách"
-                    name="maxGuests"
+                    name="maxGuest"
                     rules={[{ required: true }]}
                   >
                     <Input type="number" />
@@ -441,6 +448,18 @@ export default function AddHouseManager() {
                   </Col>
                 </Row>
               </Form.Item>
+              <Form.Item label="Giá phòng" name="price">
+                <InputNumber
+                  min={1}
+                  defaultValue={1}
+                  style={{ width: "100%" }}
+                  value={price}
+                  onChange={handlePriceChange}
+                  formatter={(value) => `${numeral(value).format("0,0")} VNĐ`}
+                  parser={(value) => numeral(value).value()
+                  }
+                />
+              </Form.Item>
               <Form.Item label="Vị trí" labelCol={labelCol}
                 wrapperCol={wrapperCol}>
                 <Select
@@ -448,7 +467,7 @@ export default function AddHouseManager() {
                     width: "100%",
                   }}
                   showSearch
-                  placeholder={t("Location")}
+                  placeholder={t("Thành phố cụ thể")}
                   optionFilterProp="children"
                   className="dropdow-header"
                   onChange={onChange}
@@ -460,19 +479,6 @@ export default function AddHouseManager() {
                 >
                   {renderOption()}
                 </Select>
-              </Form.Item>
-              <Form.Item
-                label="Giá phòng"
-                name="price"
-                rules={[{ required: true }]}
-                labelCol={labelCol}
-                wrapperCol={wrapperCol}
-              >
-                <InputNumber
-                  min={1}
-                  defaultValue={1}
-                  style={{ width: "100%" }}
-                />
               </Form.Item>
               <Form.Item>
                 <button

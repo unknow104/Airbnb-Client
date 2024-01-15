@@ -30,7 +30,6 @@ function CardItem({ roomInfor }) {
       const wishlistItems = response.data;
       // Kiểm tra xem roomId có trong danh sách mong muốn không
       const isLiked = wishlistItems.some(item => item.roomDTO.id === roomId);
-      
       if (isLiked) {
         setIsLiked(true);
       } else {
@@ -102,7 +101,7 @@ function CardItem({ roomInfor }) {
       );
   };
   return (
-    <div className='relative text-black hover:text-black hover:rounded-[0.8rem]  bg-white rounded-[2rem]'>
+    <div className='relative text-black hover:text-black hover:rounded-[0.8rem] bg-white rounded-[2rem]'>
       <div className="h-[270px] ">
         <Swiper
           loop={true}
@@ -121,7 +120,7 @@ function CardItem({ roomInfor }) {
         </Swiper>
       </div>
       <FaHeart
-        className={`text-black hover:text-white/50 hover:rounded-[0.8rem]  absolute top-2 right-2 z-10 cursor-pointer ${isLiked && user.id ? 'text-red-500' : 'text-black'}`}
+        className={`text-black hover:text-white/50 hover:rounded-[0.8rem] absolute top-2 right-2 z-10 cursor-pointer ${isLiked && user.id ? 'text-red-500' : 'text - black'}`}
         strokeWidth={2}
         size={24}
       />
@@ -138,10 +137,10 @@ function CardItem({ roomInfor }) {
             </div>
           </div>
           <p className="text-[0.8rem] text-left font-[400] text-[black] opacity-60">
-            Khách tối đa: {roomInfor.maxGuests}
+            Khách tối đa: {roomInfor.maxGuest}
           </p>
           <p className="text-[0.8rem] text-left font-[400] text-[black] opacity-60">
-            {moment(roomInfor.created_at).format('Do-MMMM-YYYY')}
+            {moment(roomInfor.created_at).fromNow()} {/* Sử dụng .fromNow() để hiển thị cách bao lâu */}
           </p>
           <p className="text-[0.8rem] text-left text-[black] opacity-60">{roomInfor.codeLocation}</p>
           <div className="flex justify-between">
@@ -157,7 +156,7 @@ function CardItem({ roomInfor }) {
           </div>
         </div>
       </Link>
-    </div>
+    </div >
   );
 }
 

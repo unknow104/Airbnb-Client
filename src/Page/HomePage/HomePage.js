@@ -10,25 +10,22 @@ import ExploreNearby from "./ExploreNearby";
 import CardItem from "../../Components/CardItem/CardItem";
 import { getRoomList } from "../../Redux/room/roomList";
 import SkeletonItem from "../../Components/Skeleton/SkeletonItem";
-import {
-  AiOutlineSortAscending,
-  AiOutlineSortDescending,
-} from "react-icons/ai";
+import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai";
+
 function HomePage() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const allRoom = useSelector((state) => state.room.listRoom.allRoom);
   const [room, setRoom] = useState([]);
+
+  // Ghi chú: Khi allRoom thay đổi, cập nhật giá trị cho room
   useEffect(() => {
     setRoom(allRoom);
   }, [allRoom]);
 
   const isfetching = useSelector((state) => state.room.listRoom.isfetching);
-  const allLocation = [];
   const [openShadowFilter, setopenShadowFilter] = useState(false);
-  const [newRoom, setNewRoom] = useState([]);
   const [queyFilter, setQueyFilter] = useState({});
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 24;
 
@@ -38,9 +35,12 @@ function HomePage() {
   const currentItems = room?.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(room?.length / itemsPerPage);
+
   const handleQueyFilter = (data) => {
     setQueyFilter(data);
   };
+
+  // Ghi chú: Fetch danh sách phòng khi component được tạo
   useEffect(() => {
     dispatch(getRoomList());
   }, []);
@@ -56,6 +56,7 @@ function HomePage() {
   const handleDecrease = () => {
     setRoom([...room].sort((a, b) => (a.price > b.price ? -1 : 1)));
   };
+
   const handleIncrease = () => {
     setRoom([...room].sort((a, b) => (a.price > b.price ? 1 : -1)));
   };
@@ -72,26 +73,20 @@ function HomePage() {
       setopenShadowFilter(false);
     }
   };
-  window.addEventListener("scroll", closeNav);
+
+  // Ghi chú: Thêm sự kiện lắng nghe cuộn trang
+  useEffect(() => {
+    window.addEventListener("scroll", closeNav);
+    return () => {
+      window.removeEventListener("scroll", closeNav);
+    };
+  }, []);
 
   return (
     <div>
-      <div className="header-homepage h-[100vh] pt-[70px] relative mb:hidden sm:hidden lg:flex justify-center items-center">
-        <div className="filter-background absolute bg-[#0000007a] w-full z-10 top-0 right-0 h-full "></div>
-        <div className="flex px-[4rem] container justify-between z-20 w-full h-full items-center pt-[1rem]">
-          <div className="text-center w-2/4 ">
-            <svg className="text-home" viewBox="0 0 1320 300">
-              <text x="50%" y="50%" dy=".35em" textAnchor="middle">
-                Unique
-              </text>
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div className="container m-auto mb:mt-[10rem] sm:mt-[10rem] lg:mt-10 mb-10">
+      <div className="container m-auto mb:mt-[10rem] sm:mt-[10rem] lg:mt-20 mb-10">
         <div className="mb-10">
-          <h1 className="text-[3rem] font-bold mb-10">Danh mục</h1>
-          <ExploreNearby />
+          {/* Nội dung bổ sung */}
         </div>
       </div>
       <div className="container mb-5 m-auto mt-10 flex justify-start space-x-3 ">
@@ -110,7 +105,7 @@ function HomePage() {
           Từ cao
         </Button>
       </div>
-      <div className="container  m-auto  grid mb:grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 gap-6 ">
+      <div className="w-[1460px] m-auto grid mb:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5 gap-6">
         {isfetching ? <SkeletonItem /> : renderRoomItem()}
       </div>
       <div className="flex justify-center my-10 space-x-3">

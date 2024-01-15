@@ -190,7 +190,7 @@ export default function Header() {
                 setOpen(!open);
               }}
               style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}
-              className="flex z-20 items-center px-3 py-2 rounded-3xl border border-gray-300 "
+              className="flex z-20 items-center px-3 py-2 rounded-3xl border border-gray-300  w-max"
             >
               <div
                 className={`font-medium cursor-pointer px-2 lg:border-r-2 md:border-r-2 lg:w-[150px] md:w[150px] sm:w-[270px] mb:w-[270px]`}
@@ -252,14 +252,13 @@ export default function Header() {
                   {`${quantity} ${t('Guest')}`}
                 </h1>
               </div>
-              <div className="p-2 bg-[#FF385C] rounded-4xl h-[76px]">
+              <div className="p-2 bg-[#FF385C] rounded-xl">
                 <FaSearch className="text-white" />
               </div>
             </div>
           )}
         </>
         {/* END MIDDLE */}
-
         {/* RIGHT */}
         <UserNav bg={bg} />
         {/* END RIGHT */}

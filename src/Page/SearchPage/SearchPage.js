@@ -46,12 +46,12 @@ export default function SearchPage() {
   };
 
   return (
-    <div className=" lg:mt-0 md:mt-10 sm:mt-10 mb:mt-10">
-      <div className="container mx-auto grid lg:grid-cols-2 md:col-span-1 sm:col-span-1 mb:col-span-1 gap-5 ">
+    <div className="">
+      <div className="container mx-auto grid grid-cols-2 gap-5 ">
         <div className="col-span-1 mb-10 mt-20">
           <div className="mb-10">
-            <h1 className="text-base font-medium">{data?.length} Experiences</h1>
-            <h1 className="font-bold text-2xl "> Experiences near you</h1>
+            <h1 className="text-base font-medium">{data?.length} Kết quả tìm kiếm </h1>
+            <h1 className="font-bold text-2xl "> Điểm đến của bạn</h1>
 
           </div>
           <div className="grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 mb:grid-cols-1 gap-5">
@@ -66,13 +66,10 @@ export default function SearchPage() {
             ))}
           </div>
         </div>
-        <div className="col-span-1 h-full lg:block md:hidden sm:hidden mb:hidden ">
-          <div className="h-full">
-            <div className="w-full h-full">
-              <Map address={address} />
-            </div>
-          </div>
-        </div>
+
+      </div>
+      <div className="h-full">
+        <Map address={address} />
       </div>
     </div>
   )

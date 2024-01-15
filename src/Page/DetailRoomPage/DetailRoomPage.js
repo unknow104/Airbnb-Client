@@ -224,7 +224,7 @@ export default function DetailRoomPage() {
               <div className="border-b-[1px] border-[#dadada]">
                 <div className="w-full mb-3 border-[#dadada]">
                   <span className="text-[1rem] font-[400] text-[#717171]">
-                    {roomDetail?.maxGuests} khách - {roomDetail?.numBedrooms} phòng ngủ - {roomDetail?.numLivingRooms} phòng khách -  {roomDetail?.numBathrooms} nhà tắm
+                    {roomDetail?.maxGuest} khách - {roomDetail?.numBedrooms} phòng ngủ - {roomDetail?.numLivingRooms} phòng khách -  {roomDetail?.numBathrooms} nhà tắm
                   </span>
                   <p className="text-[1rem] font-[400] text-[#717171]">{roomDetail?.codeLocation}</p>
                   <p className="text-[1rem] font-[400] text-[#717171]">{roomDetail?.address?.fullAddress}</p>

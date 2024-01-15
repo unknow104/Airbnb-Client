@@ -103,7 +103,7 @@ export default function ConfirmOrderPage() {
               </div>
               <div className="flex flex-wrap my-3">
                 <p className="w-40 font-semibold">Người cho thuê</p>
-                <p>{roomDetail.name.length > 25 ? roomDetail.name.slice(0, 25) + "..." : roomDetail.name}</p>
+                <p>{roomDetail.name.length > 25 ? roomDetail.userName.slice(0, 25) + "..." : roomDetail.userName}</p>
               </div>
               <div className="flex flex-wrap my-3">
                 <p className="w-40 font-semibold">Ngày bắt đầu</p>
@@ -131,7 +131,7 @@ export default function ConfirmOrderPage() {
               </div>
               <div className="flex flex-wrap my-3">
                 <p className="w-40 font-extrabold">Tổng cộng</p>
-                <p>{formattedPrice(calculateTotalPrice())}</p>
+                <p>{formattedPrice(calculateTotalPrice() - calculateTax())}</p>
               </div>
             </div>
             <div className="flex gap-2 w-[400px]">

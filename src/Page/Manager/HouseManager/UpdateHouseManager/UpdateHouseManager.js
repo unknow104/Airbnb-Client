@@ -4,6 +4,10 @@ import { useTranslation } from "react-i18next";
 import { useParams, useNavigate } from "react-router-dom";
 import { roomService } from "../../../../services/RoomService";
 import { Form, Input, Checkbox, Row, Col, Select } from "antd";
+import { openNotificationIcon } from "../../../../Components/NotificationIcon/NotificationIcon";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const { Option } = Select;
 
@@ -13,11 +17,13 @@ export default function UpdateHouseManager() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     roomService
       .getHouseById(id)
       .then((res) => {
+        console.log(res);
         setRoomDetail(res.data);
         form.setFieldsValue({
           // Set initial form values based on the received data
@@ -26,18 +32,19 @@ export default function UpdateHouseManager() {
           price: res.data.price || 0,
           codeLocation: res.data.codeLocation || undefined,
           address: res.data.address.fullAddress || "",
-          maxGuests: res.data.maxGuests || 1,
+          maxGuest: res.data.maxGuest || 1,
           numLivingRooms: res.data.numLivingRooms || 0,
           numBathrooms: res.data.numBathrooms || 0,
           numBedrooms: res.data.numBedrooms || 0,
           allowPet: res.data.allowPet || false,
-          washingMachine: res.data.washingMachine || false,
+          washingMachine: res.data.washingMachine,
           television: res.data.television || false,
           airConditioner: res.data.airConditioner || false,
           wifi: res.data.wifi || false,
           kitchen: res.data.kitchen || false,
           parking: res.data.parking || false,
           pool: res.data.pool || false,
+          hotAndColdMachine: res.data.hotAndColdMachine || false,
         });
       })
       .catch((err) => {
@@ -48,21 +55,24 @@ export default function UpdateHouseManager() {
 
 
   const onFinish = (values) => {
+    setIsLoading(true);
+    console.log(values);
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("description", values.description);
     formData.append("price", values.price);
     formData.append("codeLocation", values.codeLocation);
     formData.append("address", values.address);
-    formData.append('washingMachine', values.washingMachine ? 'true' : 'false');
-    formData.append('television', values.television ? 'true' : 'false');
-    formData.append('airConditioner', values.airConditioner ? 'true' : 'false');
-    formData.append('wifi', values.wifi ? 'true' : 'false');
-    formData.append('kitchen', values.kitchen ? 'true' : 'false');
-    formData.append('parking', values.parking ? 'true' : 'false');
-    formData.append('pool', values.pool ? 'true' : 'false');
-    formData.append("allowPet", values.allowPet ? "true" : "false");
-    formData.append("maxGuests", values.maxGuests);
+    formData.append("hotAndColdMachine", values.hotAndColdMachine ? true : false); // Chuyển đổi thành kiểu boolean
+    formData.append('washingMachine', values.washingMachine ? true : false);
+    formData.append('television', values.television ? true : false);
+    formData.append('airConditioner', values.airConditioner ? true : false);
+    formData.append('wifi', values.wifi ? true : false);
+    formData.append('kitchen', values.kitchen ? true : false);
+    formData.append('parking', values.parking ? true : false);
+    formData.append('pool', values.pool ? true : false);
+    formData.append("allowPet", values.allowPet ? true : false);
+    formData.append("maxGuest", values.maxGuest)
     formData.append("numLivingRooms", values.numLivingRooms);
     formData.append("numBathrooms", values.numBathrooms);
     formData.append("numBedrooms", values.numBedrooms);
@@ -72,10 +82,12 @@ export default function UpdateHouseManager() {
       .update(id, formData)
       .then((res) => {
         console.log("Phòng được cập nhật:", res);
+        openNotificationIcon("success", "Thành công", "Cập nhập phòng thành công")
         navigate("/manager/house");
       })
       .catch((err) => {
         console.log("Cập nhật thất bại:", err);
+        openNotificationIcon("error", "Thất bại", "Cập nhập phòng thất bại")
       });
   };
 
@@ -95,9 +107,18 @@ export default function UpdateHouseManager() {
 
   return (
     <div className="update-house-manager-container">
-      <h1 className="font-semibold mx-auto text-center text-2xl">
-        {t("Cập Nhật Phòng Trọ")}
-      </h1>
+      <div className="flex">
+        <Form.Item>
+          <Link to="/manager/house">
+            <button className="px-3 py-2 rounded-lg bg-gray-300 text-black font-medium hover:bg-gray-400 hover:text-white transition-all">
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+          </Link>
+        </Form.Item>
+        <h1 className="font-semibold mx-auto text-center text-2xl">
+          {t("Cập Nhật Phòng Trọ")}
+        </h1>
+      </div>
       <Form form={form} layout="vertical" onFinish={onFinish}>
         <Form.Item
           label={t("Tên")}
@@ -135,7 +156,7 @@ export default function UpdateHouseManager() {
           <Col span={8}>
             <Form.Item
               label={t("Số Khách Tối Đa")}
-              name="maxGuests"
+              name="maxGuest"
               rules={[
                 { required: true, message: t("Vui lòng nhập số khách tối đa") },
               ]}
@@ -143,6 +164,8 @@ export default function UpdateHouseManager() {
               <Input type="number" min={1} />
             </Form.Item>
           </Col>
+        </Row>
+        <Row gutter={16}>
           <Col span={8}>
             <Form.Item
               label={t("Số Phòng Khách")}
@@ -157,9 +180,6 @@ export default function UpdateHouseManager() {
               <Input type="number" min={0} />
             </Form.Item>
           </Col>
-        </Row>
-
-        <Row gutter={16}>
           <Col span={8}>
             <Form.Item
               label={t("Số Phòng Tắm")}
@@ -189,119 +209,101 @@ export default function UpdateHouseManager() {
             </Form.Item>
           </Col>
         </Row>
-
-        <Form.Item label={t("Tiện Ích")} wrapperCol={{ span: 16 }}>
+        <Form.Item label={t("Tiện Ích")} wrapperCol={{ span: 18 }}>
           <Row>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("washingMachine")}
-                onChange={(e) => {
-                  console.log(e.target.checked);
-                  form.setFieldsValue({ washingMachine: e.target.checked });
-                }}
-                name="washingMachine"
-              >
-                {t("Máy giặt")}
-              </Checkbox>
+            <Col span={6}>
+              <Form.Item name="washingMachine" valuePropName="checked">
+                <Checkbox
+                >
+                  {t("Máy giặt")}
+                </Checkbox>
+              </Form.Item>
             </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("television")}
-                onChange={(e) =>
-                  form.setFieldsValue({ television: e.target.checked })
-                }
-                name="television"
-              >
-                {t("Tivi")}
-              </Checkbox>
+            <Col span={6}>
+              <Form.Item name="television" valuePropName="checked">
+                <Checkbox
+                >
+                  {t("Tivi")}
+                </Checkbox>
+              </Form.Item>
             </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("airConditioner")}
-                onChange={(e) =>
-                  form.setFieldsValue({ airConditioner: e.target.checked })
-                }
-                name="airConditioner"
-              >
-                {t("Máy lạnh")}
-              </Checkbox>
+            <Col span={6}>
+              <Form.Item name="airConditioner" valuePropName="checked">
+                <Checkbox
+                >
+                  {t("Máy lạnh")}
+                </Checkbox>
+              </Form.Item>
             </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("wifi")}
-                onChange={(e) =>
-                  form.setFieldsValue({ wifi: e.target.checked })
-                }
-                name="wifi"
-              >
-                {t("Wifi miễn phí")}
-              </Checkbox>
+            <Col span={6}>
+              <Form.Item name="wifi" valuePropName="checked">
+                <Checkbox
+                >
+                  {t("Wifi miễn phí")}
+                </Checkbox>
+              </Form.Item>
             </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("kitchen")}
-                onChange={(e) =>
-                  form.setFieldsValue({ kitchen: e.target.checked })
-                }
-                name="kitchen"
-              >
-                {t("Có bếp riêng")}
-              </Checkbox>
+            <Col span={6}>
+              <Form.Item name="kitchen" valuePropName="checked">
+                <Checkbox
+                >
+                  {t("Có bếp riêng")}
+                </Checkbox>
+              </Form.Item>
             </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("parking")}
-                onChange={(e) =>
-                  form.setFieldsValue({ parking: e.target.checked })
-                }
-                name="parking"
-              >
-                {t("Chỗ đổ xe")}
-              </Checkbox>
+            <Col span={6}>
+              <Form.Item name="parking" valuePropName="checked">
+                <Checkbox
+                >
+                  {t("Chỗ đổ xe")}
+                </Checkbox>
+              </Form.Item>
             </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("pool")}
-                onChange={(e) =>
-                  form.setFieldsValue({ pool: e.target.checked })
-                }
-                name="pool"
-              >
-                {t("Hồ bơi")}
-              </Checkbox>
+            <Col span={6}>
+              <Form.Item name="pool" valuePropName="checked">
+                <Checkbox
+                >
+                  {t("Hồ bơi")}
+                </Checkbox>
+              </Form.Item>
             </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("hotAndColdMachine")}
-                onChange={(e) =>
-                  form.setFieldsValue({ hotAndColdMachine: e.target.checked })
-                }
-                name="hotAndColdMachine"
-              >
-                {t("Vòi sen nóng lạnh")}
-              </Checkbox>
+            <Col span={6}>
+              <Form.Item name="hotAndColdMachine" valuePropName="checked">
+                <Checkbox
+                >
+                  {t("Vòi sen nóng lạnh")}
+                </Checkbox>
+              </Form.Item>
             </Col>
-            <Col span={8}>
-              <Checkbox
-                checked={form.getFieldValue("allowPet")}
-                onChange={(e) =>
-                  form.setFieldsValue({ allowPet: e.target.checked })
-                }
-                name="allowPet"
-              >
-                {t("Cho phép mang thú cưng")}
-              </Checkbox>
+            <Col span={6}>
+              <Form.Item name="allowPet" valuePropName="checked">
+                <Checkbox
+                >
+                  {t("Cho phép mang thú cưng")}
+                </Checkbox>
+              </Form.Item>
             </Col>
           </Row>
         </Form.Item>
-        <Form.Item>
-          <button
-            className="px-3 py-2 rounded-lg bg-primary text-whitefont-medium hover:bg-[#FF2171] font-bold text-white transition-all"
-            htmlType="submit"
-          >
-            Cập Nhật
-          </button>
-        </Form.Item>
+        <div className="flex gap-5">
+          <Form.Item>
+            <button
+              className="px-3 py-2 rounded-lg bg-primary text-white font-medium hover:bg-[#068FFF] hover:text-white transition-all"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Cập nhập phòng"}
+            </button>
+          </Form.Item>
+          <Form.Item>
+            <Link to="/manager/house">
+              <button className="px-3 py-2 rounded-lg bg-gray-300 text-black font-medium hover:bg-gray-400 hover:text-white transition-all">
+                Trở lại
+              </button>
+            </Link>
+          </Form.Item>
+        </div>
+
       </Form>
     </div>
   );
